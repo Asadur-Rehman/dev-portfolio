@@ -1,48 +1,52 @@
-/**
- * Work experience - customize with your real roles and achievements
- */
 export interface ExperienceEntry {
   id: string;
   company: string;
   role: string;
   duration: string;
-  logo?: string; // URL or path to logo image
+  location?: string;
+  logo?: string;
   achievements: string[];
   tech: string[];
 }
 
 export const experience: ExperienceEntry[] = [
   {
-    id: "1",
+    id: "aurora",
     company: "Aurora Solutions",
     role: "Software Engineer",
-    duration: "Jun 2025 – Present",
+    duration: "Jun 2025 — Present",
+    location: "Islamabad, Pakistan",
     achievements: [
-      "Built Exceed Booking Hub, a multi-tenant booking SaaS using Next.js + PostgreSQL, with role-based portals for Super Admin, Manager, and Sales.",
-      "Implemented booking workflows, automated Xero invoices, and reminders via Twilio and SendGrid.",
-      "Integrated NextAuth, Cloudinary, and Sentry; shipped pagination, search, and audit logs for scalability and traceability.",
+      "Engineering full-stack solutions for enterprise clients across the entire delivery lifecycle.",
+      "Building scalable, production-grade web applications with a focus on reliability and clean architecture.",
+      "Collaborating with cross-functional teams to deliver complex software on aggressive timelines.",
     ],
-    tech: [
-      "Next.js",
-      "PostgreSQL",
-      "NextAuth",
-      "Xero",
-      "Twilio",
-      "SendGrid",
-      "Cloudinary",
-      "Sentry",
-    ],
+    tech: ["Next.js", "TypeScript", "PostgreSQL", "Node.js", "Cloud Infrastructure"],
   },
   {
-    id: "2",
+    id: "eon",
     company: "Eon Intelligence",
-    role: "MERN Stack Development Intern",
-    duration: "June 2024 – September 2024",
+    role: "MERN Stack Developer (Intern)",
+    duration: "Jul 2024 — Aug 2024",
+    location: "Islamabad, Pakistan",
     achievements: [
-      "Contributed to the Test Scheduling Backend, Eon Testing Tool and KalorieKompass, enhancing functionality and user experience.",
-      "Developed web automation scripts, implemented critical features, and conducted thorough testing to ensure reliability.",
-      "Improved UI/UX by resolving multiple issues and adding new features.",
+      "Shipped features and fixes across 3 production applications: EON Testing Tool, Test Scheduling Backend, and KalorieKompass.",
+      "Built role-based access for the EON Testing Tool — testers, admins, super admins, team leads — for generating tests, tracking activity, and managing QA workflows.",
+      "Developed web automation scripts and performed SQA across multiple production codebases.",
+      "Improved UI/UX and resolved critical bugs that had been blocking releases.",
     ],
-    tech: ["MERN Stack", "React", "Node.js", "MongoDB", "JavaScript"],
+    tech: ["React", "Node.js", "Express", "MongoDB", "JavaScript", "RBAC"],
+  },
+  {
+    id: "oasis",
+    company: "Oasis Infobyte",
+    role: "Web Development Intern",
+    duration: "Jul 2023 — Aug 2023",
+    location: "Remote",
+    achievements: [
+      "Built foundational web applications including interactive calculators and task management tools.",
+      "Developed responsive, accessible frontend interfaces from scratch.",
+    ],
+    tech: ["JavaScript", "HTML5", "CSS3", "React"],
   },
 ];

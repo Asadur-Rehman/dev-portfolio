@@ -7,9 +7,10 @@ import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { personal } from "@/data/personal";
+import { socialLinks } from "@/data/socials";
 
 export default function Home() {
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://asadurrehman.dev";
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -17,14 +18,26 @@ export default function Home() {
     jobTitle: personal.title,
     description: personal.headline,
     email: personal.email,
-    ...(siteUrl && { url: siteUrl }),
+    telephone: personal.phone,
+    url: siteUrl,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Islamabad",
+      addressCountry: "PK",
+    },
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "National University of Sciences and Technology (NUST), SEECS",
+    },
+    worksFor: {
+      "@type": "Organization",
+      name: "Aurora Solutions",
+    },
+    sameAs: socialLinks.map((s) => s.url),
     knowsAbout: [
-      "Next.js",
-      "React",
-      "Node.js",
-      "TypeScript",
-      "MongoDB",
-      "PostgreSQL",
+      "Next.js", "React", "Node.js", "NestJS", "TypeScript", "Python",
+      "MongoDB", "PostgreSQL", "OpenAI API", "RAG Architecture",
+      "Full-Stack Development", "AI Integration",
     ],
   };
 
@@ -42,8 +55,8 @@ export default function Home() {
         <Projects />
         <Experience />
         <Contact />
-        <Footer />
       </main>
+      <Footer />
     </>
   );
 }
