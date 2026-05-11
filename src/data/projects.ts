@@ -1,89 +1,113 @@
-/**
- * Projects data - add/edit your projects here
- * Replace image URLs with your own or use Unsplash placeholders
- */
-export type ProjectCategory = "frontend" | "fullstack" | "backend" | "all";
+export type ProjectCategory = "frontend" | "fullstack" | "backend" | "ai" | "all";
 
 export interface Project {
   id: string;
   title: string;
+  tagline: string;
   description: string;
-  image: string;
+  highlights: string[];
   tags: string[];
   category: ProjectCategory;
   liveUrl?: string;
   githubUrl?: string;
   caseStudyUrl?: string;
+  role?: string;
+  year?: string;
   featured: boolean;
+  size?: "lg" | "md";
 }
 
 export const projects: Project[] = [
   {
-    id: "1",
-    title: "Exceed Booking Hub",
+    id: "talentscout",
+    title: "TalentScout",
+    tagline: "AI-Powered Recruitment Platform",
     description:
-      "Multi-tenant booking SaaS for hospitality with Admin and Customer portals, RBAC (Super Admin/Manager/Sales), and org isolation. Automated Xero invoices and Twilio/SendGrid reminders.",
-    image:
-      "https://images.unsplash.com/photo-1566073771259-6a0e4b219989?w=800&q=80",
-    tags: [
-      "Next.js",
-      "PostgreSQL",
-      "NextAuth",
-      "Xero",
-      "Twilio",
-      "SendGrid",
-      "Cloudinary",
-      "Sentry",
+      "Cloud-based intelligent recruitment ecosystem that automates the entire hiring pipeline — from AI-generated job descriptions to live, evaluated AI interviews.",
+    highlights: [
+      "AI-generated JDs and intelligent resume↔job matching algorithms",
+      "Real-time AI interviewer with webcam/mic, dynamic questioning, live evaluation",
+      "Integrated coding assessment environment for technical roles",
+      "Recruiter & organization dashboards with hiring funnel analytics",
     ],
+    tags: ["React", "Node.js", "Express", "MongoDB", "OpenAI API", "WebRTC", "TailwindCSS"],
+    category: "ai",
+    role: "Lead Developer & Architect — Final Year Project, NUST",
+    year: "2025",
+    featured: true,
+    size: "lg",
+  },
+  {
+    id: "task-tracker",
+    title: "Task Tracker",
+    tagline: "Enterprise Task Management System",
+    description:
+      "Advanced personal/team task management with Kanban columns, real-time sync, and a modern decoupled architecture.",
+    highlights: [
+      "Kanban-style boards, profile system, real-time updates",
+      "Decoupled Next.js frontend talking to a NestJS backend",
+      "Firebase Firestore + Admin SDK for auth and persistence",
+    ],
+    tags: ["Next.js 14", "TypeScript", "TailwindCSS", "TanStack Query", "NestJS", "Firebase"],
     category: "fullstack",
     featured: true,
   },
   {
-    id: "2",
-    title: "AWS Serverless Document Processing Pipeline",
+    id: "rag-chatbot",
+    title: "RAG Chatbot",
+    tagline: "AI Knowledge Assistant",
     description:
-      "Scalable serverless pipeline processing 1000+ documents daily. AWS Lambda + Step Functions, Textract for OCR, Comprehend for entity recognition, ~95% extraction accuracy. S3, SQS, DynamoDB, CloudFormation.",
-    image:
-      "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80",
-    tags: [
-      "AWS Lambda",
-      "S3",
-      "Textract",
-      "Step Functions",
-      "Comprehend",
-      "DynamoDB",
-      "CloudFormation",
+      "Retrieval-Augmented Generation chatbot for intelligent document Q&A — combining vector search with conversational LLM responses.",
+    highlights: [
+      "FAISS-powered similarity search with sentence-transformer embeddings",
+      "Conversational AI built on Qwen1.5-1.8B-Chat",
+      "FastAPI backend with an interactive Streamlit UI",
     ],
-    category: "backend",
+    tags: ["Python", "FastAPI", "Streamlit", "FAISS", "HuggingFace"],
+    category: "ai",
     featured: true,
   },
   {
-    id: "3",
-    title: "TalentScout – AI Recruitment Platform",
+    id: "kaloriekompass",
+    title: "KalorieKompass",
+    tagline: "Diet & Nutrition Platform",
     description:
-      "Cloud-based AI recruitment platform with AWS Rekognition for candidate sentiment during video interviews, Amazon Transcribe for speech-to-text, and OpenAI for assessment scoring. Deployed on EC2, RDS, S3, WebRTC.",
-    image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80",
-    tags: [
-      "MERN Stack",
-      "AWS Rekognition",
-      "Amazon Transcribe",
-      "OpenAI API",
-      "WebRTC",
-      "RDS",
-      "S3",
+      "Health-tech platform for personalized diet management and professional nutrition consultation with multi-role dashboards.",
+    highlights: [
+      "Calorie tracking with goal-based meal planning (loss/gain)",
+      "Multi-role dashboards: users, dietitians, nutritionists, super admins",
+      "Connect with certified nutritionists for personalized plans",
     ],
+    tags: ["MongoDB", "Express.js", "React", "Node.js", "RBAC"],
+    category: "fullstack",
+    liveUrl: "https://kaloriekompass.com",
+    featured: true,
+  },
+  {
+    id: "real-estate",
+    title: "Real Estate Marketplace",
+    tagline: "Full-Stack Property Platform",
+    description:
+      "Production-grade property listing and search platform with advanced filtering, image uploads and map integration.",
+    highlights: [
+      "Auth, property CRUD, multi-image uploads, advanced filters",
+      "Responsive UI with map-based discovery",
+    ],
+    tags: ["MongoDB", "Express.js", "React", "Node.js"],
     category: "fullstack",
     featured: true,
   },
   {
-    id: "4",
-    title: "KalorieKompass & Eon Testing Tool",
+    id: "blogging-platform",
+    title: "Blogging Platform",
+    tagline: "Full-Stack Content Management",
     description:
-      "Contributed to KalorieKompass and Eon Testing Tool at Eon Intelligence: new features, web automation scripts, and UI/UX improvements with thorough testing.",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    tags: ["React", "Node.js", "MongoDB", "JavaScript"],
+      "Feature-rich blogging platform with authentication, full CRUD, and rich text editing.",
+    highlights: [
+      "JWT-based auth with role-aware access",
+      "Rich text editor and SEO-friendly post pages",
+    ],
+    tags: ["MongoDB", "Express.js", "React", "Node.js"],
     category: "fullstack",
     featured: true,
   },

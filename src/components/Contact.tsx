@@ -2,16 +2,23 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { Github, Linkedin, Mail, Send, Loader2, Phone } from "lucide-react";
+import { Github, Linkedin, Mail, Send, Loader2, Phone, ArrowUpRight, CheckCircle2, AlertTriangle, Briefcase, Download } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
-import { Button } from "@/components/ui/Button";
 
-const iconMap = {
-  github: Github,
-  linkedin: Linkedin,
-  twitter: Mail,
-  email: Mail,
+const iconMap: Record<string, LucideIcon> = {
+  github: Github, linkedin: Linkedin, twitter: Mail, email: Mail, upwork: Briefcase,
+};
+
+const fade = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+};
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
 
 export function Contact() {
@@ -26,18 +33,28 @@ export function Contact() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+    if (!accessKey || accessKey === "your_web3forms_access_key") {
+      setStatus("error");
+      setErrorMessage("Email service not configured yet. Please email me directly at " + personal.email);
+      return;
+    }
+
     setStatus("loading");
     setErrorMessage("");
 
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY,
+          access_key: accessKey,
+          subject: `Portfolio inquiry from ${data.name}`,
+          from_name: data.name,
           name: data.name,
           email: data.email,
           message: data.message,
+          botcheck: data.botcheck,
         }),
       });
       const result = await response.json();
@@ -46,152 +63,113 @@ export function Contact() {
         form.reset();
       } else {
         setStatus("error");
-        setErrorMessage(result.message || "Something went wrong.");
+        setErrorMessage(result.message || "Something went wrong. Try again.");
       }
     } catch {
       setStatus("error");
-      setErrorMessage("Network error. Please try again.");
+      setErrorMessage("Network error. Please try again or email me directly.");
     }
   }
 
   return (
-    <section
-      id="contact"
-      ref={ref}
-      className="py-24 px-6 sm:px-12 lg:px-24"
-      aria-labelledby="contact-heading"
-    >
-      <div className="max-w-3xl mx-auto">
-        <motion.h2
-          id="contact-heading"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-          className="font-display text-3xl sm:text-4xl font-bold text-foreground mb-4"
-        >
-          Let&apos;s Build Something Together
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="text-muted mb-10"
-        >
-          Have a project in mind or want to chat? Get in touch.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="grid md:grid-cols-[1fr,auto] gap-12"
-        >
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="contact-name" className="block text-sm font-medium text-foreground mb-2">
-                Name <span className="text-accent">*</span>
-              </label>
-              <input
-                id="contact-name"
-                name="name"
-                type="text"
-                required
-                className="w-full rounded-lg border border-border bg-surface px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
-                placeholder="Your name"
-              />
-            </div>
-            <div>
-              <label htmlFor="contact-email" className="block text-sm font-medium text-foreground mb-2">
-                Email <span className="text-accent">*</span>
-              </label>
-              <input
-                id="contact-email"
-                name="email"
-                type="email"
-                required
-                className="w-full rounded-lg border border-border bg-surface px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
-                placeholder="you@example.com"
-              />
-            </div>
-            <div>
-              <label htmlFor="contact-message" className="block text-sm font-medium text-foreground mb-2">
-                Message <span className="text-accent">*</span>
-              </label>
-              <textarea
-                id="contact-message"
-                name="message"
-                required
-                rows={5}
-                className="w-full rounded-lg border border-border bg-surface px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20 resize-none"
-                placeholder="Tell me about your project..."
-              />
-            </div>
-            {status === "success" && (
-              <p className="text-accent text-sm">Thanks! Your message was sent.</p>
-            )}
-            {status === "error" && (
-              <p className="text-red-400 text-sm">{errorMessage}</p>
-            )}
-            <Button
-              type="submit"
-              disabled={status === "loading"}
-              className="min-w-[140px]"
-            >
-              {status === "loading" ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" aria-hidden />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="h-4 w-4 mr-2" aria-hidden />
-                  Send
-                </>
+    <section id="contact" ref={ref} className="relative py-28 sm:py-36 px-6 sm:px-10 lg:px-20 overflow-hidden" aria-labelledby="contact-heading">
+      <div className="absolute inset-0 -z-10" aria-hidden>
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.05] blur-[120px]" />
+      </div>
+      <div className="max-w-6xl mx-auto">
+        <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
+          <motion.p variants={fade} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">05 — Contact</motion.p>
+          <motion.h2 id="contact-heading" variants={fade} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl tracking-tighter text-foreground max-w-3xl">
+            Let&apos;s build something <span className="text-gradient-accent">extraordinary</span> together.
+          </motion.h2>
+          <motion.p variants={fade} className="mt-5 max-w-2xl text-lg text-muted-strong">
+            Have a hard problem, an ambitious product, or a role you think I&apos;d be a fit for? Drop a line — I read every message.
+          </motion.p>
+          <motion.div variants={fade} className="mt-14 grid lg:grid-cols-5 gap-10">
+            <form onSubmit={handleSubmit} className="lg:col-span-3 rounded-2xl border border-border bg-surface/60 p-6 sm:p-8 space-y-5" noValidate>
+              <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden />
+              <div>
+                <label htmlFor="contact-name" className="block text-xs font-mono uppercase tracking-widest text-muted mb-2">Your name</label>
+                <input id="contact-name" name="name" type="text" required className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 transition-colors" placeholder="Jane Doe" />
+              </div>
+              <div>
+                <label htmlFor="contact-email" className="block text-xs font-mono uppercase tracking-widest text-muted mb-2">Email</label>
+                <input id="contact-email" name="email" type="email" required className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 transition-colors" placeholder="you@company.com" />
+              </div>
+              <div>
+                <label htmlFor="contact-message" className="block text-xs font-mono uppercase tracking-widest text-muted mb-2">Message</label>
+                <textarea id="contact-message" name="message" required rows={6} className="w-full rounded-xl border border-border bg-background/60 px-4 py-3 text-foreground placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/30 resize-none transition-colors" placeholder="Tell me about the project, role, or problem you want to solve..." />
+              </div>
+              {status === "success" && (
+                <div className="flex items-start gap-2 rounded-lg border border-emerald-500/30 bg-emerald-500/10 p-3 text-sm text-emerald-300">
+                  <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" aria-hidden />
+                  Thanks — your message landed. I&apos;ll get back to you within 24 hours.
+                </div>
               )}
-            </Button>
-          </form>
-
-          <div className="flex md:flex-col gap-6">
-            <div>
-              {personal.phone && (
-                <a
-                  href={`tel:${personal.phone.replace(/\s/g, "")}`}
-                  className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-colors mb-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
-                >
-                  <Phone className="h-5 w-5" aria-hidden />
-                  {personal.phone}
+              {status === "error" && (
+                <div className="flex items-start gap-2 rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-300">
+                  <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" aria-hidden />
+                  {errorMessage}
+                </div>
+              )}
+              <button type="submit" disabled={status === "loading"} className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow disabled:opacity-60 disabled:cursor-not-allowed transition-all min-w-[160px]">
+                {status === "loading" ? (<><Loader2 className="h-4 w-4 animate-spin" aria-hidden />Sending…</>) : (<>Send message<Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden /></>)}
+              </button>
+            </form>
+            <div className="lg:col-span-2 space-y-6">
+              <div className="rounded-2xl border border-border bg-surface/60 p-6 space-y-4">
+                <p className="font-mono text-xs uppercase tracking-widest text-muted">Direct</p>
+                <a href={`mailto:${personal.email}`} className="group flex items-start gap-3 hover:text-accent transition-colors">
+                  <Mail className="h-4 w-4 mt-1 text-accent shrink-0" aria-hidden />
+                  <span className="text-sm text-foreground group-hover:text-accent break-all">{personal.email}</span>
                 </a>
-              )}
-              <p className="text-sm font-medium text-muted mb-3">Social</p>
-              <ul className="flex md:flex-col gap-3">
-                {socialLinks.map((link) => {
-                  const Icon = iconMap[link.icon];
-                  return (
-                    <li key={link.name}>
-                      <a
-                        href={link.url}
-                        target={link.icon === "email" ? undefined : "_blank"}
-                        rel={link.icon === "email" ? undefined : "noopener noreferrer"}
-                        className="inline-flex items-center gap-2 text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
-                      >
-                        <Icon className="h-5 w-5" aria-hidden />
-                        {link.name}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
+                {personal.phone && (
+                  <a href={`tel:${personal.phone.replace(/\s/g, "")}`} className="group flex items-start gap-3 text-foreground hover:text-accent transition-colors">
+                    <Phone className="h-4 w-4 mt-1 text-accent shrink-0" aria-hidden />
+                    <span className="text-sm">{personal.phone}</span>
+                  </a>
+                )}
+                <a href={personal.resumeUrl} download className="group inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-medium text-foreground hover:border-accent/40 hover:text-accent transition-colors">
+                  <Download className="h-3.5 w-3.5" aria-hidden />Download resume
+                </a>
+              </div>
+              <div className="rounded-2xl border border-border bg-surface/60 p-6">
+                <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">Elsewhere</p>
+                <ul className="space-y-3">
+                  {socialLinks.map((link) => {
+                    const Icon = iconMap[link.icon] || Mail;
+                    const external = link.icon !== "email";
+                    return (
+                      <li key={link.name}>
+                        <a href={link.url} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} className="group flex items-center justify-between gap-3 rounded-lg p-2 -m-2 hover:bg-surface-hover transition-colors">
+                          <span className="flex items-center gap-3">
+                            <span className="grid h-8 w-8 place-items-center rounded-md bg-accent/10 border border-accent/20 text-accent">
+                              <Icon className="h-4 w-4" aria-hidden />
+                            </span>
+                            <span>
+                              <span className="block text-sm font-medium text-foreground group-hover:text-accent transition-colors">{link.name}</span>
+                              {link.handle && <span className="block text-xs text-muted">{link.handle}</span>}
+                            </span>
+                          </span>
+                          {external && <ArrowUpRight className="h-4 w-4 text-muted group-hover:text-accent transition-colors" aria-hidden />}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-accent/30 bg-accent/[0.04] p-6">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="relative flex h-2 w-2" aria-hidden>
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                  </span>
+                  <p className="text-xs font-mono uppercase tracking-widest text-emerald-400">Currently available</p>
+                </div>
+                <p className="text-sm text-muted-strong">Open to senior IC and full-stack/AI engineering roles — remote-first, global timezones.</p>
+              </div>
             </div>
-            <div>
-              <a
-                href={personal.resumeUrl}
-                download
-                className="inline-flex items-center rounded-lg border-2 border-accent px-4 py-2 text-accent font-medium hover:bg-accent-muted transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-              >
-                Download Resume
-              </a>
-            </div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

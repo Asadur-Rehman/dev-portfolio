@@ -3,13 +3,15 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ArrowUpRight } from "lucide-react";
 import { personal } from "@/data/personal";
 
 const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#contact", label: "Contact" },
+  { href: "#about", label: "About", num: "01" },
+  { href: "#tech", label: "Stack", num: "02" },
+  { href: "#projects", label: "Work", num: "03" },
+  { href: "#experience", label: "Experience", num: "04" },
+  { href: "#contact", label: "Contact", num: "05" },
 ];
 
 export function Header() {
@@ -17,42 +19,65 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
-    window.addEventListener("scroll", onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "bg-background/80 backdrop-blur-md border-b border-border" : ""
+        scrolled ? "bg-background/70 backdrop-blur-xl border-b border-border" : "bg-transparent"
       }`}
       role="banner"
     >
-      <div className="max-w-6xl mx-auto px-6 sm:px-12 lg:px-24 flex items-center justify-between h-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-20 flex items-center justify-between h-16 sm:h-20">
         <Link
           href="#hero"
-          className="font-display font-semibold text-foreground hover:text-accent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="group inline-flex items-center gap-2 font-display font-bold text-foreground hover:text-accent transition-colors"
+          aria-label="Home"
         >
-          {personal.name.split(" ")[0]}
+          <span className="grid h-8 w-8 place-items-center rounded-md bg-accent/10 border border-accent/30 text-accent font-mono text-sm group-hover:bg-accent group-hover:text-background transition-colors">
+            A
+          </span>
+          <span className="hidden sm:inline tracking-tight">
+            {personal.name.split(" ")[0]}
+            <span className="text-accent">.</span>
+          </span>
         </Link>
-        <nav className="hidden sm:block" aria-label="Main">
-          <ul className="flex items-center gap-8">
+
+        <nav className="hidden md:block" aria-label="Primary">
+          <ul className="flex items-center gap-1">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-muted hover:text-accent text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+                  className="group inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-muted hover:text-foreground transition-colors"
                 >
+                  <span className="font-mono text-[0.65rem] text-accent/70 group-hover:text-accent transition-colors">
+                    {link.num}
+                  </span>
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
         </nav>
+
+        <div className="hidden md:flex items-center gap-3">
+          <Link
+            href="#contact"
+            className="group inline-flex items-center gap-1.5 rounded-full bg-foreground/95 px-5 py-2.5 text-sm font-semibold text-background hover:bg-accent transition-colors"
+          >
+            Hire me
+            <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </Link>
+        </div>
+
         <button
           type="button"
-          className="sm:hidden p-2 text-foreground hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded"
+          className="md:hidden p-2 text-foreground hover:text-accent rounded"
           onClick={() => setOpen((o) => !o)}
           aria-expanded={open}
           aria-label="Toggle menu"
@@ -60,26 +85,39 @@ export function Header() {
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
+
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="sm:hidden bg-surface border-b border-border"
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border"
           >
-            <ul className="px-6 py-4 flex flex-col gap-4">
+            <ul className="px-6 py-4 flex flex-col">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
                     onClick={() => setOpen(false)}
-                    className="text-muted hover:text-accent font-medium transition-colors block py-2"
+                    className="flex items-center gap-3 py-3 text-base font-medium text-muted-strong hover:text-accent transition-colors border-b border-border/60"
                   >
+                    <span className="font-mono text-xs text-accent">{link.num}</span>
                     {link.label}
                   </Link>
                 </li>
               ))}
+              <li className="pt-4">
+                <Link
+                  href="#contact"
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-background w-full"
+                >
+                  Hire me
+                  <ArrowUpRight className="h-4 w-4" />
+                </Link>
+              </li>
             </ul>
           </motion.div>
         )}

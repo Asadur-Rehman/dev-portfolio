@@ -9,27 +9,38 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Dark theme base - deep blacks/grays (not pure black)
         background: "var(--background)",
+        "background-2": "var(--background-2)",
         foreground: "var(--foreground)",
         surface: "var(--surface)",
         "surface-elevated": "var(--surface-elevated)",
+        "surface-hover": "var(--surface-hover)",
         muted: "var(--muted)",
+        "muted-strong": "var(--muted-strong)",
         border: "var(--border)",
-        // Accent - electric blue (customize in globals.css)
+        "border-strong": "var(--border-strong)",
         accent: "var(--accent)",
         "accent-hover": "var(--accent-hover)",
         "accent-muted": "var(--accent-muted)",
+        "accent-glow": "var(--accent-glow)",
+        "accent-2": "var(--accent-2)",
+        "accent-2-muted": "var(--accent-2-muted)",
+        "accent-3": "var(--accent-3)",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],
         body: ["var(--font-body)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
       },
+      letterSpacing: {
+        tightest: "-0.04em",
+        tighter: "-0.025em",
+      },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out forwards",
         "fade-in-up": "fadeInUp 0.6s ease-out forwards",
         "pulse-soft": "pulseSoft 2s ease-in-out infinite",
+        shimmer: "shimmer 2.5s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -44,12 +55,22 @@ const config: Config = {
           "0%, 100%": { opacity: "1" },
           "50%": { opacity: "0.7" },
         },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
       },
       boxShadow: {
-        glow: "0 0 40px -10px var(--accent)",
-        "glow-sm": "0 0 20px -5px var(--accent)",
+        glow: "0 0 60px -10px var(--accent-glow)",
+        "glow-sm": "0 0 24px -8px var(--accent-glow)",
+        "glow-2": "0 0 60px -10px rgba(167, 139, 250, 0.4)",
         card: "0 4px 24px -4px rgba(0,0,0,0.4)",
-        "card-hover": "0 12px 40px -8px rgba(0,0,0,0.5), 0 0 30px -8px var(--accent-muted)",
+        "card-hover":
+          "0 16px 48px -12px rgba(0,0,0,0.6), 0 0 32px -8px var(--accent-muted)",
+      },
+      backgroundImage: {
+        "radial-fade":
+          "radial-gradient(ellipse at center, var(--accent-muted) 0%, transparent 70%)",
       },
     },
   },
