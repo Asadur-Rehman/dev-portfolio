@@ -112,35 +112,38 @@ export const projects: Project[] = [
     featured: true,
   },
   {
-    id: "5",
-    title: "Arcadia – NUST University Library System",
+    id: "arcadia",
+    title: "Arcadia",
+    tagline: "NUST University Library System",
     description:
-      "Digital library platform built exclusively for the NUST university community. Members can discover, borrow, and track thousands of books across multiple disciplines, with university ID verification for access control.",
-    image:
-      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=800&q=80",
-    tags: [
-      "Next.js 15",
-      "TypeScript",
-      "PostgreSQL",
-      "Drizzle ORM",
-      "NextAuth v5",
-      "Tailwind CSS",
-      "Upstash Redis",
+      "Digital library platform built exclusively for the NUST university community. Members can discover, borrow, and track thousands of books across multiple disciplines with real-time availability.",
+    highlights: [
+      "University ID verification for NUST-exclusive access control",
+      "Single-click borrowing with real-time availability tracking and digital receipts",
+      "Collection spanning CS, Engineering, Literature, and Social Sciences",
     ],
+    tags: ["Next.js 15", "TypeScript", "PostgreSQL", "Drizzle ORM", "NextAuth v5", "Tailwind CSS", "Upstash Redis"],
     category: "fullstack",
     liveUrl: "https://arcadia-kqy3.vercel.app/",
+    year: "2025",
     featured: true,
   },
   {
-    id: "6",
-    title: "FlowCraft – AI Workflow Automation Builder",
+    id: "flowcraft",
+    title: "FlowCraft",
+    tagline: "AI Workflow Automation Builder",
     description:
-      "AI-powered workflow automation builder with a visual drag-and-drop interface for constructing and running automated pipelines. Features native AI nodes for summarization, content generation, and classification, queue-based async execution, real-time metrics, and multi-tenant workspaces with RBAC.",
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80",
-    tags: ["Next.js", "React Flow", "Prisma", "BullMQ", "TypeScript"],
-    category: "fullstack",
+      "AI-powered workflow automation builder with a visual drag-and-drop interface for constructing and running automated pipelines with native AI nodes.",
+    highlights: [
+      "Drag-and-drop builder with trigger, action, and AI nodes (summarization, generation, classification)",
+      "Queue-based async execution with retry and failure handling via BullMQ",
+      "Real-time metrics, execution monitoring, and multi-tenant workspaces with RBAC",
+      "External triggering via webhooks and REST APIs",
+    ],
+    tags: ["Next.js", "TypeScript", "React Flow", "Prisma", "BullMQ"],
+    category: "ai",
     liveUrl: "https://flow-craft-pied.vercel.app/",
+    year: "2025",
     featured: true,
   },
 ];
