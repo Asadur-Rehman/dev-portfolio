@@ -6,6 +6,7 @@ import { Projects } from "@/components/Projects";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
+import { PageLoader } from "@/components/ui/PageLoader";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
 
@@ -47,16 +48,18 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Header />
-      <main id="main-content">
-        <Hero />
-        <About />
-        <TechStack />
-        <Projects />
-        <Experience />
-        <Contact />
-      </main>
-      <Footer />
+      <PageLoader>
+        <Header />
+        <main id="main-content">
+          <Hero />
+          <About />
+          <TechStack />
+          <Projects />
+          <Experience />
+          <Contact />
+        </main>
+        <Footer />
+      </PageLoader>
     </>
   );
 }

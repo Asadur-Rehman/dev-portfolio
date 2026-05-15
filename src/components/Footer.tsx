@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Github, Linkedin, Mail, Briefcase, ArrowUp, ArrowUpRight } from "lucide-react";
+import { motion } from "framer-motion";
+import { Github, Linkedin, Mail, Briefcase, ArrowUp, ArrowUpRight, Rocket } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
@@ -18,6 +19,15 @@ const navLinks = [
   ["#experience", "Experience"],
   ["#contact", "Contact"],
 ];
+
+const stagger = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+};
 
 function useLocalTime(timezone: string) {
   const [time, setTime] = useState("");
@@ -40,6 +50,7 @@ function useLocalTime(timezone: string) {
 
 export function Footer() {
   const localTime = useLocalTime(personal.timezone);
+  const [isHoveringTop, setIsHoveringTop] = useState(false);
 
   return (
     <footer
@@ -52,11 +63,16 @@ export function Footer() {
       {/* Ambient glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[40rem] h-[16rem] rounded-full bg-accent/[0.04] blur-[80px] pointer-events-none" aria-hidden />
 
-      <div className="max-w-7xl mx-auto relative">
+      <motion.div
+        variants={stagger}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-40px" }}
+        className="max-w-7xl mx-auto relative"
+      >
         <div className="grid sm:grid-cols-2 lg:grid-cols-12 gap-10 mb-12">
-
           {/* CTA block */}
-          <div className="sm:col-span-2 lg:col-span-6">
+          <motion.div variants={fadeUp} className="sm:col-span-2 lg:col-span-6">
             <p className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">
               Open to opportunities
             </p>
@@ -79,27 +95,24 @@ export function Footer() {
               Get in touch
               <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
-          </div>
+          </motion.div>
 
           {/* Navigate */}
-          <div className="lg:col-span-3">
+          <motion.div variants={fadeUp} className="lg:col-span-3">
             <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">Navigate</p>
             <ul className="space-y-2.5">
               {navLinks.map(([href, label]) => (
                 <li key={href}>
-                  <Link
-                    href={href}
-                    className="text-sm text-muted-strong hover:text-accent transition-colors"
-                  >
+                  <Link href={href} className="text-sm text-muted-strong hover:text-accent transition-colors hover:translate-x-1 inline-block duration-200">
                     {label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Connect */}
-          <div className="lg:col-span-3">
+          <motion.div variants={fadeUp} className="lg:col-span-3">
             <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">Connect</p>
             <ul className="space-y-2.5">
               {socialLinks.map((link) => {
@@ -116,18 +129,18 @@ export function Footer() {
                       <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden />
                       {link.name}
                       {external && (
-                        <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden />
+                        <ArrowUpRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-all group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
                       )}
                     </a>
                   </li>
                 );
               })}
             </ul>
-          </div>
+          </motion.div>
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
+        <motion.div variants={fadeUp} className="pt-8 border-t border-border/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted">
           <p>
             © {new Date().getFullYear()}{" "}
             <span className="text-muted-strong">{personal.name}</span>
@@ -141,14 +154,21 @@ export function Footer() {
             )}
             <a
               href="#hero"
+              onMouseEnter={() => setIsHoveringTop(true)}
+              onMouseLeave={() => setIsHoveringTop(false)}
               className="inline-flex items-center gap-1.5 hover:text-accent transition-colors group"
             >
               Back to top
-              <ArrowUp className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />
+              <motion.span
+                animate={isHoveringTop ? { y: [0, -4, 0], rotate: [0, -10, 0] } : { y: 0 }}
+                transition={isHoveringTop ? { duration: 0.5, repeat: Infinity } : { duration: 0.3 }}
+              >
+                {isHoveringTop ? <Rocket className="h-3 w-3" /> : <ArrowUp className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />}
+              </motion.span>
             </a>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </footer>
   );
 }

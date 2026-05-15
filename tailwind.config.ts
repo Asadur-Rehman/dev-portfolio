@@ -41,6 +41,13 @@ const config: Config = {
         "fade-in-up": "fadeInUp 0.6s ease-out forwards",
         "pulse-soft": "pulseSoft 2s ease-in-out infinite",
         shimmer: "shimmer 2.5s linear infinite",
+        "rotate-border": "rotate-border 4s linear infinite",
+        "breathing-glow": "breathingGlow 2.5s ease-in-out infinite",
+        "text-shimmer": "textShimmer 3s linear infinite",
+        "orbit-ring": "orbitRing 12s linear infinite",
+        "liquid-fill": "liquidFill 4s ease infinite",
+        "draw-line": "drawLine 1.5s ease forwards",
+        "slide-up": "slideUpEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards",
       },
       keyframes: {
         fadeIn: {
@@ -67,6 +74,7 @@ const config: Config = {
         card: "0 4px 24px -4px rgba(0,0,0,0.4)",
         "card-hover":
           "0 16px 48px -12px rgba(0,0,0,0.6), 0 0 32px -8px var(--accent-muted)",
+        "glow-accent": "0 0 40px -8px var(--accent-glow), 0 0 12px -2px var(--accent-glow)",
       },
       backgroundImage: {
         "radial-fade":

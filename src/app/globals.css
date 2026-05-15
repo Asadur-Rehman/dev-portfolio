@@ -33,6 +33,13 @@
   --accent-3: #fbbf24;
 }
 
+/* CSS @property for animated border-angle */
+@property --border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -72,7 +79,7 @@ body::before {
   inset: 0;
   pointer-events: none;
   z-index: 100;
-  opacity: 0.5;
+  opacity: 0.4;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/></svg>");
 }
@@ -155,8 +162,60 @@ body::before {
     border-color: var(--accent);
     box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15), 0 0 20px -4px rgba(0, 212, 255, 0.2);
   }
+
+  /* Shimmer sweep on hover */
+  .shimmer-hover {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer-hover::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255,255,255,0.08) 45%,
+      rgba(255,255,255,0.14) 50%,
+      rgba(255,255,255,0.08) 55%,
+      transparent 70%
+    );
+    transform: translateX(-100%);
+    transition: transform 0s;
+  }
+  .shimmer-hover:hover::after {
+    transform: translateX(100%);
+    transition: transform 0.7s ease;
+  }
+
+  /* Breathing glow for "current" badges */
+  .breathing-glow {
+    animation: breathingGlow 2.5s ease-in-out infinite;
+  }
+
+  /* Slide-up entrance utility */
+  .slide-up-enter {
+    animation: slideUpEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  /* Floating label for inputs */
+  .floating-label {
+    transform: translateY(0);
+    font-size: 0.75rem;
+    opacity: 0.5;
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .floating-label-active {
+    transform: translateY(-1.75rem);
+    font-size: 0.65rem;
+    opacity: 1;
+    color: var(--accent);
+  }
 }
 
+/* ============================================
+   KEYFRAMES
+   ============================================ */
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
@@ -170,6 +229,52 @@ body::before {
 @keyframes glowPulse {
   0%, 100% { box-shadow: 0 0 30px -10px var(--accent-glow); }
   50% { box-shadow: 0 0 60px -10px var(--accent-glow); }
+}
+
+@keyframes rotate-border {
+  from { --border-angle: 0deg; }
+  to { --border-angle: 360deg; }
+}
+
+@keyframes breathingGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px -2px rgba(52, 211, 153, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px -2px rgba(52, 211, 153, 0.5);
+  }
+}
+
+@keyframes slideUpEnter {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes textShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes orbitRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes liquidFill {
+  0% { background-position: 0% 80%; }
+  50% { background-position: 100% 20%; }
+  100% { background-position: 0% 80%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
