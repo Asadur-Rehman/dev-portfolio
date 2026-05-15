@@ -6,13 +6,62 @@ import { personal } from "@/data/personal";
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
 };
 
 const item = {
   hidden: { opacity: 0, y: 28 },
   show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 };
+
+const techStack = ["TypeScript", "Next.js", "Node.js", "Python", "PostgreSQL", "OpenAI API", "MongoDB"];
+
+const stats = [
+  { k: "Education", v: "NUST SEECS" },
+  { k: "Currently", v: "Aurora Solutions" },
+  { k: "Focus", v: "Full-Stack & AI" },
+  { k: "Location", v: "Remote / Global" },
+];
+
+function TerminalWidget() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 32, scale: 0.96 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay: 1.0, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      className="glass-strong rounded-2xl overflow-hidden shadow-card border-border/80 w-full max-w-xs"
+      aria-hidden
+    >
+      {/* Title bar */}
+      <div className="flex items-center gap-2 px-4 py-3 border-b border-border/60 bg-surface/60">
+        <span className="h-3 w-3 rounded-full bg-red-500/70" />
+        <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
+        <span className="h-3 w-3 rounded-full bg-emerald-500/70" />
+        <span className="ml-auto font-mono text-[0.6rem] tracking-widest text-muted uppercase">~/asad</span>
+      </div>
+      {/* Code */}
+      <div className="p-5 font-mono text-[0.72rem] leading-[1.75] text-foreground/80">
+        <p><span className="text-accent-2">const</span> <span className="text-foreground">engineer</span> <span className="text-muted/60">=</span> {"{"}</p>
+        <p className="pl-4"><span className="text-accent">role</span><span className="text-muted/60">:</span> <span className="text-accent-3">&quot;Full‑Stack + AI&quot;</span><span className="text-muted/50">,</span></p>
+        <p className="pl-4"><span className="text-accent">stack</span><span className="text-muted/60">:</span> <span className="text-accent">[</span></p>
+        {["Next.js", "TypeScript", "Node.js", "Python"].map((s) => (
+          <p key={s} className="pl-8 text-foreground/60">&quot;{s}&quot;<span className="text-muted/50">,</span></p>
+        ))}
+        <p className="pl-4"><span className="text-accent">]</span><span className="text-muted/50">,</span></p>
+        <p className="pl-4"><span className="text-accent">available</span><span className="text-muted/60">:</span> <span className="text-emerald-400">true</span></p>
+        <p>{"}"}</p>
+      </div>
+      {/* Status */}
+      <div className="px-5 py-3 border-t border-border/60 bg-surface/40 flex items-center gap-2">
+        <span className="relative flex h-2 w-2 shrink-0">
+          <span className="animate-ping absolute h-full w-full rounded-full bg-emerald-400 opacity-75" />
+          <span className="relative h-2 w-2 rounded-full bg-emerald-400" />
+        </span>
+        <span className="font-mono text-[0.65rem] text-emerald-400 tracking-wide">Open to remote roles</span>
+      </div>
+    </motion.div>
+  );
+}
 
 export function Hero() {
   const scrollTo = (id: string) =>
@@ -21,102 +70,150 @@ export function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col justify-center px-6 sm:px-10 lg:px-20 pt-32 pb-20 overflow-hidden"
+      className="relative min-h-screen flex flex-col justify-center px-5 sm:px-10 lg:px-20 pt-24 sm:pt-32 pb-20 overflow-hidden"
       aria-label="Hero"
     >
+      {/* Background */}
       <div className="absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-grid bg-grid-fade opacity-60" />
-        <div className="absolute top-[10%] left-[8%] w-[42rem] h-[42rem] rounded-full bg-accent/[0.08] blur-[140px] animate-pulse-soft" />
-        <div className="absolute bottom-[-10%] right-[5%] w-[34rem] h-[34rem] rounded-full bg-accent-2/[0.10] blur-[120px] animate-pulse-soft" style={{ animationDelay: "1.5s" }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60rem] h-[60rem] rounded-full bg-accent/[0.025] blur-[100px]" />
+        <div className="absolute inset-0 bg-grid bg-grid-fade opacity-50" />
+        <div className="absolute top-[8%] left-[6%] w-[38rem] h-[38rem] rounded-full bg-accent/[0.09] blur-[150px] animate-pulse-soft" />
+        <div className="absolute bottom-[-12%] right-[4%] w-[32rem] h-[32rem] rounded-full bg-accent-2/[0.10] blur-[120px] animate-pulse-soft" style={{ animationDelay: "2s" }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[54rem] h-[54rem] rounded-full bg-accent/[0.025] blur-[100px]" />
       </div>
 
-      <motion.div variants={container} initial="hidden" animate="show" className="max-w-6xl mx-auto w-full">
-        <motion.div variants={item} className="flex flex-wrap items-center gap-3 mb-10">
-          <span className="inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-xs font-medium tracking-wide text-muted-strong">
-            <span className="relative flex h-2 w-2" aria-hidden>
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+      {/* Content — 2-column at 2xl */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        animate="show"
+        className="max-w-7xl mx-auto w-full 2xl:grid 2xl:grid-cols-[1fr_320px] 2xl:gap-16 2xl:items-center"
+      >
+        {/* ── Left / Main ── */}
+        <div>
+          {/* Status badges */}
+          <motion.div variants={item} className="flex flex-wrap items-center gap-2.5 mb-10">
+            <span className="inline-flex items-center gap-2 rounded-full glass px-3.5 py-1.5 text-xs font-medium tracking-wide text-muted-strong">
+              <span className="relative flex h-2 w-2" aria-hidden>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+              </span>
+              {personal.availability}
             </span>
-            {personal.availability}
-          </span>
-          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full glass px-3.5 py-1.5 text-xs font-medium text-muted-strong">
-            <MapPin className="h-3.5 w-3.5 text-accent" aria-hidden />
-            {personal.location}
-          </span>
-          <span className="hidden md:inline-flex items-center gap-1.5 rounded-full glass px-3.5 py-1.5 text-xs font-medium text-muted-strong">
-            <Sparkles className="h-3.5 w-3.5 text-accent-2" aria-hidden />
-            {personal.currentRole}
-          </span>
-        </motion.div>
+            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full glass px-3.5 py-1.5 text-xs font-medium text-muted-strong">
+              <MapPin className="h-3.5 w-3.5 text-accent" aria-hidden />
+              {personal.location}
+            </span>
+            <span className="hidden md:inline-flex items-center gap-1.5 rounded-full glass px-3.5 py-1.5 text-xs font-medium text-muted-strong">
+              <Sparkles className="h-3.5 w-3.5 text-accent-2" aria-hidden />
+              {personal.currentRole}
+            </span>
+          </motion.div>
 
-        <motion.p variants={item} className="font-mono text-sm sm:text-base text-accent mb-5 tracking-wider">
-          {"//"} Hi, I&apos;m {personal.firstName} —
-        </motion.p>
+          {/* Greeting */}
+          <motion.p variants={item} className="font-mono text-sm sm:text-base text-accent mb-5 tracking-wider">
+            {"//"} Hi, I&apos;m {personal.firstName} —
+          </motion.p>
 
-        <motion.h1
-          variants={item}
-          className="font-display font-bold text-balance leading-[0.95] tracking-tightest text-[3rem] sm:text-[4.5rem] md:text-[5.75rem] lg:text-[7rem] xl:text-[8rem]"
-        >
-          <span className="text-foreground">Full-Stack</span>
-          <br />
-          <span className="text-gradient-accent">Engineer</span>
-          <span className="text-foreground"> &amp; </span>
-          <span className="text-gradient">AI Architect</span>
-          <span className="text-accent">.</span>
-        </motion.h1>
-
-        <motion.p variants={item} className="mt-8 max-w-2xl text-lg sm:text-xl text-muted-strong leading-relaxed text-pretty">
-          {personal.headline}{" "}
-          <span className="text-foreground/80">Building intelligent software that scales.</span>
-        </motion.p>
-
-        <motion.p variants={item} className="mt-3 max-w-2xl text-sm sm:text-base text-muted">
-          {personal.subhead}
-        </motion.p>
-
-        <motion.div variants={item} className="mt-12 flex flex-wrap items-center gap-4">
-          <button
-            onClick={() => scrollTo("projects")}
-            className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-4 text-base font-semibold text-background transition-all duration-300 hover:bg-accent-hover hover:shadow-glow hover:scale-[1.02] active:scale-[0.98]"
+          {/* Headline */}
+          <motion.h1
+            variants={item}
+            className="font-display font-bold text-balance leading-[0.93] tracking-tightest text-[2.75rem] xs:text-[3.25rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] xl:text-[7.5rem]"
           >
-            View My Work
-            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
-          </button>
-          <button
-            onClick={() => scrollTo("contact")}
-            className="group inline-flex items-center justify-center gap-2 rounded-full glass px-7 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:border-accent/40 hover:text-accent hover:scale-[1.02] active:scale-[0.98]"
-          >
-            Get In Touch
-            <ArrowRight className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" aria-hidden />
-          </button>
-        </motion.div>
+            <span className="text-foreground">Full-Stack</span>
+            <br />
+            <span className="text-gradient-accent">Engineer</span>
+            <span className="text-foreground"> &amp; </span>
+            <span className="text-gradient">AI Architect</span>
+            <span className="text-accent">.</span>
+          </motion.h1>
 
-        <motion.div variants={item} className="mt-20 sm:mt-28 grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-6 max-w-3xl">
-          {[
-            { k: "Education", v: "NUST SEECS" },
-            { k: "Currently", v: "Aurora Solutions" },
-            { k: "Focus", v: "Full-Stack & AI" },
-            { k: "Location", v: "Islamabad / Remote" },
-          ].map((s) => (
-            <div key={s.k} className="border-l border-border-strong pl-4">
-              <p className="font-mono text-[0.7rem] uppercase tracking-widest text-muted">{s.k}</p>
-              <p className="mt-1 text-sm sm:text-base font-medium text-foreground">{s.v}</p>
+          {/* Subhead */}
+          <motion.p variants={item} className="mt-7 max-w-2xl text-base sm:text-lg text-muted-strong leading-relaxed text-pretty">
+            {personal.headline}{" "}
+            <span className="text-foreground/80">Building intelligent software that scales.</span>
+          </motion.p>
+          <motion.p variants={item} className="mt-3 max-w-xl text-sm text-muted">
+            {personal.subhead}
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
+            <button
+              onClick={() => scrollTo("projects")}
+              className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-background transition-all duration-300 hover:bg-accent-hover hover:shadow-glow hover:scale-[1.03] active:scale-[0.97]"
+            >
+              View My Work
+              <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" aria-hidden />
+            </button>
+            <button
+              onClick={() => scrollTo("contact")}
+              className="group inline-flex items-center justify-center gap-2 rounded-full glass px-7 py-3.5 text-base font-semibold text-foreground transition-all duration-300 hover:border-accent/50 hover:text-accent hover:scale-[1.03] active:scale-[0.97]"
+            >
+              Get In Touch
+              <ArrowRight className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" aria-hidden />
+            </button>
+          </motion.div>
+
+          {/* Tech badges strip */}
+          <motion.div variants={item} className="mt-8 flex flex-wrap gap-2" aria-label="Core technologies">
+            {techStack.map((tech) => (
+              <span
+                key={tech}
+                className="inline-flex items-center rounded-full border border-border/60 bg-surface/40 px-3 py-1 text-xs font-mono text-muted-strong hover:border-accent/40 hover:text-accent hover:bg-accent/5 transition-all duration-200 cursor-default"
+              >
+                {tech}
+              </span>
+            ))}
+          </motion.div>
+
+          {/* Stat cards */}
+          <motion.div variants={item} className="mt-14 sm:mt-16 grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl">
+            {stats.map((s) => (
+              <div
+                key={s.k}
+                className="group rounded-xl glass p-4 border-border/60 hover:border-accent/30 hover:bg-surface/40 transition-all duration-300"
+              >
+                <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted">{s.k}</p>
+                <p className="mt-1.5 text-xs sm:text-sm font-semibold text-foreground group-hover:text-accent transition-colors leading-snug">{s.v}</p>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* ── Right / Terminal (2xl only) ── */}
+        <div className="hidden 2xl:flex flex-col gap-5 items-end">
+          <TerminalWidget />
+          {/* Floating stat card */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.4, duration: 0.7 }}
+            className="glass rounded-xl p-4 w-full max-w-xs"
+            aria-hidden
+          >
+            <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted mb-3">Currently at</p>
+            <div className="flex items-center gap-3">
+              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-accent/10 border border-accent/20 font-display font-bold text-accent text-sm">A</span>
+              <div>
+                <p className="text-sm font-semibold text-foreground">Aurora Solutions</p>
+                <p className="text-xs text-muted">Software Engineer</p>
+              </div>
             </div>
-          ))}
-        </motion.div>
+          </motion.div>
+        </div>
       </motion.div>
 
+      {/* Scroll indicator */}
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.4, duration: 0.6 }}
+        transition={{ delay: 1.6, duration: 0.6 }}
         onClick={() => scrollTo("about")}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors group"
         aria-label="Scroll to about section"
       >
-        <span className="font-mono text-[0.65rem] uppercase tracking-[0.3em]">Scroll</span>
-        <ArrowDown className="h-4 w-4 animate-bounce group-hover:text-accent" />
+        <span className="font-mono text-[0.6rem] uppercase tracking-[0.3em]">Scroll</span>
+        <ArrowDown className="h-4 w-4 animate-bounce" />
       </motion.button>
     </section>
   );
