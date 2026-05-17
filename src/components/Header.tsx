@@ -144,7 +144,7 @@ export function Header() {
 
         {/* Desktop CTA */}
         <div className="hidden md:flex items-center gap-3">
-          <MagneticButton strength={0.25}>
+          <MagneticButton strength={0.10}>
             <Link
               href="#contact"
               className="group inline-flex items-center gap-1.5 rounded-full bg-foreground/95 px-5 py-2.5 text-sm font-semibold text-background hover:bg-accent transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] hover:shadow-glow-sm"

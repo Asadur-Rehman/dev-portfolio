@@ -20,15 +20,15 @@ export function SpotlightCard({
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth spring for the spotlight position
-  const spotX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const spotY = useSpring(mouseY, { stiffness: 300, damping: 30 });
+  // Smoother, less springy spotlight tracking
+  const spotX = useSpring(mouseX, { stiffness: 400, damping: 40 });
+  const spotY = useSpring(mouseY, { stiffness: 400, damping: 40 });
 
-  // 3D tilt values
-  const rotateX = useSpring(0, { stiffness: 200, damping: 20 });
-  const rotateY = useSpring(0, { stiffness: 200, damping: 20 });
+  // Gentler 3D tilt — max ±3 degrees instead of ±6
+  const rotateX = useSpring(0, { stiffness: 300, damping: 30 });
+  const rotateY = useSpring(0, { stiffness: 300, damping: 30 });
 
-  const spotlight = useMotionTemplate`radial-gradient(400px circle at ${spotX}px ${spotY}px, ${spotlightColor}, transparent 80%)`;
+  const spotlight = useMotionTemplate`radial-gradient(350px circle at ${spotX}px ${spotY}px, ${spotlightColor}, transparent 80%)`;
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = ref.current?.getBoundingClientRect();
@@ -40,11 +40,11 @@ export function SpotlightCard({
     mouseX.set(x);
     mouseY.set(y);
 
-    // Calculate tilt (max ±6 degrees)
+    // Subtle tilt — max ±3 degrees
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
-    rotateX.set(((y - centerY) / centerY) * -6);
-    rotateY.set(((x - centerX) / centerX) * 6);
+    rotateX.set(((y - centerY) / centerY) * -3);
+    rotateY.set(((x - centerX) / centerX) * 3);
   };
 
   const handleMouseLeave = () => {
@@ -63,7 +63,7 @@ export function SpotlightCard({
         rotateX,
         rotateY,
         transformStyle: "preserve-3d",
-        perspective: 800,
+        perspective: 1000,
       }}
       className={`relative overflow-hidden ${className}`}
     >

@@ -7,8 +7,8 @@ export function PageLoader({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Short timeout to let fonts load and ensure smooth entrance
-    const timer = setTimeout(() => setLoading(false), 1400);
+    // Faster entrance — 800ms feels snappy but still lets fonts settle
+    const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -19,8 +19,8 @@ export function PageLoader({ children }: { children: React.ReactNode }) {
           <motion.div
             key="loader"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.05 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-[9999] flex items-center justify-center bg-background"
           >
             {/* Animated logo / initials */}
@@ -28,7 +28,7 @@ export function PageLoader({ children }: { children: React.ReactNode }) {
               <motion.div
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
                 className="relative"
               >
                 {/* Outer ring */}
@@ -53,7 +53,7 @@ export function PageLoader({ children }: { children: React.ReactNode }) {
                 <motion.div
                   initial={{ x: "-100%" }}
                   animate={{ x: "100%" }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "easeInOut" }}
+                  transition={{ duration: 0.7, repeat: Infinity, ease: "easeInOut" }}
                   className="h-full w-1/2 bg-accent rounded-full"
                 />
               </div>
@@ -66,7 +66,7 @@ export function PageLoader({ children }: { children: React.ReactNode }) {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: loading ? 0 : 1 }}
-        transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+        transition={{ duration: 0.5, delay: 0.05, ease: "easeOut" }}
       >
         {children}
       </motion.div>

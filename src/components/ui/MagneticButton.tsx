@@ -11,10 +11,17 @@ interface MagneticButtonProps {
   [key: string]: unknown;
 }
 
+/** Max pixels the button can travel from its resting position */
+const MAX_OFFSET = 14;
+
+function clamp(value: number, min: number, max: number) {
+  return Math.max(min, Math.min(max, value));
+}
+
 export function MagneticButton({
   children,
   className = "",
-  strength = 0.35,
+  strength = 0.12,
   as = "div",
   ...props
 }: MagneticButtonProps) {
@@ -23,8 +30,9 @@ export function MagneticButton({
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const springX = useSpring(x, { stiffness: 250, damping: 15, mass: 0.5 });
-  const springY = useSpring(y, { stiffness: 250, damping: 15, mass: 0.5 });
+  // Higher damping = less bounce, snappier return
+  const springX = useSpring(x, { stiffness: 350, damping: 30, mass: 0.4 });
+  const springY = useSpring(y, { stiffness: 350, damping: 30, mass: 0.4 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
     const el = ref.current;
@@ -34,8 +42,12 @@ export function MagneticButton({
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
 
-    x.set((e.clientX - centerX) * strength);
-    y.set((e.clientY - centerY) * strength);
+    const rawX = (e.clientX - centerX) * strength;
+    const rawY = (e.clientY - centerY) * strength;
+
+    // Clamp so the button never visually dislocates
+    x.set(clamp(rawX, -MAX_OFFSET, MAX_OFFSET));
+    y.set(clamp(rawY, -MAX_OFFSET, MAX_OFFSET));
   };
 
   const handleMouseLeave = () => {

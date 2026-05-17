@@ -64,8 +64,8 @@ export function Experience() {
                       aria-hidden
                     >
                       <motion.span
-                        animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: idx * 0.3 }}
+                        animate={{ scale: [1, 1.2, 1], opacity: [1, 0.7, 1] }}
+                        transition={{ duration: 3, repeat: Infinity, delay: idx * 0.5 }}
                         className="h-2 w-2 rounded-full bg-accent"
                       />
                     </motion.span>

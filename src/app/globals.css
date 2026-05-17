@@ -8,29 +8,29 @@
    cyan accent, subtle violet secondary highlight.
    ============================================ */
 :root {
-  --background: #07070b;
-  --background-2: #0b0b12;
-  --foreground: #f5f5f7;
-  --surface: #101018;
-  --surface-elevated: #15151f;
-  --surface-hover: #1c1c2a;
-  --muted: #8a8a98;
-  --muted-strong: #b4b4c0;
-  --border: #1f1f2c;
-  --border-strong: #2a2a3a;
+  --background: #060609;
+  --background-2: #0a0a10;
+  --foreground: #f0f0f4;
+  --surface: #0e0e16;
+  --surface-elevated: #141420;
+  --surface-hover: #1a1a28;
+  --muted: #7c7c8e;
+  --muted-strong: #a8a8b8;
+  --border: #1a1a28;
+  --border-strong: #262636;
 
-  /* Primary accent — electric cyan */
+  /* Primary accent — electric cyan with a warmer tint */
   --accent: #00d4ff;
-  --accent-hover: #22e2ff;
-  --accent-muted: rgba(0, 212, 255, 0.14);
-  --accent-glow: rgba(0, 212, 255, 0.35);
+  --accent-hover: #33e0ff;
+  --accent-muted: rgba(0, 212, 255, 0.12);
+  --accent-glow: rgba(0, 212, 255, 0.30);
 
-  /* Secondary highlight — violet */
+  /* Secondary highlight — softer violet */
   --accent-2: #a78bfa;
-  --accent-2-muted: rgba(167, 139, 250, 0.16);
+  --accent-2-muted: rgba(167, 139, 250, 0.14);
 
-  /* Tertiary highlight — warm gold */
-  --accent-3: #fbbf24;
+  /* Tertiary highlight — warm amber */
+  --accent-3: #f59e0b;
 }
 
 /* CSS @property for animated border-angle */
@@ -58,31 +58,23 @@ body {
   position: relative;
 }
 
-/* Ambient color washes */
+/* Ambient color washes — simplified for performance */
 body::after {
   content: "";
   position: fixed;
-  inset: -20vh -20vw;
+  inset: -10vh -10vw;
   z-index: -10;
   pointer-events: none;
   background:
-    radial-gradient(60vw 60vh at 15% 0%, rgba(0, 212, 255, 0.08), transparent 60%),
-    radial-gradient(50vw 50vh at 85% 30%, rgba(167, 139, 250, 0.07), transparent 60%),
-    radial-gradient(70vw 50vh at 50% 110%, rgba(0, 212, 255, 0.05), transparent 60%);
-  filter: blur(40px);
+    radial-gradient(50vw 50vh at 12% 0%, rgba(0, 212, 255, 0.06), transparent 55%),
+    radial-gradient(45vw 45vh at 88% 25%, rgba(167, 139, 250, 0.05), transparent 55%),
+    radial-gradient(55vw 40vh at 50% 100%, rgba(0, 212, 255, 0.03), transparent 55%);
+  filter: blur(30px);
 }
 
-/* Subtle film grain */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 100;
-  opacity: 0.4;
-  mix-blend-mode: overlay;
-  background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.95' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/></svg>");
-}
+/* Film grain removed — it was using mix-blend-mode: overlay which
+   forces the browser to composite the entire page on every paint.
+   The visual benefit was negligible vs the performance cost. */
 
 ::selection {
   background: var(--accent);
@@ -95,7 +87,7 @@ body::before {
   border-radius: 4px;
 }
 
-::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-track { background: var(--background); }
 ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 8px; border: 2px solid var(--background); }
 ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
@@ -105,21 +97,21 @@ body::before {
   .text-pretty { text-wrap: pretty; }
 
   .glass {
-    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.06);
   }
 
   .glass-strong {
-    background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
-    backdrop-filter: blur(24px) saturate(160%);
-    -webkit-backdrop-filter: blur(24px) saturate(160%);
-    border: 1px solid rgba(255,255,255,0.10);
+    background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+    backdrop-filter: blur(24px) saturate(150%);
+    -webkit-backdrop-filter: blur(24px) saturate(150%);
+    border: 1px solid rgba(255,255,255,0.08);
   }
 
   .text-gradient {
-    background: linear-gradient(135deg, #ffffff 0%, #ffffff 30%, var(--accent) 60%, var(--accent-2) 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #ffffff 25%, var(--accent) 55%, var(--accent-2) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -139,8 +131,8 @@ body::before {
 
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 
@@ -160,7 +152,7 @@ body::before {
   .input-glow:focus {
     outline: none;
     border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.15), 0 0 20px -4px rgba(0, 212, 255, 0.2);
+    box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.12), 0 0 16px -4px rgba(0, 212, 255, 0.15);
   }
 
   /* Shimmer sweep on hover */
@@ -175,9 +167,9 @@ body::before {
     background: linear-gradient(
       105deg,
       transparent 30%,
-      rgba(255,255,255,0.08) 45%,
-      rgba(255,255,255,0.14) 50%,
-      rgba(255,255,255,0.08) 55%,
+      rgba(255,255,255,0.06) 45%,
+      rgba(255,255,255,0.10) 50%,
+      rgba(255,255,255,0.06) 55%,
       transparent 70%
     );
     transform: translateX(-100%);
@@ -185,7 +177,7 @@ body::before {
   }
   .shimmer-hover:hover::after {
     transform: translateX(100%);
-    transition: transform 0.7s ease;
+    transition: transform 0.6s ease;
   }
 
   /* Breathing glow for "current" badges */
@@ -195,7 +187,7 @@ body::before {
 
   /* Slide-up entrance utility */
   .slide-up-enter {
-    animation: slideUpEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation: slideUpEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
 
   /* Floating label for inputs */
@@ -223,12 +215,12 @@ body::before {
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 @keyframes glowPulse {
-  0%, 100% { box-shadow: 0 0 30px -10px var(--accent-glow); }
-  50% { box-shadow: 0 0 60px -10px var(--accent-glow); }
+  0%, 100% { box-shadow: 0 0 24px -10px var(--accent-glow); }
+  50% { box-shadow: 0 0 48px -10px var(--accent-glow); }
 }
 
 @keyframes rotate-border {
@@ -238,17 +230,17 @@ body::before {
 
 @keyframes breathingGlow {
   0%, 100% {
-    box-shadow: 0 0 8px -2px rgba(52, 211, 153, 0.3);
+    box-shadow: 0 0 6px -2px rgba(52, 211, 153, 0.25);
   }
   50% {
-    box-shadow: 0 0 20px -2px rgba(52, 211, 153, 0.5);
+    box-shadow: 0 0 16px -2px rgba(52, 211, 153, 0.4);
   }
 }
 
 @keyframes slideUpEnter {
   from {
     opacity: 0;
-    transform: translateY(32px) scale(0.97);
+    transform: translateY(24px) scale(0.98);
   }
   to {
     opacity: 1;

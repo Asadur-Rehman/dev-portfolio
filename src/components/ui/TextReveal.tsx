@@ -44,13 +44,12 @@ function Word({
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
   range: [number, number];
 }) {
+  // Only animate opacity — blur per-word is extremely expensive on GPU
   const opacity = useTransform(progress, range, [0.15, 1]);
-  const blur = useTransform(progress, range, [2, 0]);
-  const filter = useTransform(blur, (v) => `blur(${v}px)`);
 
   return (
     <motion.span
-      style={{ opacity, filter }}
+      style={{ opacity }}
       className="inline-block mr-[0.25em] transition-colors"
     >
       {children}

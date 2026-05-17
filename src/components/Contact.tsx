@@ -133,7 +133,7 @@ export function Contact() {
                   </motion.div>
                 )}
 
-                <MagneticButton strength={0.2}>
+                <MagneticButton strength={0.10}>
                   <button type="submit" disabled={status === "loading"} className="group inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow-accent hover:scale-[1.03] active:scale-[0.97] disabled:opacity-60 disabled:cursor-not-allowed disabled:scale-100 transition-all duration-300 min-w-[160px]">
                     {status === "loading" ? (
                       <><Loader2 className="h-4 w-4 animate-spin" aria-hidden />Sending…</>
@@ -173,7 +173,7 @@ export function Contact() {
                       const external = link.icon !== "email";
                       return (
                         <li key={link.name}>
-                          <MagneticButton strength={0.15}>
+                          <MagneticButton strength={0.10}>
                             <a href={link.url} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} className="group flex items-center justify-between gap-3 rounded-xl p-2.5 -mx-2.5 hover:bg-surface-hover transition-colors">
                               <span className="flex items-center gap-3">
                                 <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-accent/10 border border-accent/20 text-accent group-hover:bg-accent/20 transition-colors">

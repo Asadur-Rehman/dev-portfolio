@@ -10,12 +10,12 @@ import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.08 } },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 28 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 };
 
 // Letter-by-letter stagger for headline
@@ -23,17 +23,17 @@ const letterContainer = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { staggerChildren: 0.025, delayChildren: 0.5 },
+    transition: { staggerChildren: 0.018, delayChildren: 0.25 },
   },
 };
 
 const letter = {
-  hidden: { opacity: 0, y: 40, rotateX: -40 },
+  hidden: { opacity: 0, y: 24, rotateX: -20 },
   show: {
     opacity: 1,
     y: 0,
     rotateX: 0,
-    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 };
 
@@ -72,7 +72,7 @@ function TerminalWidget() {
       <motion.div
         initial={{ opacity: 0, y: 32, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: 1.0, duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: 0.6, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="glass-strong rounded-2xl overflow-hidden shadow-card border-border/80 w-full max-w-xs"
         aria-hidden
       >
@@ -173,7 +173,7 @@ export function Hero() {
               className="text-accent inline-block"
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.8, duration: 0.4, type: "spring", stiffness: 300 }}
+              transition={{ delay: 1.0, duration: 0.3, type: "spring", stiffness: 300 }}
             >
               .
             </motion.span>
@@ -190,7 +190,7 @@ export function Hero() {
 
           {/* CTAs with magnetic effect */}
           <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-3">
-            <MagneticButton strength={0.3}>
+            <MagneticButton strength={0.12}>
               <button
                 onClick={() => scrollTo("projects")}
                 className="group relative inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-base font-semibold text-background transition-all duration-300 hover:bg-accent-hover hover:shadow-glow-accent hover:scale-[1.03] active:scale-[0.97]"
@@ -201,7 +201,7 @@ export function Hero() {
                 </span>
               </button>
             </MagneticButton>
-            <MagneticButton strength={0.3}>
+            <MagneticButton strength={0.12}>
               <button
                 onClick={() => scrollTo("contact")}
                 className="group inline-flex items-center justify-center gap-2 rounded-full glass px-7 py-3.5 text-base font-semibold text-foreground transition-all duration-300 hover:border-accent/50 hover:text-accent hover:scale-[1.03] active:scale-[0.97] hover:shadow-glow-sm"
@@ -219,7 +219,7 @@ export function Hero() {
                 key={tech}
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1.2 + i * 0.05, duration: 0.4 }}
+                transition={{ delay: 0.7 + i * 0.04, duration: 0.3 }}
                 className="shimmer-hover inline-flex items-center rounded-full border border-border/60 bg-surface/40 px-3 py-1 text-xs font-mono text-muted-strong hover:border-accent/40 hover:text-accent hover:bg-accent/5 transition-all duration-200 cursor-default"
               >
                 {tech}
@@ -238,7 +238,7 @@ export function Hero() {
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 1.0 + i * 0.1, duration: 0.5 }}
+                  transition={{ delay: 0.6 + i * 0.08, duration: 0.4 }}
                   className="glass p-4 rounded-xl border-border/60 hover:border-accent/30 transition-all duration-300"
                 >
                   <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted">{s.k}</p>
@@ -257,7 +257,7 @@ export function Hero() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1.4, duration: 0.7 }}
+              transition={{ delay: 0.8, duration: 0.5 }}
               className="glass rounded-xl p-4 w-full"
               aria-hidden
             >
@@ -284,7 +284,7 @@ export function Hero() {
       <motion.button
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.6, duration: 0.6 }}
+        transition={{ delay: 1.0, duration: 0.5 }}
         onClick={() => scrollTo("about")}
         className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted hover:text-accent transition-colors group"
         aria-label="Scroll to about section"
