@@ -8,6 +8,7 @@ import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { TextReveal } from "@/components/ui/TextReveal";
 import { CountUp } from "@/components/ui/CountUp";
 import { SectionDivider } from "@/components/ui/SectionDivider";
+import { Portrait } from "@/components/ui/Portrait";
 
 const fade = {
   hidden: { opacity: 0, y: 24 },
@@ -130,25 +131,39 @@ export function About() {
               ))}
             </motion.div>
 
-            <motion.div variants={fade} className="mt-12 grid lg:grid-cols-12 gap-10 lg:gap-16">
-              {/* Bio with scroll-linked text reveal */}
-              <div className="lg:col-span-7 space-y-5 text-base sm:text-lg leading-relaxed text-muted-strong text-pretty">
-                <TextReveal
-                  text={personal.bio}
-                  className="text-base sm:text-lg leading-relaxed text-muted-strong text-pretty"
-                />
-                <TextReveal
-                  text={personal.bioExtended}
-                  className="text-base sm:text-lg leading-relaxed text-muted-strong text-pretty"
-                />
-                <TextReveal
-                  text={personal.bioClose}
-                  className="text-base sm:text-lg leading-relaxed text-foreground/90 font-medium text-pretty"
-                />
+            <motion.div variants={fade} className="mt-12 grid lg:grid-cols-12 gap-10 lg:gap-12">
+              {/* Portrait — left column on desktop */}
+              <div className="lg:col-span-4">
+                <motion.div
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="lg:sticky lg:top-28"
+                >
+                  <Portrait
+                    initials="AR"
+                    caption={personal.firstName + " ur Rehman"}
+                  />
+                </motion.div>
               </div>
 
-              {/* Stat cards with 3D reveal + spotlight */}
-              <div className="lg:col-span-5">
+              {/* Bio + stat cards */}
+              <div className="lg:col-span-8 space-y-10">
+                <div className="space-y-5 text-base sm:text-lg leading-relaxed text-muted-strong text-pretty">
+                  <TextReveal
+                    text={personal.bio}
+                    className="text-base sm:text-lg leading-relaxed text-muted-strong text-pretty"
+                  />
+                  <TextReveal
+                    text={personal.bioExtended}
+                    className="text-base sm:text-lg leading-relaxed text-muted-strong text-pretty"
+                  />
+                  <TextReveal
+                    text={personal.bioClose}
+                    className="text-base sm:text-lg leading-relaxed text-foreground/90 font-medium text-pretty"
+                  />
+                </div>
+
                 <motion.div
                   variants={container}
                   initial="hidden"

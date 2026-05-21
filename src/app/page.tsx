@@ -11,6 +11,7 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { CommandPalette } from "@/components/ui/CommandPalette";
 import { ShortcutsHelp } from "@/components/ui/ShortcutsHelp";
 import { ScrollRail } from "@/components/ui/ScrollRail";
+import { ChapterIndicator } from "@/components/ui/ChapterIndicator";
 import { EasterEgg } from "@/components/ui/EasterEgg";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
@@ -60,6 +61,7 @@ export default function Home() {
       <PageLoader>
         <Header />
         <ScrollRail />
+        <ChapterIndicator />
         <main id="main-content">
           <Hero />
           <About />

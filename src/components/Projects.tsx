@@ -1,12 +1,12 @@
 "use client";
 
-import { useRef, useState, useMemo } from "react";
+import { useRef, useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   motion, useInView, AnimatePresence,
   useScroll, useTransform, LayoutGroup,
 } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight, Sparkles } from "lucide-react";
+import { ExternalLink, Github, ArrowUpRight, Sparkles, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { projects } from "@/data/projects";
 import type { Project as ProjectType, ProjectCategory } from "@/data/projects";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
@@ -141,12 +141,26 @@ function FeaturedCard({ project }: { project: ProjectType }) {
                 ))}
               </div>
               <div className="flex flex-wrap items-center gap-3">
+                {project.caseStudyUrl && (
+                  <Link
+                    href={project.caseStudyUrl}
+                    className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
+                  >
+                    <BookOpen className="h-4 w-4" aria-hidden />
+                    Read case study
+                    <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" aria-hidden />
+                  </Link>
+                )}
                 {project.liveUrl && (
                   <Link
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
+                    className={`group/btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] ${
+                      project.caseStudyUrl
+                        ? "glass text-foreground hover:text-accent hover:border-accent/40"
+                        : "bg-accent text-background hover:bg-accent-hover hover:shadow-glow"
+                    }`}
                   >
                     Live demo
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" aria-hidden />
@@ -230,9 +244,19 @@ function ProjectCard({ project, num }: { project: ProjectType; num: number }) {
             </div>
 
             <div className="flex items-center gap-4 pt-4 border-t border-border/50">
+              {project.caseStudyUrl && (
+                <Link href={project.caseStudyUrl}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover transition-colors"
+                >
+                  <BookOpen className="h-3.5 w-3.5" aria-hidden />
+                  Case study
+                </Link>
+              )}
               {project.liveUrl && (
                 <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:text-accent-hover transition-colors"
+                  className={`inline-flex items-center gap-1.5 text-sm font-medium transition-colors ${
+                    project.caseStudyUrl ? "text-muted hover:text-accent" : "text-accent hover:text-accent-hover"
+                  }`}
                 >
                   <ExternalLink className="h-3.5 w-3.5" aria-hidden />
                   Live
@@ -246,7 +270,7 @@ function ProjectCard({ project, num }: { project: ProjectType; num: number }) {
                   Code
                 </Link>
               )}
-              {!project.liveUrl && !project.githubUrl && (
+              {!project.liveUrl && !project.githubUrl && !project.caseStudyUrl && (
                 <span className="text-xs font-mono text-muted/50 italic">Private</span>
               )}
             </div>
@@ -254,6 +278,159 @@ function ProjectCard({ project, num }: { project: ProjectType; num: number }) {
         </div>
       </SpotlightCard>
     </motion.div>
+  );
+}
+
+/* ── ProjectsShelf — horizontal scroll-snap row ──────────────────── */
+function ProjectsShelf({ projects }: { projects: ProjectType[] }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const update = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth;
+    const p = max > 0 ? el.scrollLeft / max : 0;
+    setProgress(p);
+    setCanPrev(el.scrollLeft > 4);
+    setCanNext(el.scrollLeft < max - 4);
+
+    // active card = the one whose center is closest to the viewport center
+    const center = el.scrollLeft + el.clientWidth / 2;
+    let bestIdx = 0;
+    let bestDist = Infinity;
+    Array.from(el.children).forEach((c, i) => {
+      const card = c as HTMLElement;
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const d = Math.abs(cardCenter - center);
+      if (d < bestDist) { bestDist = d; bestIdx = i; }
+    });
+    setActiveIdx(bestIdx);
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    update();
+    el.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      el.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [update]);
+
+  // Convert vertical wheel to horizontal scroll inside the shelf (desktop UX).
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      // Skip if user is already scrolling horizontally (trackpad).
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;
+      if (e.deltaY === 0) return;
+      e.preventDefault();
+      el.scrollBy({ left: e.deltaY, behavior: "auto" });
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
+
+  const scrollByOne = (dir: 1 | -1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const first = el.children[0] as HTMLElement | undefined;
+    const step = first ? first.offsetWidth + 20 : el.clientWidth * 0.8;
+    el.scrollBy({ left: step * dir, behavior: "smooth" });
+  };
+
+  return (
+    <section aria-label="More projects" className="relative">
+      {/* Header strip */}
+      <div className="flex items-end justify-between gap-4 mb-4">
+        <div>
+          <p className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-muted/60 mb-1">
+            More work · {projects.length} {projects.length === 1 ? "project" : "projects"}
+          </p>
+          <h3 className="font-display text-lg sm:text-xl tracking-tight text-foreground">
+            Drag, swipe, or scroll →
+          </h3>
+        </div>
+        <div className="hidden sm:flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => scrollByOne(-1)}
+            disabled={!canPrev}
+            className="grid h-9 w-9 place-items-center rounded-full border border-border bg-surface/60 text-muted hover:text-accent hover:border-accent/40 disabled:opacity-30 disabled:hover:text-muted disabled:hover:border-border transition-all"
+            aria-label="Previous projects"
+          >
+            <ArrowLeft className="h-4 w-4" aria-hidden />
+          </button>
+          <button
+            type="button"
+            onClick={() => scrollByOne(1)}
+            disabled={!canNext}
+            className="grid h-9 w-9 place-items-center rounded-full border border-border bg-surface/60 text-muted hover:text-accent hover:border-accent/40 disabled:opacity-30 disabled:hover:text-muted disabled:hover:border-border transition-all"
+            aria-label="Next projects"
+          >
+            <ArrowRight className="h-4 w-4" aria-hidden />
+          </button>
+        </div>
+      </div>
+
+      {/* The shelf */}
+      <div className="relative -mx-4 sm:-mx-10 lg:-mx-20">
+        {/* edge fades */}
+        <span
+          aria-hidden
+          className={`pointer-events-none absolute inset-y-0 left-0 w-12 sm:w-20 z-10 bg-gradient-to-r from-background to-transparent transition-opacity duration-300 ${canPrev ? "opacity-100" : "opacity-0"}`}
+        />
+        <span
+          aria-hidden
+          className={`pointer-events-none absolute inset-y-0 right-0 w-12 sm:w-20 z-10 bg-gradient-to-l from-background to-transparent transition-opacity duration-300 ${canNext ? "opacity-100" : "opacity-0"}`}
+        />
+
+        <div
+          ref={trackRef}
+          className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth px-4 sm:px-10 lg:px-20 pb-6 no-scrollbar"
+          style={{ scrollPaddingLeft: "1rem", scrollPaddingRight: "1rem" }}
+        >
+          {projects.map((project, i) => (
+            <div
+              key={project.id}
+              className="snap-start shrink-0 w-[84vw] sm:w-[58vw] md:w-[44vw] lg:w-[30vw] xl:w-[26rem]"
+              data-idx={i}
+            >
+              <ProjectCard project={project} num={i + 2} />
+            </div>
+          ))}
+        </div>
+
+        {/* progress + dots */}
+        <div className="flex items-center justify-between gap-4 px-4 sm:px-10 lg:px-20">
+          <div className="relative flex-1 max-w-md h-px bg-border/60">
+            <span
+              aria-hidden
+              className="absolute left-0 top-0 h-px bg-gradient-to-r from-accent via-accent-2 to-accent transition-[width] duration-200"
+              style={{ width: `${Math.max(8, progress * 100)}%` }}
+            />
+          </div>
+          <div className="flex items-center gap-1.5">
+            {projects.map((_, i) => (
+              <span
+                key={i}
+                aria-hidden
+                className={`block h-1.5 rounded-full transition-all duration-200 ${
+                  i === activeIdx ? "w-4 bg-accent" : "w-1.5 bg-border-strong"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -326,7 +503,7 @@ export function Projects() {
               </LayoutGroup>
             </motion.div>
 
-            {/* Grid */}
+            {/* Featured + horizontal-snap shelf */}
             <AnimatePresence mode="wait">
               {filtered.length === 0 ? (
                 <motion.p
@@ -344,12 +521,13 @@ export function Projects() {
                   variants={container}
                   initial="hidden"
                   animate="show"
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"
+                  className="space-y-10"
                 >
                   {featured && <FeaturedCard project={featured} />}
-                  {rest.map((project, i) => (
-                    <ProjectCard key={project.id} project={project} num={i + 2} />
-                  ))}
+
+                  {rest.length > 0 && (
+                    <ProjectsShelf projects={rest} />
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>

@@ -92,10 +92,12 @@ export default function RootLayout({
       className={`${syne.variable} ${jakarta.variable} ${jetbrains.variable} dark`}
     >
       <head>
-        {/* No-FOUC theme bootstrap — read the saved theme before paint */}
+        {/* No-FOUC theme bootstrap — read the saved theme before paint.
+            Default is 'ember' (the :root values); 'orbit' and 'lime' are
+            opt-in overrides via data-theme. */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='ember'||t==='lime'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='orbit'||t==='lime'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
           }}
         />
       </head>

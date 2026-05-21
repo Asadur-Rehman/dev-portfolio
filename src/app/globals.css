@@ -7,7 +7,44 @@
    Luxury-tech dark theme: deep blacks, electric
    cyan accent, subtle violet secondary highlight.
    ============================================ */
+/* ============================================
+   :root = EMBER (default)
+   Warm studio — coral primary, honey secondary,
+   teal counterweight. Distinctive and warm.
+   ============================================ */
 :root {
+  --background: #08060a;
+  --background-2: #0d0a10;
+  --foreground: #f0eee9;
+  --surface: #15101a;
+  --surface-elevated: #1b1422;
+  --surface-hover: #221829;
+  --muted: #8a8088;
+  --muted-strong: #b9afb1;
+  --border: #211a23;
+  --border-strong: #2f242f;
+
+  /* Primary accent — coral / vermillion */
+  --accent: #ff6a3d;
+  --accent-hover: #ff8761;
+  --accent-muted: rgba(255, 106, 61, 0.14);
+  --accent-glow: rgba(255, 106, 61, 0.35);
+
+  /* Secondary highlight — honey */
+  --accent-2: #ffd166;
+  --accent-2-muted: rgba(255, 209, 102, 0.14);
+
+  /* Tertiary highlight — teal counterweight */
+  --accent-3: #38b6a1;
+}
+
+/* ============================================
+   THEME OVERRIDES
+   Selected via [data-theme="..."] on <html>.
+   ============================================ */
+
+/* Original cyan / violet */
+html[data-theme="orbit"] {
   --background: #060609;
   --background-2: #0a0a10;
   --foreground: #f0f0f4;
@@ -19,47 +56,15 @@
   --border: #1a1a28;
   --border-strong: #262636;
 
-  /* Primary accent — electric cyan with a warmer tint */
-  --accent: #00d4ff;
+  --accent:       #00d4ff;
   --accent-hover: #33e0ff;
   --accent-muted: rgba(0, 212, 255, 0.12);
-  --accent-glow: rgba(0, 212, 255, 0.30);
+  --accent-glow:  rgba(0, 212, 255, 0.30);
 
-  /* Secondary highlight — softer violet */
-  --accent-2: #a78bfa;
+  --accent-2:       #a78bfa;
   --accent-2-muted: rgba(167, 139, 250, 0.14);
 
-  /* Tertiary highlight — warm amber */
   --accent-3: #f59e0b;
-}
-
-/* ============================================
-   THEMES
-   The default :root is the original cyan/violet
-   ("orbit"). The themes below override the
-   accent system only — backgrounds stay dark
-   so every section keeps its visual rhythm.
-   Switched at runtime via [data-theme="..."]
-   on the <html> element.
-   ============================================ */
-
-/* Warm studio — coral primary, peach secondary */
-html[data-theme="ember"] {
-  --background: #08060a;
-  --background-2: #0d0a10;
-  --surface: #15101a;
-  --surface-elevated: #1b1422;
-  --surface-hover: #221829;
-
-  --accent:       #ff6a3d;
-  --accent-hover: #ff8761;
-  --accent-muted: rgba(255, 106, 61, 0.14);
-  --accent-glow:  rgba(255, 106, 61, 0.35);
-
-  --accent-2:       #ffd166;
-  --accent-2-muted: rgba(255, 209, 102, 0.14);
-
-  --accent-3: #38b6a1;
 }
 
 /* Single bold shot — lime on near-black, no secondary */

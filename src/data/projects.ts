@@ -186,6 +186,7 @@ export const projects: Project[] = [
     category: "fullstack",
     liveUrl: "https://syncapi-9fkn.onrender.com",
     githubUrl: "https://github.com/Asadur-Rehman/syncapi",
+    caseStudyUrl: "/work/syncapi",
     year: "2026",
     featured: true,
   },
