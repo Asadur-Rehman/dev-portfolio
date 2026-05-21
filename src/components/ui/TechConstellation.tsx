@@ -48,13 +48,19 @@ export function TechConstellation() {
   const [size, setSize] = useState({ w: 800, h: 560 });
   const [hover, setHover] = useState<string | null>(null);
 
+  // Mobile: phones can't hover. Show labels only for the tapped node.
+  const isSmall = size.w < 640;
+
   // Measure container
   useEffect(() => {
     const el = wrapRef.current;
     if (!el) return;
     const ro = new ResizeObserver(() => {
       const r = el.getBoundingClientRect();
-      setSize({ w: Math.max(320, r.width), h: Math.max(420, r.width < 640 ? 520 : r.width < 1024 ? 560 : 620) });
+      const w = Math.max(280, r.width);
+      // Phones get a much taller canvas so the 31 nodes have room without colliding.
+      const h = w < 480 ? 640 : w < 640 ? 600 : w < 1024 ? 580 : 640;
+      setSize({ w, h });
     });
     ro.observe(el);
     return () => ro.disconnect();
@@ -209,6 +215,9 @@ export function TechConstellation() {
           const c = colors[n.category];
           const muted = isMuted(n.key);
           const active = hover === n.key;
+          // On small screens, only show a label when this node is the active one
+          // (avoids the 31-label collision tangle on phones).
+          const showLabel = isSmall ? active : true;
           return (
             <button
               key={n.key}
@@ -217,11 +226,17 @@ export function TechConstellation() {
               onFocus={() => setHover(n.key)}
               onMouseLeave={() => setHover((h) => (h === n.key ? null : h))}
               onBlur={() => setHover((h) => (h === n.key ? null : h))}
+              onClick={() => setHover((h) => (h === n.key ? null : n.key))}
               className="absolute -translate-x-1/2 -translate-y-1/2 group focus:outline-none"
               style={{ left: px(n), top: py(n) }}
               aria-label={n.name}
             >
-              {/* pulse halo on hover */}
+              {/* tap target — larger than the visible dot so phones can hit it */}
+              <span
+                aria-hidden
+                className="absolute -inset-3 sm:-inset-2 rounded-full"
+              />
+              {/* pulse halo on hover/active */}
               <span
                 aria-hidden
                 className="absolute inset-0 m-auto rounded-full"
@@ -246,33 +261,38 @@ export function TechConstellation() {
                 }}
               />
               {/* label */}
-              <span
-                className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-mono text-[0.6rem] tracking-wide"
-                style={{
-                  color: active ? c.hex : "rgba(168,168,184,0.55)",
-                  opacity: muted ? 0.25 : active ? 1 : 0.65,
-                  transition: "color 180ms ease, opacity 180ms ease",
-                }}
-              >
-                {n.name}
-              </span>
+              {showLabel && (
+                <span
+                  className="pointer-events-none absolute left-1/2 top-full mt-2 -translate-x-1/2 whitespace-nowrap font-mono text-[0.6rem] tracking-wide"
+                  style={{
+                    color: active ? c.hex : "rgba(168,168,184,0.55)",
+                    opacity: muted ? 0.25 : active ? 1 : 0.65,
+                    transition: "color 180ms ease, opacity 180ms ease",
+                  }}
+                >
+                  {n.name}
+                </span>
+              )}
             </button>
           );
         })}
 
-        {/* category legend bottom-left */}
-        <div className="absolute left-3 sm:left-4 bottom-3 sm:bottom-4 flex flex-wrap gap-2 max-w-[60%]">
+        {/* category legend bottom-left — clickable on touch as well */}
+        <div className="absolute left-2 right-2 sm:left-4 sm:right-auto bottom-2 sm:bottom-4 flex flex-wrap gap-1.5 sm:gap-2 max-w-full sm:max-w-[60%] justify-center sm:justify-start">
           {skillCategories.map((c) => (
             <button
               key={c.id}
               type="button"
               onMouseEnter={() => {
-                // highlight all of this category by picking the first node
                 const first = nodes.find((n) => n.category === c.id);
                 if (first) setHover(first.key);
               }}
               onMouseLeave={() => setHover(null)}
-              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/60 backdrop-blur px-2.5 py-1 font-mono text-[0.6rem] tracking-wide text-muted-strong hover:text-foreground transition-colors"
+              onClick={() => {
+                const first = nodes.find((n) => n.category === c.id);
+                if (first) setHover((h) => (h === first.key ? null : first.key));
+              }}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background/70 backdrop-blur px-2.5 py-1 font-mono text-[0.6rem] tracking-wide text-muted-strong hover:text-foreground transition-colors"
             >
               <span className="block w-1.5 h-1.5 rounded-full" style={{ background: colors[c.id].hex }} />
               {c.label}
@@ -296,6 +316,14 @@ export function TechConstellation() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* phone-only hint */}
+        {isSmall && !hover && (
+          <div className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full border border-border bg-background/70 backdrop-blur px-3 py-1.5 font-mono text-[0.6rem] tracking-wider text-muted">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent animate-pulse" aria-hidden />
+            tap a dot
+          </div>
+        )}
       </div>
     </div>
   );

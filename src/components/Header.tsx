@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, Search, Command } from "lucide-react";
 import { personal } from "@/data/personal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
@@ -143,7 +143,21 @@ export function Header() {
         </nav>
 
         {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden md:flex items-center gap-2">
+          {/* Search / palette opener — sits beside the Hire me button */}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+            className="group hidden lg:inline-flex items-center gap-2 rounded-full border border-border bg-surface/40 px-3 py-1.5 text-xs font-mono text-muted hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all"
+            aria-label="Open command palette"
+          >
+            <Search className="h-3.5 w-3.5" aria-hidden />
+            <span>Search</span>
+            <span className="ml-1 inline-flex items-center gap-0.5">
+              <kbd className="rounded border border-border bg-background/60 px-1 py-0.5 text-[0.6rem]">⌘</kbd>
+              <kbd className="rounded border border-border bg-background/60 px-1 py-0.5 text-[0.6rem]">K</kbd>
+            </span>
+          </button>
           <MagneticButton strength={0.10}>
             <Link
               href="#contact"
@@ -155,26 +169,37 @@ export function Header() {
           </MagneticButton>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          type="button"
-          className="md:hidden p-2 rounded-lg text-muted hover:text-accent hover:bg-surface/60 transition-colors"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-label="Toggle navigation menu"
-        >
-          <AnimatePresence mode="wait">
-            {open ? (
-              <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                <X className="h-5 w-5" />
-              </motion.div>
-            ) : (
-              <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                <Menu className="h-5 w-5" />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </button>
+        {/* Mobile controls — palette opener + hamburger */}
+        <div className="md:hidden flex items-center gap-1">
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+            className="p-2 rounded-lg text-muted hover:text-accent hover:bg-surface/60 transition-colors"
+            aria-label="Open command palette"
+          >
+            <Command className="h-5 w-5" />
+          </button>
+
+          <button
+            type="button"
+            className="p-2 rounded-lg text-muted hover:text-accent hover:bg-surface/60 transition-colors"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-label="Toggle navigation menu"
+          >
+            <AnimatePresence mode="wait">
+              {open ? (
+                <motion.div key="close" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <X className="h-5 w-5" />
+                </motion.div>
+              ) : (
+                <motion.div key="menu" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
+                  <Menu className="h-5 w-5" />
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}

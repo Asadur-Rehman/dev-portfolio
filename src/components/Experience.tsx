@@ -195,9 +195,16 @@ function VerticalTimeline({ isInView, lineScaleY }: { isInView: boolean; lineSca
                   </div>
                 </div>
 
-                <p className="inline-flex items-center gap-1.5 font-mono text-xs text-accent mb-4">
-                  <CalendarDays className="h-3.5 w-3.5" aria-hidden />{entry.duration}
-                </p>
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mb-4">
+                  <p className="inline-flex items-center gap-1.5 font-mono text-xs text-accent">
+                    <CalendarDays className="h-3.5 w-3.5" aria-hidden />{entry.duration}
+                  </p>
+                  {entry.location && (
+                    <p className="inline-flex items-center gap-1 text-xs text-muted">
+                      <MapPin className="h-3 w-3" aria-hidden />{entry.location}
+                    </p>
+                  )}
+                </div>
 
                 <ul className="space-y-2.5 mb-6">
                   {entry.achievements.map((a) => (

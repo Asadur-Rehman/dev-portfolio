@@ -91,6 +91,14 @@ export default function RootLayout({
       lang="en"
       className={`${syne.variable} ${jakarta.variable} ${jetbrains.variable} dark`}
     >
+      <head>
+        {/* No-FOUC theme bootstrap — read the saved theme before paint */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='ember'||t==='lime'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="font-body antialiased bg-background text-foreground">
         <a
           href="#main-content"

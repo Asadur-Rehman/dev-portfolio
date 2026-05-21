@@ -33,6 +33,55 @@
   --accent-3: #f59e0b;
 }
 
+/* ============================================
+   THEMES
+   The default :root is the original cyan/violet
+   ("orbit"). The themes below override the
+   accent system only — backgrounds stay dark
+   so every section keeps its visual rhythm.
+   Switched at runtime via [data-theme="..."]
+   on the <html> element.
+   ============================================ */
+
+/* Warm studio — coral primary, peach secondary */
+html[data-theme="ember"] {
+  --background: #08060a;
+  --background-2: #0d0a10;
+  --surface: #15101a;
+  --surface-elevated: #1b1422;
+  --surface-hover: #221829;
+
+  --accent:       #ff6a3d;
+  --accent-hover: #ff8761;
+  --accent-muted: rgba(255, 106, 61, 0.14);
+  --accent-glow:  rgba(255, 106, 61, 0.35);
+
+  --accent-2:       #ffd166;
+  --accent-2-muted: rgba(255, 209, 102, 0.14);
+
+  --accent-3: #38b6a1;
+}
+
+/* Single bold shot — lime on near-black, no secondary */
+html[data-theme="lime"] {
+  --background: #050706;
+  --background-2: #0a0d0b;
+  --surface: #0f1310;
+  --surface-elevated: #141a16;
+  --surface-hover: #1a221c;
+
+  --accent:       #c6f24e;
+  --accent-hover: #d6f870;
+  --accent-muted: rgba(198, 242, 78, 0.14);
+  --accent-glow:  rgba(198, 242, 78, 0.32);
+
+  /* Pulled toward the primary so secondary glints feel coherent */
+  --accent-2:       #84e1c4;
+  --accent-2-muted: rgba(132, 225, 196, 0.12);
+
+  --accent-3: #fbbf24;
+}
+
 /* CSS @property for animated border-angle */
 @property --border-angle {
   syntax: "<angle>";

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 type Props = {
   text: string;
@@ -24,6 +24,22 @@ export function DistortName({ text, className = "", lift = 24, radius = 160, tin
   const centersRef = useRef<{ x: number; y: number }[]>([]);
   const rafRef = useRef<number | null>(null);
   const targetRef = useRef({ x: -10000, y: -10000 });
+  const [interactive, setInteractive] = useState(false);
+
+  // Only run the rAF / pointer logic on devices that can hover and do not
+  // prefer reduced motion. Saves battery on phones and respects a11y.
+  useEffect(() => {
+    const hoverMQ = window.matchMedia("(hover: hover)");
+    const reducedMQ = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const update = () => setInteractive(hoverMQ.matches && !reducedMQ.matches);
+    update();
+    hoverMQ.addEventListener?.("change", update);
+    reducedMQ.addEventListener?.("change", update);
+    return () => {
+      hoverMQ.removeEventListener?.("change", update);
+      reducedMQ.removeEventListener?.("change", update);
+    };
+  }, []);
 
   const measure = useCallback(() => {
     const els = lettersRef.current;
@@ -34,6 +50,7 @@ export function DistortName({ text, className = "", lift = 24, radius = 160, tin
   }, []);
 
   useEffect(() => {
+    if (!interactive) return;
     measure();
     const onResize = () => measure();
     window.addEventListener("resize", onResize);
@@ -42,9 +59,10 @@ export function DistortName({ text, className = "", lift = 24, radius = 160, tin
       window.removeEventListener("resize", onResize);
       window.removeEventListener("scroll", onResize);
     };
-  }, [measure]);
+  }, [measure, interactive]);
 
   useEffect(() => {
+    if (!interactive) return;
     const tick = () => {
       const { x: mx, y: my } = targetRef.current;
       const els = lettersRef.current;
@@ -56,14 +74,14 @@ export function DistortName({ text, className = "", lift = 24, radius = 160, tin
         const dx = c.x - mx;
         const dy = c.y - my;
         const d = Math.sqrt(dx * dx + dy * dy);
-        const t = Math.max(0, 1 - d / radius); // 0 (far) → 1 (near)
-        // Bell-ish curve via t^2
+        const t = Math.max(0, 1 - d / radius);
         const k = t * t;
         const ty = -lift * k;
         const scale = 1 + 0.18 * k;
         el.style.transform = `translate3d(0, ${ty.toFixed(2)}px, 0) scale(${scale.toFixed(3)})`;
         if (tint) {
-          el.style.color = k > 0.05 ? `rgba(0, 212, 255, ${Math.min(1, 0.35 + k * 0.65)})` : "";
+          el.style.color = k > 0.05 ? `var(--accent)` : "";
+          el.style.opacity = k > 0.05 ? String(Math.min(1, 0.55 + k * 0.45)) : "";
         }
       }
       rafRef.current = requestAnimationFrame(tick);
@@ -72,27 +90,25 @@ export function DistortName({ text, className = "", lift = 24, radius = 160, tin
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [lift, radius, tint]);
+  }, [lift, radius, tint, interactive]);
 
   useEffect(() => {
+    if (!interactive) return;
     const onMove = (e: PointerEvent) => {
       targetRef.current = { x: e.clientX, y: e.clientY };
     };
     const onLeave = () => {
       targetRef.current = { x: -10000, y: -10000 };
     };
-    const onTouchEnd = () => onLeave();
     window.addEventListener("pointermove", onMove, { passive: true });
     window.addEventListener("pointerleave", onLeave);
     window.addEventListener("blur", onLeave);
-    window.addEventListener("touchend", onTouchEnd);
     return () => {
       window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerleave", onLeave);
       window.removeEventListener("blur", onLeave);
-      window.removeEventListener("touchend", onTouchEnd);
     };
-  }, []);
+  }, [interactive]);
 
   lettersRef.current = [];
 
