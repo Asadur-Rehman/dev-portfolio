@@ -32,12 +32,18 @@ export function Experience() {
   return (
     <>
       <SectionDivider />
-      <section id="experience" ref={ref} className="relative py-24 sm:py-36 px-5 sm:px-10 lg:px-20 border-t border-border/60 bg-background-2/40" aria-labelledby="experience-heading">
+      <section id="experience" ref={ref} className="relative py-24 sm:py-36 px-5 sm:px-10 lg:px-20 border-t border-border/60 bg-background-2/40 overflow-hidden" aria-labelledby="experience-heading">
+        {/* Decorative background number */}
+        <div className="absolute inset-0 flex items-start justify-end pointer-events-none overflow-hidden select-none" aria-hidden>
+          <span className="font-display font-black text-[12rem] sm:text-[18rem] lg:text-[22rem] text-foreground/[0.02] leading-none tracking-tightest pr-0 -mr-8 mt-0">
+            04
+          </span>
+        </div>
         <motion.div style={{ y }} className="max-w-5xl mx-auto">
           <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
             <motion.p variants={headerItem} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">04 — Experience</motion.p>
 
-            <motion.h2 id="experience-heading" variants={headerItem} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl tracking-tighter text-foreground max-w-3xl">
+            <motion.h2 id="experience-heading" variants={headerItem} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-3xl">
               A track record of <span className="text-gradient-accent">production work</span>.
             </motion.h2>
 

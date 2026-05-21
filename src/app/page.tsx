@@ -7,6 +7,7 @@ import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { PageLoader } from "@/components/ui/PageLoader";
+import { CustomCursor } from "@/components/ui/CustomCursor";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
 
@@ -48,6 +49,7 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <CustomCursor />
       <PageLoader>
         <Header />
         <main id="main-content">

@@ -84,17 +84,26 @@ export function Contact() {
     <>
       <SectionDivider />
       <section id="contact" ref={ref} className="relative py-24 sm:py-36 px-5 sm:px-10 lg:px-20 overflow-hidden" aria-labelledby="contact-heading">
-        {/* Background glow */}
-        <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden>
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.05] blur-[120px]" />
+        {/* Background */}
+        <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden" aria-hidden>
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.06] blur-[130px]" />
+          <div className="absolute bottom-0 right-0 w-[30rem] h-[30rem] rounded-full bg-accent-2/[0.04] blur-[100px]" />
+          {/* Giant watermark */}
+          <div className="absolute inset-0 flex items-center justify-center select-none">
+            <span className="font-display font-black text-[10rem] sm:text-[15rem] lg:text-[20rem] text-foreground/[0.018] leading-none tracking-tightest pointer-events-none">
+              HELLO
+            </span>
+          </div>
         </div>
 
         <motion.div style={{ y }} className="max-w-6xl mx-auto">
           <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
             <motion.p variants={fade} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">05 — Contact</motion.p>
 
-            <motion.h2 id="contact-heading" variants={fade} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl tracking-tighter text-foreground max-w-3xl">
-              Let&apos;s build something <span className="text-gradient-accent">extraordinary</span> together.
+            <motion.h2 id="contact-heading" variants={fade} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-4xl">
+              Let&apos;s build something{" "}
+              <span className="text-gradient-accent">extraordinary</span>{" "}
+              together.
             </motion.h2>
 
             <motion.p variants={fade} className="mt-5 max-w-2xl text-base sm:text-lg text-muted-strong">

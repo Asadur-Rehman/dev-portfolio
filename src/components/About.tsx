@@ -89,9 +89,15 @@ export function About() {
       <section
         id="about"
         ref={ref}
-        className="relative py-24 sm:py-36 px-5 sm:px-10 lg:px-20"
+        className="relative py-24 sm:py-36 px-5 sm:px-10 lg:px-20 overflow-hidden"
         aria-labelledby="about-heading"
       >
+        {/* Section number watermark */}
+        <div className="absolute -top-6 right-0 pointer-events-none select-none overflow-hidden" aria-hidden>
+          <span className="font-display font-black text-[14rem] sm:text-[20rem] text-foreground/[0.018] leading-none tracking-tightest">
+            01
+          </span>
+        </div>
         <motion.div style={{ y }} className="max-w-6xl mx-auto">
           <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
 
@@ -102,12 +108,27 @@ export function About() {
             <motion.h2
               id="about-heading"
               variants={fade}
-              className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl tracking-tighter text-foreground max-w-3xl"
+              className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-4xl"
             >
               I build software that{" "}
               <span className="text-gradient-accent">earns its place</span>{" "}
               in production.
             </motion.h2>
+
+            {/* Metrics strip */}
+            <motion.div variants={fade} className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-px border border-border/50 rounded-2xl overflow-hidden">
+              {[
+                { value: "10+", label: "Projects shipped", color: "text-accent" },
+                { value: "2+",  label: "Years in production", color: "text-violet-400" },
+                { value: "<5%", label: "NUST acceptance rate", color: "text-amber-400" },
+                { value: "3+",  label: "AI systems built", color: "text-emerald-400" },
+              ].map((m) => (
+                <div key={m.label} className="bg-surface/40 px-5 py-6 sm:px-7 flex flex-col gap-1 hover:bg-surface/70 transition-colors duration-200">
+                  <span className={`font-display font-bold text-3xl sm:text-4xl tracking-tighter ${m.color}`}>{m.value}</span>
+                  <span className="font-mono text-[0.65rem] uppercase tracking-widest text-muted">{m.label}</span>
+                </div>
+              ))}
+            </motion.div>
 
             <motion.div variants={fade} className="mt-12 grid lg:grid-cols-12 gap-10 lg:gap-16">
               {/* Bio with scroll-linked text reveal */}

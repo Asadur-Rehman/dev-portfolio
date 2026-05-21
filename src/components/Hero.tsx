@@ -122,8 +122,30 @@ export function Hero() {
       <div className="absolute inset-0 -z-10" aria-hidden>
         <Aurora />
         <div className="absolute inset-0 bg-grid bg-grid-fade opacity-40" />
-        {/* Additional depth layers */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[54rem] h-[54rem] rounded-full bg-accent/[0.02] blur-[100px]" />
+        {/* Orbit rings */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-20 -right-20 w-[36rem] h-[36rem] rounded-full border border-accent/[0.06] hidden lg:block"
+        >
+          <div className="absolute top-1/4 right-0 w-1.5 h-1.5 rounded-full bg-accent/40 shadow-glow-sm translate-x-1/2 -translate-y-1/2" />
+        </motion.div>
+        <motion.div
+          animate={{ rotate: -360 }}
+          transition={{ duration: 44, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-10 -right-10 w-[24rem] h-[24rem] rounded-full border border-accent-2/[0.05] hidden lg:block"
+        >
+          <div className="absolute bottom-1/4 left-0 w-1 h-1 rounded-full bg-accent-2/40 -translate-x-1/2" />
+        </motion.div>
+      </div>
+
+      {/* Vertical scroll label — desktop only */}
+      <div className="hidden lg:flex absolute right-6 xl:right-8 top-1/2 -translate-y-1/2 flex-col items-center gap-3 z-10" aria-hidden>
+        <div className="w-px h-16 bg-gradient-to-b from-transparent via-border-strong to-transparent" />
+        <span className="font-mono text-[0.55rem] uppercase tracking-[0.35em] text-muted/25 [writing-mode:vertical-rl] rotate-180 select-none">
+          scroll to explore
+        </span>
       </div>
 
       {/* Content — 2-column at 2xl */}
@@ -131,7 +153,7 @@ export function Hero() {
         variants={container}
         initial="hidden"
         animate="show"
-        className="max-w-7xl mx-auto w-full 2xl:grid 2xl:grid-cols-[1fr_320px] 2xl:gap-16 2xl:items-center"
+        className="max-w-7xl mx-auto w-full xl:grid xl:grid-cols-[1fr_340px] xl:gap-12 xl:items-center"
       >
         {/* ── Left / Main ── */}
         <div>
@@ -162,7 +184,7 @@ export function Hero() {
           {/* Headline with letter-by-letter stagger */}
           <motion.h1
             variants={item}
-            className="font-display font-bold text-balance leading-[0.93] tracking-tightest text-[2.75rem] xs:text-[3.25rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem] xl:text-[7.5rem]"
+            className="font-display font-bold text-balance leading-[0.93] tracking-tightest text-[2.75rem] xs:text-[3.25rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[5rem] 2xl:text-[6.5rem]"
           >
             <AnimatedHeadline text="Full-Stack" className="text-foreground" />
             <br />
@@ -249,8 +271,8 @@ export function Hero() {
           </motion.div>
         </div>
 
-        {/* ── Right / Terminal (2xl only) ── */}
-        <div className="hidden 2xl:flex flex-col gap-5 items-end">
+        {/* ── Right / Terminal (xl+) ── */}
+        <div className="hidden xl:flex flex-col gap-5 items-end">
           <TerminalWidget />
           {/* Floating stat card */}
           <SpotlightCard className="rounded-xl w-full max-w-xs" spotlightColor="rgba(167, 139, 250, 0.08)">
