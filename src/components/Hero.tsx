@@ -1,12 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown, ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, MapPin, Sparkles, Command } from "lucide-react";
 import { personal } from "@/data/personal";
 import { Aurora } from "@/components/ui/Aurora";
 import { TypeWriter } from "@/components/ui/TypeWriter";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { DistortName } from "@/components/ui/DistortName";
+import { NowBar } from "@/components/ui/NowBar";
 
 const container = {
   hidden: { opacity: 0 },
@@ -181,12 +183,12 @@ export function Hero() {
             <TypeWriter text={`// Hi, I'm ${personal.firstName} —`} speed={45} delay={400} />
           </motion.p>
 
-          {/* Headline with letter-by-letter stagger */}
+          {/* Headline — first line uses cursor-distorted letters */}
           <motion.h1
             variants={item}
             className="font-display font-bold text-balance leading-[0.93] tracking-tightest text-[2.75rem] xs:text-[3.25rem] sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6rem] xl:text-[5rem] 2xl:text-[6.5rem]"
           >
-            <AnimatedHeadline text="Full-Stack" className="text-foreground" />
+            <DistortName text="Full-Stack" className="text-foreground" lift={26} radius={170} />
             <br />
             <AnimatedHeadline text="Engineer" className="text-gradient-accent" />
             <span className="text-foreground"> & </span>
@@ -200,6 +202,11 @@ export function Hero() {
               .
             </motion.span>
           </motion.h1>
+
+          {/* Live "Now" status bar */}
+          <motion.div variants={item} className="mt-7 max-w-xl">
+            <NowBar />
+          </motion.div>
 
           {/* Subhead */}
           <motion.p variants={item} className="mt-7 max-w-2xl text-base sm:text-lg text-muted-strong leading-relaxed text-pretty">
@@ -232,6 +239,20 @@ export function Hero() {
                 <ArrowRight className="h-4 w-4 -rotate-45 transition-transform duration-300 group-hover:rotate-0" aria-hidden />
               </button>
             </MagneticButton>
+
+            {/* Cmd+K hint — invites discovery of the palette */}
+            <button
+              type="button"
+              onClick={() => window.dispatchEvent(new CustomEvent("open-command-palette"))}
+              className="group hidden sm:inline-flex items-center gap-2 rounded-full border border-border bg-surface/40 px-3.5 py-2 text-xs font-mono text-muted hover:text-accent hover:border-accent/40 hover:bg-accent/5 transition-all"
+              aria-label="Open command palette"
+            >
+              <Command className="h-3.5 w-3.5" aria-hidden />
+              <span>Press</span>
+              <kbd className="rounded border border-border bg-background/60 px-1 py-0.5 text-[0.6rem]">⌘</kbd>
+              <kbd className="rounded border border-border bg-background/60 px-1 py-0.5 text-[0.6rem]">K</kbd>
+              <span className="text-muted/60">to navigate</span>
+            </button>
           </motion.div>
 
           {/* Tech badges strip */}

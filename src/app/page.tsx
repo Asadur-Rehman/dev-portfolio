@@ -8,6 +8,10 @@ import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { PageLoader } from "@/components/ui/PageLoader";
 import { CustomCursor } from "@/components/ui/CustomCursor";
+import { CommandPalette } from "@/components/ui/CommandPalette";
+import { ShortcutsHelp } from "@/components/ui/ShortcutsHelp";
+import { ScrollRail } from "@/components/ui/ScrollRail";
+import { EasterEgg } from "@/components/ui/EasterEgg";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
 
@@ -50,8 +54,12 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <CustomCursor />
+      <CommandPalette />
+      <ShortcutsHelp />
+      <EasterEgg />
       <PageLoader>
         <Header />
+        <ScrollRail />
         <main id="main-content">
           <Hero />
           <About />

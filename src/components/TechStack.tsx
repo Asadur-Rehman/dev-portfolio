@@ -2,22 +2,8 @@
 
 import { useRef } from "react";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
-import { Code2, Server, Database, Wrench, Sparkles, Terminal, type LucideIcon } from "lucide-react";
-import { skills, skillCategories } from "@/data/skills";
-import type { SkillCategory } from "@/data/skills";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { SectionDivider } from "@/components/ui/SectionDivider";
-
-const categoryMeta: Record<SkillCategory, {
-  icon: LucideIcon; accent: string; bg: string; glow: string; spotlightColor: string;
-}> = {
-  languages: { icon: Terminal, accent: "text-cyan-400", bg: "bg-cyan-400/10 border-cyan-400/20", glow: "rgba(34,211,238,0.12)", spotlightColor: "rgba(34,211,238,0.08)" },
-  frontend: { icon: Code2, accent: "text-violet-400", bg: "bg-violet-400/10 border-violet-400/20", glow: "rgba(167,139,250,0.12)", spotlightColor: "rgba(167,139,250,0.08)" },
-  backend: { icon: Server, accent: "text-amber-400", bg: "bg-amber-400/10 border-amber-400/20", glow: "rgba(251,191,36,0.10)", spotlightColor: "rgba(251,191,36,0.06)" },
-  database: { icon: Database, accent: "text-emerald-400", bg: "bg-emerald-400/10 border-emerald-400/20", glow: "rgba(52,211,153,0.10)", spotlightColor: "rgba(52,211,153,0.06)" },
-  ai: { icon: Sparkles, accent: "text-pink-400", bg: "bg-pink-400/10 border-pink-400/20", glow: "rgba(244,114,182,0.10)", spotlightColor: "rgba(244,114,182,0.06)" },
-  tools: { icon: Wrench, accent: "text-orange-400", bg: "bg-orange-400/10 border-orange-400/20", glow: "rgba(251,146,60,0.10)", spotlightColor: "rgba(251,146,60,0.06)" },
-};
+import { TechConstellation } from "@/components/ui/TechConstellation";
 
 const container = {
   hidden: { opacity: 0 },
@@ -56,36 +42,12 @@ export function TechStack() {
             <motion.h2 id="tech-heading" variants={item} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-4xl">
               Tools I reach for <span className="text-gradient-accent">when work needs to ship</span>.
             </motion.h2>
-            <motion.p variants={item} className="mt-5 max-w-2xl text-base sm:text-lg text-muted-strong">A pragmatic toolkit for full-stack systems and AI-powered products. Sharpened in production, not tutorials.</motion.p>
+            <motion.p variants={item} className="mt-5 max-w-2xl text-base sm:text-lg text-muted-strong">
+              A pragmatic toolkit for full-stack systems and AI-powered products. Each dot is a tool I&apos;ve put through production — hover the constellation to map the territory.
+            </motion.p>
 
-            <motion.div variants={container} className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {skillCategories.map((cat) => {
-                const meta = categoryMeta[cat.id];
-                const Icon = meta.icon;
-                const catSkills = skills.filter((s) => s.category === cat.id);
-                return (
-                  <motion.div key={cat.id} variants={item} style={{ perspective: 600 }}>
-                    <SpotlightCard className="rounded-2xl h-full" spotlightColor={meta.spotlightColor}>
-                      <div className="relative rounded-2xl border border-border bg-surface/60 p-6 transition-all duration-300 overflow-hidden h-full">
-                        <div className="flex items-center gap-3 mb-2">
-                          <motion.span whileHover={{ rotate: 12, scale: 1.1 }} transition={{ type: "spring", stiffness: 300 }} className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl border ${meta.bg} ${meta.accent}`}>
-                            <Icon className="h-4 w-4" aria-hidden />
-                          </motion.span>
-                          <h3 className={`font-display font-semibold text-base sm:text-lg ${meta.accent}`}>{cat.label}</h3>
-                        </div>
-                        <p className="text-xs text-muted mb-5 ml-12">{cat.description}</p>
-                        <ul className="flex flex-wrap gap-2">
-                          {catSkills.map((skill) => (
-                            <li key={skill.name} className="shimmer-hover rounded-full border border-border/80 bg-background/40 px-3 py-1 text-xs font-medium text-muted-strong hover:border-accent/40 hover:text-accent hover:bg-accent/5 transition-all duration-200 cursor-default">
-                              {skill.name}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    </SpotlightCard>
-                  </motion.div>
-                );
-              })}
+            <motion.div variants={item} className="mt-12 sm:mt-14">
+              <TechConstellation />
             </motion.div>
           </motion.div>
         </motion.div>
