@@ -9,6 +9,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { DistortName } from "@/components/ui/DistortName";
 import { NowBar } from "@/components/ui/NowBar";
+import type { LiveActivity } from "@/lib/github";
 
 const container = {
   hidden: { opacity: 0 },
@@ -110,7 +111,7 @@ function TerminalWidget() {
   );
 }
 
-export function Hero() {
+export function Hero({ liveActivity }: { liveActivity?: LiveActivity | null } = {}) {
   const scrollTo = (id: string) =>
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 
@@ -205,7 +206,7 @@ export function Hero() {
 
           {/* Live "Now" status bar */}
           <motion.div variants={item} className="mt-7 max-w-xl">
-            <NowBar />
+            <NowBar liveActivity={liveActivity ?? null} />
           </motion.div>
 
           {/* Subhead */}

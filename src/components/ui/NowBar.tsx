@@ -1,17 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Activity, Rocket, Coffee, Headphones, Code2, Cpu, type LucideIcon } from "lucide-react";
+import { Activity, Rocket, Coffee, Headphones, Code2, Cpu, GitCommit, type LucideIcon } from "lucide-react";
+import { relativeTime, type LiveActivity } from "@/lib/github";
 
 type NowItem = {
   label: string;
   value: string;
   icon: LucideIcon;
   tone?: "accent" | "violet" | "amber" | "emerald";
+  href?: string;
 };
 
-const items: NowItem[] = [
+const staticItems: NowItem[] = [
   { label: "Shipping", value: "SyncAPI — collaborative API workspace", icon: Rocket,     tone: "accent" },
   { label: "Reading",  value: "Designing Data-Intensive Applications", icon: Coffee,     tone: "amber"  },
   { label: "Tinkering", value: "Realtime presence w/ Socket.io + Redis", icon: Cpu,      tone: "violet" },
@@ -41,14 +43,30 @@ function useLocalClock(tz: string) {
   return time;
 }
 
-export function NowBar() {
+export function NowBar({ liveActivity }: { liveActivity?: LiveActivity | null } = {}) {
   const [idx, setIdx] = useState(0);
   const time = useLocalClock("Asia/Karachi");
+
+  // Merge: if we have live GitHub data, lead with it; static items follow.
+  const items = useMemo<NowItem[]>(() => {
+    if (!liveActivity) return staticItems;
+    const repoShort = liveActivity.repo.split("/").pop() ?? liveActivity.repo;
+    return [
+      {
+        label: "Last commit",
+        value: `${repoShort} · ${liveActivity.message} · ${relativeTime(liveActivity.isoTime)}`,
+        icon: GitCommit,
+        tone: "accent",
+        href: liveActivity.url,
+      },
+      ...staticItems,
+    ];
+  }, [liveActivity]);
 
   useEffect(() => {
     const id = setInterval(() => setIdx((i) => (i + 1) % items.length), 3400);
     return () => clearInterval(id);
-  }, []);
+  }, [items.length]);
 
   const cur = items[idx];
   const Icon = cur.icon;
@@ -83,7 +101,19 @@ export function NowBar() {
               <Icon className="h-3 w-3" aria-hidden />
             </span>
             <span className="text-muted/60 shrink-0">{cur.label}</span>
-            <span className="text-foreground/95 truncate">{cur.value}</span>
+            {cur.href ? (
+              <a
+                href={cur.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-foreground/95 truncate hover:text-accent transition-colors"
+                title={cur.value}
+              >
+                {cur.value}
+              </a>
+            ) : (
+              <span className="text-foreground/95 truncate">{cur.value}</span>
+            )}
           </motion.span>
         </AnimatePresence>
       </div>

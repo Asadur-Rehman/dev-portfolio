@@ -15,8 +15,10 @@ import { ChapterIndicator } from "@/components/ui/ChapterIndicator";
 import { EasterEgg } from "@/components/ui/EasterEgg";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
+import { fetchLatestActivity } from "@/lib/github";
 
-export default function Home() {
+export default async function Home() {
+  const liveActivity = await fetchLatestActivity();
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://asadurrehman.dev";
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,7 +65,7 @@ export default function Home() {
         <ScrollRail />
         <ChapterIndicator />
         <main id="main-content">
-          <Hero />
+          <Hero liveActivity={liveActivity} />
           <About />
           <TechStack />
           <Projects />
