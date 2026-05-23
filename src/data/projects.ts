@@ -129,7 +129,7 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/Asadur-Rehman/TalentScout",
     caseStudyUrl: "/work/talentscout",
     role: "Lead Developer & Architect — Final Year Project, NUST",
-    year: "2025",
+    year: "2024 — Present",
     featured: true,
   },
   {

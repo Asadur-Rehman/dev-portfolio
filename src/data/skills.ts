@@ -21,41 +21,54 @@ export const skillCategories: { id: SkillCategory; label: string; description: s
 ];
 
 export const skills: Skill[] = [
-  { name: "JavaScript", category: "languages" },
+  // Languages
   { name: "TypeScript", category: "languages" },
+  { name: "JavaScript", category: "languages" },
   { name: "Python", category: "languages" },
-  { name: "C++", category: "languages" },
   { name: "SQL", category: "languages" },
+  { name: "C++", category: "languages" },
 
-  { name: "React.js", category: "frontend" },
-  { name: "Next.js 14", category: "frontend" },
+  // Frontend
+  { name: "React", category: "frontend" },
+  { name: "Next.js (App Router)", category: "frontend" },
+  { name: "Redux Toolkit", category: "frontend" },
+  { name: "TanStack Query", category: "frontend" },
   { name: "Tailwind CSS", category: "frontend" },
   { name: "Framer Motion", category: "frontend" },
-  { name: "HTML5", category: "frontend" },
-  { name: "CSS3", category: "frontend" },
 
+  // Backend
   { name: "Node.js", category: "backend" },
-  { name: "Express.js", category: "backend" },
+  { name: "Express", category: "backend" },
   { name: "NestJS", category: "backend" },
   { name: "FastAPI", category: "backend" },
   { name: "REST APIs", category: "backend" },
+  { name: "Socket.io", category: "backend" },
   { name: "WebRTC", category: "backend" },
 
-  { name: "MongoDB", category: "database" },
+  // Databases
   { name: "PostgreSQL", category: "database" },
-  { name: "Firebase Firestore", category: "database" },
+  { name: "MongoDB", category: "database" },
+  { name: "Redis", category: "database" },
+  { name: "Prisma", category: "database" },
+  { name: "Drizzle ORM", category: "database" },
+  { name: "Firebase", category: "database" },
 
+  // AI / ML
   { name: "OpenAI API", category: "ai" },
-  { name: "HuggingFace Transformers", category: "ai" },
-  { name: "FAISS", category: "ai" },
+  { name: "Claude API", category: "ai" },
   { name: "LangChain", category: "ai" },
-  { name: "RAG Architecture", category: "ai" },
+  { name: "RAG", category: "ai" },
+  { name: "FAISS", category: "ai" },
+  { name: "HuggingFace", category: "ai" },
 
+  // DevOps & Tools
   { name: "Git", category: "tools" },
-  { name: "GitHub", category: "tools" },
   { name: "Docker", category: "tools" },
   { name: "Vercel", category: "tools" },
   { name: "CI/CD", category: "tools" },
-  { name: "Agile / Scrum", category: "tools" },
-  { name: "Web Automation", category: "tools" },
+  { name: "Turborepo", category: "tools" },
+  { name: "BullMQ", category: "tools" },
+  { name: "Jest", category: "tools" },
+  { name: "JWT", category: "tools" },
+  { name: "OAuth", category: "tools" },
 ];
