@@ -13,12 +13,12 @@ const iconMap: Record<string, LucideIcon> = {
 };
 
 const navLinks = [
-  ["#about", "About"],
-  ["#tech", "Stack"],
-  ["#projects", "Work"],
-  ["#services", "Services"],
-  ["#experience", "Experience"],
-  ["#contact", "Contact"],
+  ["/#about", "About"],
+  ["/#tech", "Stack"],
+  ["/#projects", "Work"],
+  ["/#services", "Services"],
+  ["/#experience", "Experience"],
+  ["/#contact", "Contact"],
 ];
 
 const stagger = {
@@ -90,7 +90,7 @@ export function Footer() {
               Available for remote contract work and select full-time roles.
             </p>
             <Link
-              href="#contact"
+              href="/#contact"
               className="group mt-6 inline-flex items-center gap-2 rounded-full bg-accent/10 border border-accent/30 px-5 py-2.5 text-sm font-medium text-accent hover:bg-accent hover:text-background hover:shadow-glow transition-all duration-300"
             >
               Get in touch
@@ -153,8 +153,9 @@ export function Footer() {
                 {personal.location.split(",")[0]} · {localTime}
               </span>
             )}
-            <a
-              href="#hero"
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               onMouseEnter={() => setIsHoveringTop(true)}
               onMouseLeave={() => setIsHoveringTop(false)}
               className="inline-flex items-center gap-1.5 hover:text-accent transition-colors group"
@@ -166,7 +167,7 @@ export function Footer() {
               >
                 {isHoveringTop ? <Rocket className="h-3 w-3" /> : <ArrowUp className="h-3 w-3 transition-transform group-hover:-translate-y-0.5" />}
               </motion.span>
-            </a>
+            </button>
           </div>
         </motion.div>
       </motion.div>

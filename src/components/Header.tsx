@@ -8,12 +8,12 @@ import { personal } from "@/data/personal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
 const navLinks = [
-  { href: "#about",      label: "About" },
-  { href: "#tech",       label: "Stack" },
-  { href: "#projects",   label: "Work" },
-  { href: "#services",   label: "Services" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact",    label: "Contact" },
+  { href: "/#about",      label: "About" },
+  { href: "/#tech",       label: "Stack" },
+  { href: "/#projects",   label: "Work" },
+  { href: "/#services",   label: "Services" },
+  { href: "/#experience", label: "Experience" },
+  { href: "/#contact",    label: "Contact" },
 ];
 
 export function Header() {
@@ -47,7 +47,7 @@ export function Header() {
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setActiveSection(`#${id}`);
+            setActiveSection(`/#${id}`);
           }
         },
         { rootMargin: "-30% 0px -60% 0px" }
@@ -83,7 +83,7 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-5 sm:px-10 lg:px-20 flex items-center justify-between h-16 sm:h-20">
         {/* Logo with spin on hover */}
         <Link
-          href="#hero"
+          href="/"
           className="group inline-flex items-center gap-2.5 font-display font-bold text-foreground hover:text-accent transition-colors"
           aria-label="Home"
         >
@@ -153,7 +153,7 @@ export function Header() {
           </button>
           <MagneticButton strength={0.10}>
             <Link
-              href="#contact"
+              href="/#contact"
               className="group inline-flex items-center gap-1.5 rounded-full bg-foreground/95 px-5 py-2.5 text-sm font-semibold text-background hover:bg-accent transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] hover:shadow-glow-sm"
             >
               Hire me
@@ -232,7 +232,7 @@ export function Header() {
                   transition={{ delay: 0.35, duration: 0.3 }}
                 >
                   <Link
-                    href="#contact"
+                    href="/#contact"
                     onClick={() => setOpen(false)}
                     className="flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-semibold text-background w-full hover:bg-accent-hover transition-colors"
                   >

@@ -26,7 +26,18 @@ type Action = {
 const REPO_URL = "https://github.com/Asadur-Rehman/dev-portfolio";
 
 function scrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  // If we're on a page that has this section, scroll in-page.
+  // Otherwise navigate to the home page anchor.
+  if (id === "hero" && window.location.pathname === "/") {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    return;
+  }
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  window.location.href = id === "hero" ? "/" : `/#${id}`;
 }
 
 function openExternal(url: string) {
