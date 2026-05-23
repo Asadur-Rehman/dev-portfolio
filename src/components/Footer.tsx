@@ -16,6 +16,7 @@ const navLinks = [
   ["#about", "About"],
   ["#tech", "Stack"],
   ["#projects", "Work"],
+  ["#services", "Services"],
   ["#experience", "Experience"],
   ["#contact", "Contact"],
 ];
@@ -74,10 +75,10 @@ export function Footer() {
           {/* CTA block */}
           <motion.div variants={fadeUp} className="sm:col-span-2 lg:col-span-6">
             <p className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">
-              Open to opportunities
+              Get in touch
             </p>
             <h3 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-foreground max-w-lg leading-tight">
-              Have an ambitious project?{" "}
+              Got a project in mind?{" "}
               <Link
                 href={`mailto:${personal.email}`}
                 className="text-gradient-accent underline-offset-4 hover:underline transition-all"
@@ -86,7 +87,7 @@ export function Footer() {
               </Link>
             </h3>
             <p className="mt-4 text-sm text-muted max-w-sm">
-              I&apos;m available for remote engineering roles, freelance projects, and technical consulting.
+              Available for remote contract work and select full-time roles.
             </p>
             <Link
               href="#contact"

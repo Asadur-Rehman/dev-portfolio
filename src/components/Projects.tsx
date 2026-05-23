@@ -66,13 +66,6 @@ function FeaturedCard({ project }: { project: ProjectType }) {
             <div className="absolute inset-0 bg-grid opacity-[0.17]" />
           </div>
 
-          {/* ── Giant watermark title ── */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none" aria-hidden>
-            <span className="font-display font-black text-[6rem] sm:text-[10rem] lg:text-[13rem] text-foreground/[0.022] leading-none whitespace-nowrap tracking-tightest">
-              {project.title}
-            </span>
-          </div>
-
           {/* ── Left: Identity ── */}
           <div className="p-8 sm:p-10 lg:p-12">
             <div className="flex flex-wrap items-center gap-2.5 mb-8">
@@ -355,7 +348,7 @@ function ProjectsShelf({ projects }: { projects: ProjectType[] }) {
             More work · {projects.length} {projects.length === 1 ? "project" : "projects"}
           </p>
           <h3 className="font-display text-lg sm:text-xl tracking-tight text-foreground">
-            Drag, swipe, or scroll →
+            Scroll for more →
           </h3>
         </div>
         <div className="hidden sm:flex items-center gap-2">
@@ -464,7 +457,7 @@ export function Projects() {
           <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
 
             <motion.p variants={item} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">
-              03 — Selected work
+              Work
             </motion.p>
 
             <motion.div variants={item} className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
@@ -472,8 +465,7 @@ export function Projects() {
                 id="projects-heading"
                 className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-2xl"
               >
-                Things I&apos;ve built that{" "}
-                <span className="text-gradient-accent">shipped</span>.
+                Selected projects.
               </h2>
 
               {/* Filter strip with spring pill */}

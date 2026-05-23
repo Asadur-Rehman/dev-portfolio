@@ -3,6 +3,7 @@ import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { TechStack } from "@/components/TechStack";
 import { Projects } from "@/components/Projects";
+import { Services } from "@/components/Services";
 import { Experience } from "@/components/Experience";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
@@ -11,7 +12,6 @@ import { CustomCursor } from "@/components/ui/CustomCursor";
 import { CommandPalette } from "@/components/ui/CommandPalette";
 import { ShortcutsHelp } from "@/components/ui/ShortcutsHelp";
 import { ScrollRail } from "@/components/ui/ScrollRail";
-import { ChapterIndicator } from "@/components/ui/ChapterIndicator";
 import { EasterEgg } from "@/components/ui/EasterEgg";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
@@ -63,12 +63,12 @@ export default async function Home() {
       <PageLoader>
         <Header />
         <ScrollRail />
-        <ChapterIndicator />
         <main id="main-content">
           <Hero liveActivity={liveActivity} />
           <About />
           <TechStack />
           <Projects />
+          <Services />
           <Experience />
           <Contact />
         </main>

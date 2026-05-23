@@ -88,26 +88,18 @@ export function Contact() {
         <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden" aria-hidden>
           <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[60rem] h-[40rem] rounded-full bg-accent/[0.06] blur-[130px]" />
           <div className="absolute bottom-0 right-0 w-[30rem] h-[30rem] rounded-full bg-accent-2/[0.04] blur-[100px]" />
-          {/* Giant watermark */}
-          <div className="absolute inset-0 flex items-center justify-center select-none">
-            <span className="font-display font-black text-[10rem] sm:text-[15rem] lg:text-[20rem] text-foreground/[0.018] leading-none tracking-tightest pointer-events-none">
-              HELLO
-            </span>
-          </div>
         </div>
 
         <motion.div style={{ y }} className="max-w-6xl mx-auto">
           <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
-            <motion.p variants={fade} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">05 — Contact</motion.p>
+            <motion.p variants={fade} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">Contact</motion.p>
 
             <motion.h2 id="contact-heading" variants={fade} className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-4xl">
-              Let&apos;s build something{" "}
-              <span className="text-gradient-accent">extraordinary</span>{" "}
-              together.
+              Get in touch.
             </motion.h2>
 
             <motion.p variants={fade} className="mt-5 max-w-2xl text-base sm:text-lg text-muted-strong">
-              Have a hard problem, an ambitious product, or a role you think I&apos;d be a fit for? Drop a line — I read every message.
+              Have a project, a role, or a question? Send a message and I&apos;ll get back to you within a day or two.
             </motion.p>
 
             <motion.div variants={fade} className="mt-12 sm:mt-14 grid lg:grid-cols-5 gap-8 sm:gap-10">
@@ -132,7 +124,7 @@ export function Contact() {
 
                 {status === "success" && (
                   <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-2.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-sm text-emerald-300">
-                    <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" aria-hidden /><span>Thanks — your message landed. I&apos;ll get back to you within 24 hours.</span>
+                    <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" aria-hidden /><span>Thanks, message received. I&apos;ll reply within a day or two.</span>
                   </motion.div>
                 )}
 
@@ -211,7 +203,7 @@ export function Contact() {
                     </span>
                     <p className="text-xs font-mono uppercase tracking-widest text-emerald-400">Currently available</p>
                   </div>
-                  <p className="text-sm text-muted-strong leading-relaxed">Open to senior IC and full-stack / AI engineering roles — remote-first, global timezones.</p>
+                  <p className="text-sm text-muted-strong leading-relaxed">Taking on remote contract work outside my day job. Comfortable across PKT and overlapping with US / EU mornings.</p>
                 </motion.div>
               </div>
             </motion.div>

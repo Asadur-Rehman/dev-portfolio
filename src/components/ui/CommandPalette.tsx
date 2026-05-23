@@ -53,11 +53,12 @@ export function CommandPalette() {
   const actions = useMemo<Action[]>(() => [
     // Navigate
     { id: "nav-hero", group: "Navigate", icon: Compass, label: "Go to Top", keywords: "hero home", run: () => scrollTo("hero") },
-    { id: "nav-about", group: "Navigate", icon: Sparkles, label: "Go to About", keywords: "bio intro 01", run: () => scrollTo("about") },
-    { id: "nav-tech", group: "Navigate", icon: Cpu, label: "Go to Stack", keywords: "skills tools 02", run: () => scrollTo("tech") },
-    { id: "nav-proj", group: "Navigate", icon: Layers, label: "Go to Work", keywords: "projects portfolio 03", run: () => scrollTo("projects") },
-    { id: "nav-exp", group: "Navigate", icon: Briefcase, label: "Go to Experience", keywords: "work history 04", run: () => scrollTo("experience") },
-    { id: "nav-contact", group: "Navigate", icon: Send, label: "Go to Contact", keywords: "email hire 05", run: () => scrollTo("contact") },
+    { id: "nav-about", group: "Navigate", icon: Sparkles, label: "Go to About", keywords: "bio intro", run: () => scrollTo("about") },
+    { id: "nav-tech", group: "Navigate", icon: Cpu, label: "Go to Stack", keywords: "skills tools", run: () => scrollTo("tech") },
+    { id: "nav-proj", group: "Navigate", icon: Layers, label: "Go to Work", keywords: "projects portfolio", run: () => scrollTo("projects") },
+    { id: "nav-services", group: "Navigate", icon: Code2, label: "Go to Services", keywords: "freelance hire offerings", run: () => scrollTo("services") },
+    { id: "nav-exp", group: "Navigate", icon: Briefcase, label: "Go to Experience", keywords: "work history", run: () => scrollTo("experience") },
+    { id: "nav-contact", group: "Navigate", icon: Send, label: "Go to Contact", keywords: "email hire", run: () => scrollTo("contact") },
 
     // Quick actions
     { id: "copy-email", group: "Quick actions", icon: Mail, label: "Copy email address", hint: personal.email, run: async () => { await copy(personal.email); flash("Email copied"); } },

@@ -8,11 +8,12 @@ import { personal } from "@/data/personal";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 
 const navLinks = [
-  { href: "#about",      label: "About",      num: "01" },
-  { href: "#tech",       label: "Stack",       num: "02" },
-  { href: "#projects",   label: "Work",        num: "03" },
-  { href: "#experience", label: "Experience",  num: "04" },
-  { href: "#contact",    label: "Contact",     num: "05" },
+  { href: "#about",      label: "About" },
+  { href: "#tech",       label: "Stack" },
+  { href: "#projects",   label: "Work" },
+  { href: "#services",   label: "Services" },
+  { href: "#experience", label: "Experience" },
+  { href: "#contact",    label: "Contact" },
 ];
 
 export function Header() {
@@ -36,7 +37,7 @@ export function Header() {
 
   // Active section tracking via IntersectionObserver
   useEffect(() => {
-    const sectionIds = ["about", "tech", "projects", "experience", "contact"];
+    const sectionIds = ["about", "tech", "projects", "services", "experience", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -114,7 +115,6 @@ export function Header() {
                         : "text-muted hover:text-foreground"
                     }`}
                   >
-                    {/* Active indicator background */}
                     {isActive && (
                       <motion.span
                         layoutId="nav-active"
@@ -122,14 +122,7 @@ export function Header() {
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
-                    <span className={`relative font-mono text-[0.6rem] transition-colors ${
-                      isActive ? "text-accent" : "text-accent/60 group-hover:text-accent"
-                    }`}>
-                      {link.num}
-                    </span>
                     <span className="relative">{link.label}</span>
-
-                    {/* Sliding underline on hover */}
                     <span
                       className={`absolute -bottom-0.5 left-4 right-4 h-px origin-left transition-transform duration-300 ${
                         isActive ? "scale-x-100 bg-accent" : "scale-x-0 bg-accent/60 group-hover:scale-x-100"
@@ -228,7 +221,6 @@ export function Header() {
                         activeSection === link.href ? "text-accent" : "text-muted-strong hover:text-accent"
                       }`}
                     >
-                      <span className="font-mono text-xs text-accent/70 w-6">{link.num}</span>
                       {link.label}
                     </Link>
                   </motion.li>

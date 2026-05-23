@@ -10,8 +10,9 @@ const sections: Section[] = [
   { id: "about",      label: "About",      num: "01" },
   { id: "tech",       label: "Stack",      num: "02" },
   { id: "projects",   label: "Work",       num: "03" },
-  { id: "experience", label: "Experience", num: "04" },
-  { id: "contact",    label: "Contact",    num: "05" },
+  { id: "services",   label: "Services",   num: "04" },
+  { id: "experience", label: "Experience", num: "05" },
+  { id: "contact",    label: "Contact",    num: "06" },
 ];
 
 export function ScrollRail() {
@@ -44,8 +45,8 @@ export function ScrollRail() {
       observers.push(obs);
     });
 
-    // Letter shortcuts: g h / g a / g s / g w / g e / g c
-    const keymap: Record<string, string> = { h: "hero", a: "about", s: "tech", w: "projects", e: "experience", c: "contact" };
+    // Letter shortcuts: g h / g a / g t / g w / g s / g e / g c
+    const keymap: Record<string, string> = { h: "hero", a: "about", t: "tech", w: "projects", s: "services", e: "experience", c: "contact" };
     let waiting = false;
     let waitTimer: ReturnType<typeof setTimeout> | null = null;
     const onKey = (e: KeyboardEvent) => {
