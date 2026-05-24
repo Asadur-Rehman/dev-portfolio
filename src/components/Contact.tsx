@@ -13,7 +13,7 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const iconMap: Record<string, LucideIcon> = {
-  github: Github, linkedin: Linkedin, twitter: Mail, email: Mail, upwork: Briefcase,
+  github: Github, linkedin: Linkedin, email: Mail, upwork: Briefcase,
 };
 
 const fade = {

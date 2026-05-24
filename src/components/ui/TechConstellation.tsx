@@ -47,6 +47,17 @@ export function TechConstellation() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 800, h: 560 });
   const [hover, setHover] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Below sm: render a categorized grid instead of the constellation.
+  // 39 unlabeled dots on a 360px-wide canvas is unreadable.
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener?.("change", apply);
+    return () => mq.removeEventListener?.("change", apply);
+  }, []);
 
   // Mobile: phones can't hover. Show labels only for the tapped node.
   const isSmall = size.w < 640;
@@ -142,6 +153,10 @@ export function TechConstellation() {
     mq.addEventListener?.("change", fn);
     return () => mq.removeEventListener?.("change", fn);
   }, []);
+
+  if (isMobile) {
+    return <MobileSkillGrid />;
+  }
 
   return (
     <div className="relative">
@@ -325,6 +340,49 @@ export function TechConstellation() {
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+/**
+ * MobileSkillGrid — readable list-by-category replacement for the constellation
+ * on phones, where the dot-and-edge layout collapses into noise.
+ */
+function MobileSkillGrid() {
+  return (
+    <div className="rounded-3xl border border-border bg-surface/40 p-5 space-y-6">
+      {skillCategories.map((cat) => {
+        const list = skills.filter((s) => s.category === cat.id);
+        if (list.length === 0) return null;
+        const c = colors[cat.id];
+        return (
+          <div key={cat.id}>
+            <div className="flex items-center gap-2 mb-3">
+              <span
+                className="block h-2 w-2 rounded-full"
+                style={{ background: c.hex, boxShadow: `0 0 8px ${c.glow}` }}
+                aria-hidden
+              />
+              <p className="font-mono text-[0.65rem] uppercase tracking-[0.25em]" style={{ color: c.hex }}>
+                {cat.label}
+              </p>
+              <span className="font-mono text-[0.55rem] text-muted/50 ml-auto">
+                {list.length}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {list.map((s) => (
+                <span
+                  key={s.name}
+                  className="rounded-full border border-border bg-background/40 px-2.5 py-1 text-xs font-mono text-muted-strong"
+                >
+                  {s.name}
+                </span>
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

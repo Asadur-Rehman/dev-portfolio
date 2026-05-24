@@ -1,16 +1,16 @@
-# Full-Stack Developer Portfolio
+# Asad ur Rehman — Portfolio
 
-A modern, dark-theme portfolio built with **Next.js 14** (App Router), **TypeScript**, **Tailwind CSS**, and **Framer Motion**. Designed for Full-Stack/MERN developers targeting remote USD-paying jobs.
+Source code for [my personal portfolio](https://asadurrehman.dev) — a Next.js 14 / TypeScript / Tailwind site with case studies, a tech stack constellation, a Cmd+K command palette, and a dynamic OG image generator.
 
 ## Tech Stack
 
-- **Framework:** Next.js 14 (App Router)
+- **Framework:** Next.js 14 (App Router) + React 18
 - **Language:** TypeScript (strict mode)
 - **Styling:** Tailwind CSS
 - **Animations:** Framer Motion
 - **Icons:** Lucide React
-- **Fonts:** Space Mono (display), Work Sans (body), JetBrains Mono (code)
-- **Contact form:** Web3Forms (free)
+- **Fonts:** Syne (display), Plus Jakarta Sans (body), JetBrains Mono (code)
+- **Contact form:** Web3Forms
 - **Deployment:** Vercel
 
 ## Quick Start

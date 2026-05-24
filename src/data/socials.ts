@@ -1,7 +1,7 @@
 export interface SocialLink {
   name: string;
   url: string;
-  icon: "github" | "linkedin" | "twitter" | "email" | "upwork";
+  icon: "github" | "linkedin" | "email" | "upwork";
   handle?: string;
 }
 

@@ -9,7 +9,7 @@ import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
 
 const iconMap: Record<string, LucideIcon> = {
-  github: Github, linkedin: Linkedin, twitter: Mail, email: Mail, upwork: Briefcase,
+  github: Github, linkedin: Linkedin, email: Mail, upwork: Briefcase,
 };
 
 const navLinks = [

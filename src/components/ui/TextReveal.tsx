@@ -1,7 +1,6 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface TextRevealProps {
   text: string;
@@ -9,50 +8,32 @@ interface TextRevealProps {
   as?: "p" | "span" | "div";
 }
 
+/**
+ * TextReveal — a per-word fade-in that fires when the text enters view.
+ * The earlier scroll-linked version required the user to scroll through half
+ * a viewport per paragraph to complete, which felt broken on mobile.
+ */
 export function TextReveal({ text, className = "", as: Tag = "p" }: TextRevealProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start 0.85", "end 0.35"],
-  });
-
   const words = text.split(" ");
 
   return (
-    <div ref={containerRef}>
-      <Tag className={className}>
-        {words.map((word, i) => {
-          const start = i / words.length;
-          const end = start + 1 / words.length;
-          return (
-            <Word key={`${word}-${i}`} progress={scrollYProgress} range={[start, end]}>
-              {word}
-            </Word>
-          );
-        })}
-      </Tag>
-    </div>
-  );
-}
-
-function Word({
-  children,
-  progress,
-  range,
-}: {
-  children: string;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
-  range: [number, number];
-}) {
-  // Only animate opacity — blur per-word is extremely expensive on GPU
-  const opacity = useTransform(progress, range, [0.15, 1]);
-
-  return (
-    <motion.span
-      style={{ opacity }}
-      className="inline-block mr-[0.25em] transition-colors"
-    >
-      {children}
-    </motion.span>
+    <Tag className={className}>
+      {words.map((word, i) => (
+        <motion.span
+          key={`${word}-${i}`}
+          initial={{ opacity: 0.2 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, margin: "0px 0px -15% 0px" }}
+          transition={{
+            duration: 0.35,
+            ease: [0.22, 1, 0.36, 1],
+            delay: Math.min(i * 0.012, 0.6),
+          }}
+          className="inline-block mr-[0.25em]"
+        >
+          {word}
+        </motion.span>
+      ))}
+    </Tag>
   );
 }

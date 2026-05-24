@@ -133,14 +133,14 @@ function FeaturedCard({ project }: { project: ProjectType }) {
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3">
                 {project.caseStudyUrl && (
                   <Link
                     href={project.caseStudyUrl}
-                    className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
+                    className="group/btn inline-flex items-center gap-2 rounded-full bg-accent px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow transition-all duration-300 hover:scale-[1.03] active:scale-[0.97]"
                   >
                     <BookOpen className="h-4 w-4" aria-hidden />
-                    Read case study
+                    Case study
                     <ArrowUpRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" aria-hidden />
                   </Link>
                 )}
@@ -149,7 +149,8 @@ function FeaturedCard({ project }: { project: ProjectType }) {
                     href={project.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group/btn inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] ${
+                    aria-label={`${project.title} — live demo`}
+                    className={`group/btn inline-flex items-center gap-2 rounded-full px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold transition-all duration-300 hover:scale-[1.03] active:scale-[0.97] ${
                       project.caseStudyUrl
                         ? "glass text-foreground hover:text-accent hover:border-accent/40"
                         : "bg-accent text-background hover:bg-accent-hover hover:shadow-glow"
@@ -164,10 +165,11 @@ function FeaturedCard({ project }: { project: ProjectType }) {
                     href={project.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 rounded-full glass px-6 py-3 text-sm font-semibold text-foreground hover:text-accent hover:border-accent/40 transition-all"
+                    aria-label={`${project.title} source on GitHub`}
+                    className="inline-flex items-center gap-2 rounded-full glass px-3 sm:px-6 py-2.5 sm:py-3 text-sm font-semibold text-foreground hover:text-accent hover:border-accent/40 transition-all"
                   >
                     <Github className="h-4 w-4" aria-hidden />
-                    Source
+                    <span className="hidden sm:inline">Source</span>
                   </Link>
                 )}
               </div>
@@ -285,11 +287,18 @@ function ProjectsShelf({ projects }: { projects: ProjectType[] }) {
   const update = useCallback(() => {
     const el = trackRef.current;
     if (!el) return;
-    const max = el.scrollWidth - el.clientWidth;
-    const p = max > 0 ? el.scrollLeft / max : 0;
+    // Progress should reach 100% when the last card's right edge meets the
+    // viewport's right edge — not when scrollLeft hits scrollWidth - clientWidth,
+    // which counts the track's right padding as scrollable slack.
+    const last = el.lastElementChild as HTMLElement | null;
+    const padRight = parseFloat(getComputedStyle(el).paddingRight || "0");
+    const usefulMax = last
+      ? Math.max(0, last.offsetLeft + last.offsetWidth + padRight - el.clientWidth)
+      : Math.max(0, el.scrollWidth - el.clientWidth);
+    const p = usefulMax > 0 ? Math.min(1, Math.max(0, el.scrollLeft / usefulMax)) : 0;
     setProgress(p);
     setCanPrev(el.scrollLeft > 4);
-    setCanNext(el.scrollLeft < max - 4);
+    setCanNext(el.scrollLeft < usefulMax - 4);
 
     // active card = the one whose center is closest to the viewport center
     const center = el.scrollLeft + el.clientWidth / 2;
@@ -403,11 +412,11 @@ function ProjectsShelf({ projects }: { projects: ProjectType[] }) {
 
         {/* progress + dots */}
         <div className="flex items-center justify-between gap-4 px-4 sm:px-10 lg:px-20">
-          <div className="relative flex-1 max-w-md h-px bg-border/60">
+          <div className="relative flex-1 h-px bg-border/60">
             <span
               aria-hidden
               className="absolute left-0 top-0 h-px bg-gradient-to-r from-accent via-accent-2 to-accent transition-[width] duration-200"
-              style={{ width: `${Math.max(8, progress * 100)}%` }}
+              style={{ width: `${Math.max(4, progress * 100)}%` }}
             />
           </div>
           <div className="flex items-center gap-1.5">
