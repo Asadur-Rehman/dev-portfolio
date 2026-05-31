@@ -1,10 +1,14 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
+import { Metrics } from "@/components/Metrics";
 import { TechStack } from "@/components/TechStack";
 import { Projects } from "@/components/Projects";
+import { Process } from "@/components/Process";
 import { Services } from "@/components/Services";
+import { Testimonials } from "@/components/Testimonials";
 import { Experience } from "@/components/Experience";
+import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
 import { PageLoader } from "@/components/ui/PageLoader";
@@ -65,11 +69,15 @@ export default async function Home() {
         <ScrollRail />
         <main id="main-content">
           <Hero liveActivity={liveActivity} />
+          <Metrics />
           <About />
           <TechStack />
           <Projects />
+          <Process />
           <Services />
+          <Testimonials />
           <Experience />
+          <FAQ />
           <Contact />
         </main>
         <Footer />

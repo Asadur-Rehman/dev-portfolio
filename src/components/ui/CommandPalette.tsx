@@ -67,8 +67,10 @@ export function CommandPalette() {
     { id: "nav-about", group: "Navigate", icon: Sparkles, label: "Go to About", keywords: "bio intro", run: () => scrollTo("about") },
     { id: "nav-tech", group: "Navigate", icon: Cpu, label: "Go to Stack", keywords: "skills tools", run: () => scrollTo("tech") },
     { id: "nav-proj", group: "Navigate", icon: Layers, label: "Go to Work", keywords: "projects portfolio", run: () => scrollTo("projects") },
+    { id: "nav-process", group: "Navigate", icon: Compass, label: "Go to Process", keywords: "how i work workflow methodology", run: () => scrollTo("process") },
     { id: "nav-services", group: "Navigate", icon: Code2, label: "Go to Services", keywords: "freelance hire offerings", run: () => scrollTo("services") },
     { id: "nav-exp", group: "Navigate", icon: Briefcase, label: "Go to Experience", keywords: "work history", run: () => scrollTo("experience") },
+    { id: "nav-faq", group: "Navigate", icon: Sparkles, label: "Go to FAQ", keywords: "questions pricing rates", run: () => scrollTo("faq") },
     { id: "nav-contact", group: "Navigate", icon: Send, label: "Go to Contact", keywords: "email hire", run: () => scrollTo("contact") },
 
     // Quick actions

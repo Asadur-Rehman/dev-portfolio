@@ -6,6 +6,7 @@ import { personal } from "@/data/personal";
 import { Aurora } from "@/components/ui/Aurora";
 import { MagneticButton } from "@/components/ui/MagneticButton";
 import { NowBar } from "@/components/ui/NowBar";
+import { TrustStrip } from "@/components/ui/TrustStrip";
 import type { LiveActivity } from "@/lib/github";
 
 const container = {
@@ -107,6 +108,8 @@ export function Hero({ liveActivity }: { liveActivity?: LiveActivity | null } = 
             </span>
           ))}
         </motion.div>
+
+        <TrustStrip />
       </motion.div>
 
       <motion.button

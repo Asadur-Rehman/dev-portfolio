@@ -99,8 +99,28 @@ export function Contact() {
             </motion.h2>
 
             <motion.p variants={fade} className="mt-5 max-w-2xl text-base sm:text-lg text-muted-strong">
-              Have a project, a role, or a question? Send a message and I&apos;ll get back to you within a day or two.
+              Have a project, a role, or a question? Send a message and I&apos;ll get back to you — usually within a few hours, always within 24 on weekdays.
             </motion.p>
+
+            <motion.div
+              variants={fade}
+              className="mt-6 flex flex-wrap gap-2"
+              aria-label="Response commitments"
+            >
+              {[
+                "Reply within 24h on weekdays",
+                "Honest scope, no fluff",
+                "NDA / MSA signed before scope",
+              ].map((badge) => (
+                <span
+                  key={badge}
+                  className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/40 px-3 py-1.5 text-xs text-muted-strong"
+                >
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent/70" aria-hidden />
+                  {badge}
+                </span>
+              ))}
+            </motion.div>
 
             <motion.div variants={fade} className="mt-12 sm:mt-14 grid lg:grid-cols-5 gap-8 sm:gap-10">
               {/* Form */}

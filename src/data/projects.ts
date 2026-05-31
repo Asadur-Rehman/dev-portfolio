@@ -9,6 +9,7 @@ export interface Project {
   tags: string[];
   category: ProjectCategory;
   liveUrl?: string;
+  liveNote?: string;
   githubUrl?: string;
   caseStudyUrl?: string;
   role?: string;
@@ -33,6 +34,7 @@ export const projects: Project[] = [
     tags: ["Next.js 14", "TypeScript", "NestJS", "MongoDB", "Socket.io", "Redis", "Turborepo"],
     category: "fullstack",
     liveUrl: "https://syncapi-9fkn.onrender.com",
+    liveNote: "Demo runs on a free tier — first load may take 30–60s to wake up.",
     githubUrl: "https://github.com/Asadur-Rehman/syncapi",
     caseStudyUrl: "/work/syncapi",
     year: "2026",

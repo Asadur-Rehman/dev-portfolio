@@ -134,6 +134,12 @@ function FeaturedCard({ project }: { project: ProjectType }) {
                 ))}
               </div>
               <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                {project.liveNote && (
+                  <p className="w-full mb-1 font-mono text-[0.65rem] uppercase tracking-widest text-muted">
+                    <span className="text-accent/80">Note · </span>
+                    {project.liveNote}
+                  </p>
+                )}
                 {project.caseStudyUrl && (
                   <Link
                     href={project.caseStudyUrl}

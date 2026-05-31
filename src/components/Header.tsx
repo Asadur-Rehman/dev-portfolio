@@ -9,10 +9,11 @@ import { MagneticButton } from "@/components/ui/MagneticButton";
 
 const navLinks = [
   { href: "/#about",      label: "About" },
-  { href: "/#tech",       label: "Stack" },
   { href: "/#projects",   label: "Work" },
+  { href: "/#process",    label: "Process" },
   { href: "/#services",   label: "Services" },
   { href: "/#experience", label: "Experience" },
+  { href: "/#faq",        label: "FAQ" },
   { href: "/#contact",    label: "Contact" },
 ];
 
@@ -37,7 +38,7 @@ export function Header() {
 
   // Active section tracking via IntersectionObserver
   useEffect(() => {
-    const sectionIds = ["about", "tech", "projects", "services", "experience", "contact"];
+    const sectionIds = ["about", "projects", "process", "services", "experience", "faq", "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {

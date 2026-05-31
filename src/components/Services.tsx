@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { motion, useInView } from "framer-motion";
-import { ArrowRight, Code2, Sparkles, Radio } from "lucide-react";
+import { ArrowRight, Code2, Sparkles, Radio, Briefcase, Calendar, Clock } from "lucide-react";
 import { services } from "@/data/services";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { SectionDivider } from "@/components/ui/SectionDivider";
@@ -88,7 +88,50 @@ export function Services() {
               })}
             </motion.div>
 
-            <motion.div variants={item} className="mt-10 flex flex-wrap items-center gap-4">
+            {/* Engagement model strip */}
+            <motion.div
+              variants={item}
+              className="mt-10 grid sm:grid-cols-3 gap-3"
+              aria-label="Engagement models"
+            >
+              {[
+                {
+                  icon: Briefcase,
+                  label: "Fixed-scope project",
+                  body: "Clear deliverable, milestone-based invoicing. Starting at $2.5k.",
+                },
+                {
+                  icon: Calendar,
+                  label: "Weekly retainer",
+                  body: "20–25 hrs/week for evolving scope. 4-week minimum.",
+                },
+                {
+                  icon: Clock,
+                  label: "Advisory call",
+                  body: "60-min architecture / code review. $150, applied to project if we work together.",
+                },
+              ].map((m) => {
+                const Icon = m.icon;
+                return (
+                  <div
+                    key={m.label}
+                    className="rounded-xl border border-border bg-surface/40 p-4 flex items-start gap-3"
+                  >
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
+                      <Icon className="h-3.5 w-3.5" aria-hidden />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted mb-1">
+                        {m.label}
+                      </p>
+                      <p className="text-xs text-muted-strong leading-relaxed">{m.body}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </motion.div>
+
+            <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href="#contact"
                 className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow transition-all duration-300"
