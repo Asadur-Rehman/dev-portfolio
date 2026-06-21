@@ -9,6 +9,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { personal } from "@/data/personal";
+import { linkedIn } from "@/data/socials";
 
 type Action = {
   id: string;
@@ -81,8 +82,8 @@ export function CommandPalette() {
 
     // Links
     { id: "link-github", group: "Links", icon: Github, label: "GitHub profile", hint: "@Asadur-Rehman", run: () => openExternal("https://github.com/Asadur-Rehman") },
-    { id: "link-linkedin", group: "Links", icon: Linkedin, label: "LinkedIn", hint: "asad-ur-rehman", run: () => openExternal("https://linkedin.com/in/asad-ur-rehman") },
-    { id: "link-upwork", group: "Links", icon: Briefcase, label: "Upwork profile", run: () => openExternal("https://www.upwork.com/freelancers/~asadurrehman") },
+    { id: "link-linkedin", group: "Links", icon: Linkedin, label: "LinkedIn", hint: linkedIn.vanity, run: () => openExternal(linkedIn.url) },
+    { id: "link-upwork", group: "Links", icon: Briefcase, label: "Upwork profile", run: () => openExternal("https://www.upwork.com/freelancers/~01a6a9563845b65fdc") },
 
     // Source
     { id: "src-portfolio", group: "Source", icon: FolderGit2, label: "View source for this portfolio", hint: REPO_URL.replace("https://", ""), run: () => openExternal(REPO_URL) },

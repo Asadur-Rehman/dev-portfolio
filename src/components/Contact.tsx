@@ -10,6 +10,7 @@ import type { LucideIcon } from "lucide-react";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
 import { SectionDivider } from "@/components/ui/SectionDivider";
+import { LinkedInBadge } from "@/components/ui/LinkedInBadge";
 
 const iconMap: Record<string, LucideIcon> = {
   github: Github, linkedin: Linkedin, email: Mail, upwork: Briefcase,
@@ -184,7 +185,7 @@ export function Contact() {
                 <div className="rounded-xl border border-border bg-surface-elevated p-6 shadow-sm">
                   <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">Elsewhere</p>
                   <ul className="space-y-2">
-                    {socialLinks.map((link) => {
+                    {socialLinks.filter((link) => link.icon !== "linkedin").map((link) => {
                       const Icon = iconMap[link.icon] || Mail;
                       const external = link.icon !== "email";
                       return (
@@ -205,6 +206,11 @@ export function Contact() {
                       );
                     })}
                   </ul>
+                </div>
+
+                <div className="rounded-xl border border-border bg-surface-elevated p-6 shadow-sm">
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">LinkedIn</p>
+                  <LinkedInBadge size="medium" theme="light" />
                 </div>
 
                 {/* Availability */}

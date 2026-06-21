@@ -5,6 +5,13 @@ export interface SocialLink {
   handle?: string;
 }
 
+/** LinkedIn profile + official badge vanity slug */
+export const linkedIn = {
+  url: "https://www.linkedin.com/in/asad-urrehman-dev",
+  vanity: "asad-urrehman-dev",
+  badgeLabel: "Asad ur R.",
+} as const;
+
 export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
@@ -14,20 +21,20 @@ export const socialLinks: SocialLink[] = [
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/in/asad-ur-rehman",
+    url: linkedIn.url,
     icon: "linkedin",
-    handle: "asad-ur-rehman",
+    handle: linkedIn.vanity,
+  },
+  {
+    name: "Upwork",
+    url: "https://www.upwork.com/freelancers/~01a6a9563845b65fdc",
+    icon: "upwork",
+    handle: "Public profile · hire me",
   },
   {
     name: "Email",
     url: "mailto:aurehman.bese21seecs@seecs.edu.pk",
     icon: "email",
     handle: "aurehman.bese21seecs@seecs.edu.pk",
-  },
-  {
-    name: "Upwork",
-    url: "https://www.upwork.com/freelancers/~asadurrehman",
-    icon: "upwork",
-    handle: "Hire on Upwork",
   },
 ];
