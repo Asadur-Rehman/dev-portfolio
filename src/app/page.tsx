@@ -11,19 +11,15 @@ import { Experience } from "@/components/Experience";
 import { FAQ } from "@/components/FAQ";
 import { Contact } from "@/components/Contact";
 import { Footer } from "@/components/Footer";
-import { PageLoader } from "@/components/ui/PageLoader";
-import { CustomCursor } from "@/components/ui/CustomCursor";
 import { CommandPalette } from "@/components/ui/CommandPalette";
-import { ShortcutsHelp } from "@/components/ui/ShortcutsHelp";
-import { ScrollRail } from "@/components/ui/ScrollRail";
-import { EasterEgg } from "@/components/ui/EasterEgg";
 import { personal } from "@/data/personal";
 import { socialLinks } from "@/data/socials";
 import { fetchLatestActivity } from "@/lib/github";
+import { siteUrl } from "@/lib/site";
 
 export default async function Home() {
   const liveActivity = await fetchLatestActivity();
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://asadurrehman.dev";
+  const siteUrlResolved = siteUrl;
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -32,7 +28,7 @@ export default async function Home() {
     description: personal.headline,
     email: personal.email,
     telephone: personal.phone,
-    url: siteUrl,
+    url: siteUrlResolved,
     address: {
       "@type": "PostalAddress",
       addressLocality: "Islamabad",
@@ -60,28 +56,22 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <CustomCursor />
       <CommandPalette />
-      <ShortcutsHelp />
-      <EasterEgg />
-      <PageLoader>
-        <Header />
-        <ScrollRail />
-        <main id="main-content">
-          <Hero liveActivity={liveActivity} />
-          <Metrics />
-          <About />
-          <TechStack />
-          <Projects />
-          <Process />
-          <Services />
-          <Testimonials />
-          <Experience />
-          <FAQ />
-          <Contact />
-        </main>
-        <Footer />
-      </PageLoader>
+      <Header />
+      <main id="main-content">
+        <Hero liveActivity={liveActivity} />
+        <Metrics />
+        <About />
+        <TechStack />
+        <Projects />
+        <Process />
+        <Services />
+        <Testimonials />
+        <Experience />
+        <FAQ />
+        <Contact />
+      </main>
+      <Footer />
     </>
   );
 }

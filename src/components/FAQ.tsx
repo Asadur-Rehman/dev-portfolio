@@ -41,7 +41,7 @@ export function FAQ() {
       <section
         id="faq"
         ref={ref}
-        className="relative py-24 sm:py-32 px-5 sm:px-10 lg:px-20 overflow-hidden"
+        className="relative py-20 sm:py-28 px-5 sm:px-8 lg:px-12 section-anchor"
         aria-labelledby="faq-heading"
       >
         <script
@@ -61,7 +61,7 @@ export function FAQ() {
             >
               <h2
                 id="faq-heading"
-                className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-3xl"
+                className="font-display font-bold text-balance text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground max-w-3xl"
               >
                 Questions, before you ask.
               </h2>

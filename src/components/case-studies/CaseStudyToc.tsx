@@ -107,7 +107,7 @@ export function CaseStudyToc({ chapters, rootSelector = "main" }: Props) {
                     animate={{
                       scale: isActive ? 1 : 0.55,
                       backgroundColor: isActive ? "var(--accent)" : "rgba(168,168,184,0.55)",
-                      boxShadow: isActive ? "0 0 0 4px rgba(255, 106, 61, 0.15)" : "0 0 0 0 rgba(0,0,0,0)",
+                      boxShadow: isActive ? "0 0 0 4px var(--accent-muted)" : "0 0 0 0 transparent",
                     }}
                     transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                     className="block w-1.5 h-1.5 rounded-full"

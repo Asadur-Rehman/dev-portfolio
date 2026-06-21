@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, useInView } from "framer-motion";
 import { ArrowRight, Code2, Sparkles, Radio, Briefcase, Calendar, Clock } from "lucide-react";
 import { services } from "@/data/services";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const container = {
@@ -33,7 +32,7 @@ export function Services() {
       <section
         id="services"
         ref={ref}
-        className="relative py-24 sm:py-32 px-5 sm:px-10 lg:px-20 overflow-hidden"
+        className="relative py-20 sm:py-28 px-5 sm:px-8 lg:px-12 section-anchor"
         aria-labelledby="services-heading"
       >
         <div className="max-w-6xl mx-auto">
@@ -45,7 +44,7 @@ export function Services() {
             <motion.div variants={item} className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
               <h2
                 id="services-heading"
-                className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-2xl"
+                className="font-display font-bold text-balance text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground max-w-2xl"
               >
                 What I can help with.
               </h2>
@@ -59,8 +58,7 @@ export function Services() {
                 const Icon = iconFor[s.id] ?? Code2;
                 return (
                   <motion.div key={s.id} variants={item} className="h-full">
-                    <SpotlightCard className="rounded-2xl h-full" spotlightColor="rgba(0, 212, 255, 0.08)">
-                      <div className="h-full rounded-2xl border border-border bg-surface/60 p-6 flex flex-col">
+                    <div className="h-full rounded-xl border border-border bg-surface-elevated p-6 flex flex-col shadow-sm">
                         <span className="inline-grid h-10 w-10 place-items-center rounded-xl border border-accent/30 bg-accent/10 text-accent mb-5">
                           <Icon className="h-4 w-4" aria-hidden />
                         </span>
@@ -82,7 +80,6 @@ export function Services() {
                           ))}
                         </ul>
                       </div>
-                    </SpotlightCard>
                   </motion.div>
                 );
               })}
@@ -115,7 +112,7 @@ export function Services() {
                 return (
                   <div
                     key={m.label}
-                    className="rounded-xl border border-border bg-surface/40 p-4 flex items-start gap-3"
+                    className="rounded-xl border border-border bg-surface p-4 flex items-start gap-3"
                   >
                     <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg border border-accent/30 bg-accent/10 text-accent">
                       <Icon className="h-3.5 w-3.5" aria-hidden />
@@ -134,7 +131,7 @@ export function Services() {
             <motion.div variants={item} className="mt-8 flex flex-wrap items-center gap-4">
               <Link
                 href="#contact"
-                className="group inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-background hover:bg-accent-hover hover:shadow-glow transition-all duration-300"
+                className="group inline-flex items-center gap-2 rounded-lg bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-hover transition-colors"
               >
                 Start a conversation
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden />

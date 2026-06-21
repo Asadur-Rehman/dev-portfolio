@@ -76,13 +76,13 @@ const config: Config = {
         },
       },
       boxShadow: {
-        glow: "0 0 60px -10px var(--accent-glow)",
-        "glow-sm": "0 0 24px -8px var(--accent-glow)",
-        "glow-2": "0 0 60px -10px rgba(167, 139, 250, 0.4)",
-        card: "0 4px 24px -4px rgba(0,0,0,0.4)",
+        glow: "0 0 40px -10px var(--accent-glow)",
+        "glow-sm": "0 0 16px -4px var(--accent-glow)",
+        "glow-2": "0 0 40px -10px rgba(3, 105, 161, 0.12)",
+        card: "0 1px 2px rgba(26, 24, 20, 0.06), 0 4px 20px -4px rgba(26, 24, 20, 0.1)",
         "card-hover":
-          "0 16px 48px -12px rgba(0,0,0,0.6), 0 0 32px -8px var(--accent-muted)",
-        "glow-accent": "0 0 40px -8px var(--accent-glow), 0 0 12px -2px var(--accent-glow)",
+          "0 4px 24px -4px rgba(26, 24, 20, 0.12), 0 8px 32px -8px rgba(29, 78, 216, 0.1)",
+        "glow-accent": "0 4px 20px -4px var(--accent-glow)",
       },
       backgroundImage: {
         "radial-fade":

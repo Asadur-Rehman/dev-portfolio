@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { CheckCircle2 } from "lucide-react";
 import { process } from "@/data/process";
-import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 
 const container = {
@@ -30,7 +29,7 @@ export function Process() {
       <section
         id="process"
         ref={ref}
-        className="relative py-24 sm:py-32 px-5 sm:px-10 lg:px-20 overflow-hidden"
+        className="relative py-20 sm:py-28 px-5 sm:px-8 lg:px-12 section-anchor"
         aria-labelledby="process-heading"
       >
         <div className="max-w-6xl mx-auto">
@@ -45,7 +44,7 @@ export function Process() {
             >
               <h2
                 id="process-heading"
-                className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-3xl"
+                className="font-display font-bold text-balance text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground max-w-3xl"
               >
                 How I actually work.
               </h2>
@@ -66,8 +65,7 @@ export function Process() {
 
               {process.map((step) => (
                 <motion.li key={step.id} variants={item} className="relative h-full list-none">
-                  <SpotlightCard className="rounded-2xl h-full" spotlightColor="rgba(0, 212, 255, 0.08)">
-                    <div className="h-full rounded-2xl border border-border bg-surface/60 p-6 flex flex-col">
+                  <div className="h-full rounded-xl border border-border bg-surface-elevated p-6 flex flex-col shadow-sm">
                       <div className="flex items-center gap-3 mb-5">
                         <span className="grid h-10 w-10 place-items-center rounded-xl border border-accent/30 bg-accent/10 font-mono text-sm font-semibold text-accent">
                           {step.step}
@@ -93,7 +91,6 @@ export function Process() {
                         ))}
                       </ul>
                     </div>
-                  </SpotlightCard>
                 </motion.li>
               ))}
             </motion.ol>

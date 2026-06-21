@@ -4,9 +4,8 @@ import { useRef, useState, useMemo, useEffect, useCallback } from "react";
 import Link from "next/link";
 import {
   motion, useInView, AnimatePresence,
-  useScroll, useTransform, LayoutGroup,
 } from "framer-motion";
-import { ExternalLink, Github, ArrowUpRight, Sparkles, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
+import { ExternalLink, Github, ArrowUpRight, ArrowLeft, ArrowRight, BookOpen } from "lucide-react";
 import { projects } from "@/data/projects";
 import type { Project as ProjectType, ProjectCategory } from "@/data/projects";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
@@ -60,23 +59,14 @@ function FeaturedCard({ project }: { project: ProjectType }) {
         <div className="relative flex flex-col lg:grid lg:grid-cols-[1fr_1px_42%] overflow-hidden rounded-[calc(1.5rem-1px)]">
 
           {/* ── Atmosphere ── */}
-          <div className="absolute inset-0 -z-10 pointer-events-none" aria-hidden>
-            <div className="absolute -top-48 -left-48 w-[36rem] h-[36rem] rounded-full bg-accent/[0.10] blur-[100px]" />
-            <div className="absolute -bottom-48 -right-48 w-[28rem] h-[28rem] rounded-full bg-accent-2/[0.08] blur-[100px]" />
-            <div className="absolute inset-0 bg-grid opacity-[0.17]" />
-          </div>
+          <div className="absolute inset-0 -z-10 pointer-events-none bg-surface/50" aria-hidden />
 
           {/* ── Left: Identity ── */}
           <div className="p-8 sm:p-10 lg:p-12">
             <div className="flex flex-wrap items-center gap-2.5 mb-8">
-              <motion.span
-                animate={{ scale: [1, 1.05, 1] }}
-                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                className="inline-flex items-center gap-1.5 rounded-full bg-accent/10 border border-accent/30 px-3 py-1 text-xs font-mono font-medium text-accent"
-              >
-                <Sparkles className="h-3 w-3 fill-current" aria-hidden />
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent-muted border border-accent/20 px-3 py-1 text-xs font-mono font-medium text-accent">
                 Featured
-              </motion.span>
+              </span>
               {project.year && (
                 <span className="font-mono text-xs text-muted">{project.year}</span>
               )}
@@ -128,7 +118,7 @@ function FeaturedCard({ project }: { project: ProjectType }) {
             <div>
               <div className="flex flex-wrap gap-2 mb-6">
                 {project.tags.map((tag) => (
-                  <span key={tag} className="shimmer-hover rounded-full border border-border bg-background/60 px-3 py-1 text-xs font-mono text-muted-strong">
+                  <span key={tag} className="rounded-full border border-border bg-surface px-3 py-1 text-xs font-mono text-muted-strong">
                     {tag}
                   </span>
                 ))}
@@ -194,7 +184,7 @@ function ProjectCard({ project, num }: { project: ProjectType; num: number }) {
   return (
     <motion.div variants={item} style={{ perspective: 700 }} className="h-full">
       <SpotlightCard className="rounded-2xl h-full" spotlightColor={meta.spotlight}>
-        <div className="group rounded-2xl border border-border bg-surface/60 flex flex-col overflow-hidden h-full transition-all duration-300 hover:border-white/10 hover:-translate-y-1 hover:shadow-card-hover">
+        <div className="group rounded-2xl border border-border bg-surface-elevated flex flex-col overflow-hidden h-full transition-all duration-200 hover:border-accent/30 hover:shadow-card-hover">
 
           {/* Category stripe */}
           <div
@@ -233,7 +223,7 @@ function ProjectCard({ project, num }: { project: ProjectType; num: number }) {
 
             <div className="flex flex-wrap gap-1.5 mb-5">
               {project.tags.slice(0, 5).map((tag) => (
-                <span key={tag} className="shimmer-hover rounded-full border border-border bg-background/40 px-2.5 py-0.5 text-[0.67rem] font-mono text-muted-strong">
+                <span key={tag} className="rounded-full border border-border bg-surface px-2.5 py-0.5 text-[0.67rem] font-mono text-muted-strong">
                   {tag}
                 </span>
               ))}
@@ -444,12 +434,9 @@ function ProjectsShelf({ projects }: { projects: ProjectType[] }) {
 
 /* ── Projects section ────────────────────────────────────────────── */
 export function Projects() {
-  const ref   = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
   const [filter, setFilter] = useState<ProjectCategory | "all">("all");
-
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [30, -30]);
 
   const filtered = useMemo(() => {
     const base = projects.filter((p) => p.featured);
@@ -465,10 +452,10 @@ export function Projects() {
       <section
         id="projects"
         ref={ref}
-        className="relative py-24 sm:py-36 px-4 sm:px-10 lg:px-20"
+        className="relative py-20 sm:py-28 px-5 sm:px-8 lg:px-12 section-anchor"
         aria-labelledby="projects-heading"
       >
-        <motion.div style={{ y }} className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <motion.div variants={container} initial="hidden" animate={isInView ? "show" : "hidden"}>
 
             <motion.p variants={item} className="font-mono text-xs uppercase tracking-[0.4em] text-accent mb-4">
@@ -478,36 +465,27 @@ export function Projects() {
             <motion.div variants={item} className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-12">
               <h2
                 id="projects-heading"
-                className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-2xl"
+                className="font-display font-bold text-balance text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground max-w-2xl"
               >
                 Selected projects.
               </h2>
 
-              {/* Filter strip with spring pill */}
-              <LayoutGroup>
-                <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
-                  {filters.map((f) => (
-                    <button
-                      key={f.id}
-                      onClick={() => setFilter(f.id)}
-                      className={`relative shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
-                        filter === f.id
-                          ? "text-background"
-                          : "border border-border text-muted hover:text-foreground hover:border-border-strong"
-                      }`}
-                    >
-                      {filter === f.id && (
-                        <motion.span
-                          layoutId="filter-pill"
-                          className="absolute inset-0 rounded-full bg-accent shadow-glow-sm"
-                          transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                        />
-                      )}
-                      <span className="relative z-10">{f.label}</span>
-                    </button>
-                  ))}
-                </div>
-              </LayoutGroup>
+              {/* Filter strip */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+                {filters.map((f) => (
+                  <button
+                    key={f.id}
+                    onClick={() => setFilter(f.id)}
+                    className={`shrink-0 rounded-full px-4 py-2 text-sm font-medium transition-colors duration-200 ${
+                      filter === f.id
+                        ? "bg-accent text-white"
+                        : "border border-border text-muted-strong hover:text-foreground hover:border-border-strong"
+                    }`}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
             </motion.div>
 
             {/* Featured + horizontal-snap shelf */}
@@ -546,7 +524,7 @@ export function Projects() {
               </motion.p>
             )}
           </motion.div>
-        </motion.div>
+        </div>
       </section>
     </>
   );

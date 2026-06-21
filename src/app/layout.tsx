@@ -3,6 +3,7 @@ import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { personal } from "@/data/personal";
+import { siteUrl } from "@/lib/site";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -25,10 +26,10 @@ const jetbrains = JetBrains_Mono({
   display: "swap",
 });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://asadurrehman.dev";
+const siteUrlResolved = siteUrl;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(siteUrlResolved),
   title: {
     default: `${personal.name} — ${personal.title}`,
     template: `%s — ${personal.name}`,
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: siteUrl,
+    url: siteUrlResolved,
     siteName: personal.name,
     title: `${personal.name} — ${personal.title}`,
     description: personal.headline,
@@ -87,8 +88,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#07070b",
-  colorScheme: "dark",
+  themeColor: "#e3e0da",
+  colorScheme: "light",
   width: "device-width",
   initialScale: 1,
 };
@@ -99,18 +100,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${jakarta.variable} ${jetbrains.variable} dark`}
+      className={`${syne.variable} ${jakarta.variable} ${jetbrains.variable}`}
     >
-      <head>
-        {/* No-FOUC theme bootstrap — read the saved theme before paint.
-            Default is 'ember' (the :root values); 'orbit' and 'lime' are
-            opt-in overrides via data-theme. */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='orbit'||t==='lime'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
-          }}
-        />
-      </head>
       <body className="font-body antialiased bg-background text-foreground">
         <a
           href="#main-content"

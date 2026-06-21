@@ -1,20 +1,18 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { siteUrl, caseStudySlugs } from "@/lib/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://yoursite.vercel.app";
   const now = new Date();
-
-  const caseStudies = ["syncapi", "flowcraft", "talentscout"];
 
   return [
     {
-      url: baseUrl,
+      url: siteUrl,
       lastModified: now,
       changeFrequency: "monthly",
       priority: 1,
     },
-    ...caseStudies.map((slug) => ({
-      url: `${baseUrl}/work/${slug}`,
+    ...caseStudySlugs.map((slug) => ({
+      url: `${siteUrl}/work/${slug}`,
       lastModified: now,
       changeFrequency: "monthly" as const,
       priority: 0.8,

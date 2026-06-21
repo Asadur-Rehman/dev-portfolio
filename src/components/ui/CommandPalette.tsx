@@ -5,17 +5,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Search, Mail, Phone, Github, Linkedin, Briefcase, Download,
   Sparkles, Code2, Compass, Cpu, Layers, FolderGit2, Send,
-  CornerDownLeft, Command, Palette,
+  CornerDownLeft, Command,
   type LucideIcon,
 } from "lucide-react";
 import { personal } from "@/data/personal";
-import { THEMES, applyTheme, type Theme } from "@/lib/theme";
 
 type Action = {
   id: string;
   label: string;
   hint?: string;
-  group: "Navigate" | "Quick actions" | "Theme" | "Links" | "Source";
+  group: "Navigate" | "Quick actions" | "Links" | "Source";
   icon: LucideIcon;
   iconColor?: string;
   keywords?: string;
@@ -79,21 +78,6 @@ export function CommandPalette() {
     { id: "mail-me", group: "Quick actions", icon: Send, label: "Send me an email", hint: "opens mail client", run: () => { window.location.href = `mailto:${personal.email}`; } },
     { id: "download-cv", group: "Quick actions", icon: Download, label: "Download résumé", hint: "PDF", run: () => { const a = document.createElement("a"); a.href = personal.resumeUrl; a.download = "asad-ur-rehman-resume.pdf"; a.click(); flash("Résumé downloading"); } },
     { id: "show-help", group: "Quick actions", icon: Command, label: "Show keyboard shortcuts", hint: "?", shortcut: ["?"], run: () => { window.dispatchEvent(new CustomEvent("open-shortcuts")); } },
-
-    // Theme
-    ...THEMES.map<Action>((t) => ({
-      id: `theme-${t.id}`,
-      group: "Theme",
-      icon: Palette,
-      iconColor: t.swatch,
-      label: `Switch theme — ${t.label}`,
-      hint: t.hint,
-      keywords: `theme color palette ${t.id} ${t.label} ${t.hint}`,
-      run: () => {
-        applyTheme(t.id as Theme);
-        flash(`Theme: ${t.label}`);
-      },
-    })),
 
     // Links
     { id: "link-github", group: "Links", icon: Github, label: "GitHub profile", hint: "@Asadur-Rehman", run: () => openExternal("https://github.com/Asadur-Rehman") },

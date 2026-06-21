@@ -48,7 +48,7 @@ export function Testimonials() {
             >
               <h2
                 id="testimonials-heading"
-                className="font-display font-bold text-balance text-4xl sm:text-5xl md:text-6xl lg:text-7xl tracking-tighter text-foreground max-w-3xl"
+                className="font-display font-bold text-balance text-3xl sm:text-4xl md:text-5xl tracking-tight text-foreground max-w-3xl"
               >
                 What people I&apos;ve worked with say.
               </h2>
