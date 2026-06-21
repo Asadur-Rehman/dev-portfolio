@@ -42,7 +42,9 @@ export default async function Home() {
       "@type": "Organization",
       name: "Aurora Solutions",
     },
-    sameAs: socialLinks.map((s) => s.url),
+    sameAs: socialLinks
+      .filter((s) => s.url.startsWith("http"))
+      .map((s) => s.url),
     knowsAbout: [
       "Next.js", "React", "Node.js", "NestJS", "TypeScript", "Python",
       "MongoDB", "PostgreSQL", "OpenAI API", "RAG Architecture",

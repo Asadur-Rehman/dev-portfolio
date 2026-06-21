@@ -9,7 +9,7 @@ export interface SocialLink {
 export const linkedIn = {
   url: "https://www.linkedin.com/in/asad-urrehman-dev",
   vanity: "asad-urrehman-dev",
-  badgeLabel: "Asad ur R.",
+  badgeLabel: "Asad ur Rehman",
 } as const;
 
 export const socialLinks: SocialLink[] = [

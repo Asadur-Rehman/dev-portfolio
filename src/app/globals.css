@@ -184,6 +184,28 @@ body::after {
     background: var(--accent);
     opacity: 0.85;
   }
+
+  /* LinkedIn official badge — full width, hide fallback link after widget loads */
+  .linkedin-badge {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .linkedin-badge .LI-profile-badge {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .linkedin-badge iframe {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+  }
+
+  .linkedin-badge:has(iframe) .LI-simple-link {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

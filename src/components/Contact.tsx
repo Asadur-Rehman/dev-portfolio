@@ -8,9 +8,9 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { personal } from "@/data/personal";
-import { socialLinks } from "@/data/socials";
+import { linkedIn, socialLinks } from "@/data/socials";
 import { SectionDivider } from "@/components/ui/SectionDivider";
-import { LinkedInBadge } from "@/components/ui/LinkedInBadge";
+import { ResponsiveLinkedInBadge } from "@/components/ui/LinkedInBadge";
 
 const iconMap: Record<string, LucideIcon> = {
   github: Github, linkedin: Linkedin, email: Mail, upwork: Briefcase,
@@ -116,9 +116,9 @@ export function Contact() {
               ))}
             </motion.div>
 
-            <motion.div variants={fade} className="mt-12 sm:mt-14 grid lg:grid-cols-5 gap-8 sm:gap-10">
+            <motion.div variants={fade} className="mt-12 sm:mt-14 grid lg:grid-cols-5 gap-8 sm:gap-10 items-start">
               {/* Form */}
-              <form onSubmit={handleSubmit} className="lg:col-span-3 rounded-xl border border-border bg-surface-elevated p-6 sm:p-8 space-y-5 shadow-sm" noValidate>
+              <form onSubmit={handleSubmit} className="lg:col-span-3 self-start w-full rounded-xl border border-border bg-surface-elevated p-6 sm:p-8 space-y-5 shadow-sm" noValidate>
                 <input type="checkbox" name="botcheck" tabIndex={-1} autoComplete="off" className="sr-only" aria-hidden />
 
                 <div className="group">
@@ -162,7 +162,7 @@ export function Contact() {
               </form>
 
               {/* Sidebar */}
-              <div className="lg:col-span-2 flex flex-col gap-4">
+              <div className="lg:col-span-2 flex flex-col gap-4 self-start w-full min-w-0">
                 {/* Direct contact */}
                 <div className="rounded-xl border border-border bg-surface-elevated p-6 space-y-4 shadow-sm">
                   <p className="font-mono text-xs uppercase tracking-widest text-muted">Direct</p>
@@ -176,6 +176,17 @@ export function Contact() {
                       <span className="text-sm">{personal.phone}</span>
                     </a>
                   )}
+                  <a
+                    href={linkedIn.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-start gap-3 text-foreground hover:text-accent transition-colors"
+                  >
+                    <Linkedin className="h-4 w-4 mt-0.5 text-accent shrink-0" aria-hidden />
+                    <span className="text-sm group-hover:text-accent transition-colors">
+                      linkedin.com/in/{linkedIn.vanity}
+                    </span>
+                  </a>
                   <a href={personal.resumeUrl} download className="group inline-flex items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-medium text-foreground hover:border-accent/40 hover:text-accent transition-colors">
                     <Download className="h-3.5 w-3.5" aria-hidden />Download resume
                   </a>
@@ -208,9 +219,9 @@ export function Contact() {
                   </ul>
                 </div>
 
-                <div className="rounded-xl border border-border bg-surface-elevated p-6 shadow-sm">
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted mb-4">LinkedIn</p>
-                  <LinkedInBadge size="medium" theme="light" />
+                <div className="rounded-xl border border-border bg-surface-elevated p-4 sm:p-5 shadow-sm w-full min-w-0 overflow-hidden">
+                  <p className="font-mono text-xs uppercase tracking-widest text-muted mb-3">LinkedIn profile</p>
+                  <ResponsiveLinkedInBadge theme="light" />
                 </div>
 
                 {/* Availability */}
