@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import { personal } from "@/data/personal";
 import { siteUrl } from "@/lib/site";
+import { colorModeInitScript } from "@/lib/theme";
 
 const syne = Syne({
   subsets: ["latin"],
@@ -88,8 +89,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#e3e0da",
-  colorScheme: "light",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f7f8fa" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b0d11" },
+  ],
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
 };
@@ -101,7 +105,11 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${syne.variable} ${jakarta.variable} ${jetbrains.variable}`}
+      suppressHydrationWarning
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: colorModeInitScript }} />
+      </head>
       <body className="font-body antialiased bg-background text-foreground">
         <a
           href="#main-content"

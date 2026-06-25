@@ -12,8 +12,8 @@ export default function NotFound() {
       <CommandPalette />
       <Header />
 
-      <main id="main-content" className="min-h-[70vh] flex items-center justify-center px-5 sm:px-10 lg:px-20 pt-28 pb-20">
-        <div className="max-w-lg text-center">
+      <main id="main-content" className="min-h-[70vh] flex items-center justify-center px-5 sm:px-8 lg:px-12 pt-28 pb-20">
+        <div className="max-w-lg w-full text-center">
           <p className="font-mono text-sm text-accent mb-3">404</p>
           <h1 className="font-display font-bold text-3xl sm:text-4xl tracking-tight text-foreground">
             Page not found
@@ -47,6 +47,25 @@ export default function NotFound() {
                 <ArrowUpRight className="h-3.5 w-3.5" />
               </Link>
             ))}
+          </div>
+
+          <div className="mt-8 pt-8 border-t border-border/60">
+            <p className="font-mono text-[0.6rem] uppercase tracking-widest text-muted mb-3">Case studies</p>
+            <div className="flex flex-wrap justify-center gap-2">
+              {[
+                { href: "/work/syncapi", label: "SyncAPI" },
+                { href: "/work/flowcraft", label: "FlowCraft" },
+                { href: "/work/talentscout", label: "TalentScout" },
+              ].map((s) => (
+                <Link
+                  key={s.href}
+                  href={s.href}
+                  className="rounded-md border border-border bg-surface px-3 py-1.5 text-xs font-mono text-muted-strong hover:text-accent hover:border-accent/30 transition-colors"
+                >
+                  {s.label}
+                </Link>
+              ))}
+            </div>
           </div>
         </div>
       </main>

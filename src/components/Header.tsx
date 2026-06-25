@@ -5,6 +5,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import { personal } from "@/data/personal";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 /** Primary nav — shown on desktop */
 const primaryNav = [
@@ -75,7 +76,7 @@ export function Header() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
         scrolled
-          ? "bg-[rgba(227,224,218,0.88)] backdrop-blur-xl border-b border-border/80 shadow-[0_1px_0_rgba(20,18,16,0.04),0_8px_24px_-12px_rgba(20,18,16,0.12)]"
+          ? "header-scrim backdrop-blur-xl border-b border-border/80"
           : "bg-transparent border-b border-transparent"
       }`}
       role="banner"
@@ -112,24 +113,28 @@ export function Header() {
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/#contact"
             className="group inline-flex items-center gap-1.5 rounded-lg bg-foreground px-4 py-2 text-[0.8125rem] font-semibold text-surface-elevated hover:bg-accent"
           >
             Hire me
-            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            <ArrowUpRight className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
         </div>
 
-        <button
-          type="button"
-          className="lg:hidden p-2 rounded-lg text-muted-strong hover:text-foreground hover:bg-surface-elevated/80"
-          onClick={() => setOpen((o) => !o)}
-          aria-expanded={open}
-          aria-label="Toggle navigation menu"
-        >
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
+        <div className="flex lg:hidden items-center gap-1.5">
+          <ThemeToggle />
+          <button
+            type="button"
+            className="p-2 rounded-lg text-muted-strong hover:text-foreground hover:bg-surface-elevated/80"
+            onClick={() => setOpen((o) => !o)}
+            aria-expanded={open}
+            aria-label="Toggle navigation menu"
+          >
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -138,8 +143,8 @@ export function Header() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-            className="lg:hidden border-t border-border/80 bg-[rgba(227,224,218,0.96)] backdrop-blur-xl overflow-hidden"
+            transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:hidden border-t border-border/80 mobile-menu-scrim backdrop-blur-xl overflow-hidden"
           >
             <nav aria-label="Mobile navigation">
               <ul className="px-5 py-3 flex flex-col max-h-[70vh] overflow-y-auto">

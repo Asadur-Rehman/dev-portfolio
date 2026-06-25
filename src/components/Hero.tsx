@@ -9,15 +9,15 @@ import type { LiveActivity } from "@/lib/github";
 
 const container = {
   hidden: { opacity: 0 },
-  show: { opacity: 1, transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+  show: { opacity: 1, transition: { staggerChildren: 0.04, delayChildren: 0.03 } },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 12 },
+  hidden: { opacity: 0, y: 8 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
+    transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 };
 
@@ -43,7 +43,7 @@ export function Hero({ liveActivity }: { liveActivity?: LiveActivity | null } = 
       >
         <motion.div variants={item} className="flex flex-wrap items-center gap-2.5 mb-8">
           <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-strong">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" aria-hidden />
+            <span className="h-2 w-2 rounded-full status-dot" aria-hidden />
             {personal.availability}
           </span>
           <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-3.5 py-1.5 text-xs font-medium text-muted-strong">

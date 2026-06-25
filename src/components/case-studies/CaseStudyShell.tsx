@@ -17,7 +17,7 @@ export function CaseStudyShell({
       <CommandPalette />
       <Header />
       <CaseStudyToc chapters={chapters} />
-      <main id="main-content" className="pt-24 sm:pt-28">
+      <main id="main-content" className="pt-[4.25rem] sm:pt-[4.25rem] xl:pr-[10.5rem]">
         {children}
       </main>
       <Footer />

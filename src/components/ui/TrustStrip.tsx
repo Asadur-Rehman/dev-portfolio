@@ -1,7 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
-
 const companies = [
   { name: "Aurora Solutions", role: "Software Engineer · 2025 — present" },
   { name: "Egnitify", role: "Contract Engineer · 2024 — 2025" },
@@ -11,13 +7,7 @@ const companies = [
 
 export function TrustStrip() {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.65, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-      className="mt-10 sm:mt-12"
-      aria-label="Recent work history"
-    >
+    <div className="mt-10 sm:mt-12" aria-label="Recent work history">
       <p className="font-mono text-[0.6rem] uppercase tracking-[0.35em] text-muted mb-4">
         Recent work &amp; education
       </p>
@@ -44,6 +34,6 @@ export function TrustStrip() {
           </li>
         ))}
       </ul>
-    </motion.div>
+    </div>
   );
 }

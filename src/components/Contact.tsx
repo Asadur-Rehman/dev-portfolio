@@ -137,13 +137,13 @@ export function Contact() {
                 </div>
 
                 {status === "success" && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-sm text-emerald-800">
+                  <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="flex items-start gap-2.5 rounded-xl border p-4 text-sm alert-success">
                     <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" aria-hidden /><span>Thanks, message received. I&apos;ll reply within a day or two.</span>
                   </motion.div>
                 )}
 
                 {status === "error" && (
-                  <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-start gap-2.5 rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                  <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.25 }} className="flex items-start gap-2.5 rounded-xl border p-4 text-sm alert-error">
                     <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0" aria-hidden /><span>{errorMessage}</span>
                   </motion.div>
                 )}
@@ -221,14 +221,14 @@ export function Contact() {
 
                 <div className="rounded-xl border border-border bg-surface-elevated p-4 sm:p-5 shadow-sm w-full min-w-0 overflow-hidden">
                   <p className="font-mono text-xs uppercase tracking-widest text-muted mb-3">LinkedIn profile</p>
-                  <ResponsiveLinkedInBadge theme="light" />
+                  <ResponsiveLinkedInBadge />
                 </div>
 
                 {/* Availability */}
                 <div className="rounded-2xl border border-border bg-accent-muted p-5">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" aria-hidden />
-                    <p className="text-xs font-mono uppercase tracking-widest text-emerald-700">Currently available</p>
+                    <span className="h-2 w-2 shrink-0 rounded-full status-dot" aria-hidden />
+                    <p className="text-xs font-mono uppercase tracking-widest text-success">Currently available</p>
                   </div>
                   <p className="text-sm text-muted-strong leading-relaxed">Taking on remote contract work outside my day job. Comfortable across PKT and overlapping with US / EU mornings.</p>
                 </div>

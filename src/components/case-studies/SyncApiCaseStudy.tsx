@@ -7,7 +7,9 @@ import {
 import { CaseStudyShell } from "./CaseStudyShell";
 import {
   Chapter, StatStrip, CaseStudyHero, ClosingCta,
-  DiagramBox, DiagramLabel, primaryBtn, secondaryBtn,
+  DiagramBox, DiagramLabel, DiagramFrame,
+  FeatureGrid, DecisionGrid, ChallengeList, SectionTitle, StackPills,
+  primaryBtn, secondaryBtn,
 } from "./shared";
 
 const meta = {
@@ -88,24 +90,24 @@ export function SyncApiCaseStudy() {
         actions={
           <>
             <a href="https://syncapi-9fkn.onrender.com" target="_blank" rel="noopener noreferrer" className={primaryBtn}>
-                <ExternalLink className="h-4 w-4" />
-                Live app
-                <ArrowUpRight className="h-4 w-4" />
-              </a>
-              <a href="https://github.com/Asadur-Rehman/syncapi" target="_blank" rel="noopener noreferrer" className={secondaryBtn}>
-                <Github className="h-4 w-4" />
-                Source on GitHub
-              </a>
-            </>
+              <ExternalLink className="h-4 w-4" />
+              Live app
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a href="https://github.com/Asadur-Rehman/syncapi" target="_blank" rel="noopener noreferrer" className={secondaryBtn}>
+              <Github className="h-4 w-4" />
+              Source on GitHub
+            </a>
+          </>
         }
       />
 
       <StatStrip items={stats} />
 
       <Chapter id="problem" number="01" label="Problem">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
+        <SectionTitle>
           Postman is great for solo work. <span className="text-gradient-accent">Teams need more.</span>
-        </h2>
+        </SectionTitle>
         <div className="mt-6 grid md:grid-cols-2 gap-6 text-base text-muted-strong leading-relaxed">
           <p>
             Working on the same API as a teammate is awkward. You message someone a curl command,
@@ -123,92 +125,39 @@ export function SyncApiCaseStudy() {
       </Chapter>
 
       <Chapter id="architecture" number="02" label="Architecture" tone="alt">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          One repo, two services, three persistence layers.
-        </h2>
-        <p className="mt-4 max-w-2xl text-base text-muted-strong leading-relaxed">
+        <SectionTitle>One repo, two services, three persistence layers.</SectionTitle>
+        <p className="mt-4 max-w-2xl text-base text-muted-strong leading-relaxed text-pretty">
           Monorepo organized with Turborepo. The Next.js app and the NestJS API share types and
           schemas via a workspace package, so a contract change is one commit and one PR.
         </p>
         <ArchitectureDiagram />
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          {meta.stack.map((s) => (
-            <span key={s} className="rounded-md border border-border bg-surface px-3 py-1 text-xs font-mono text-muted-strong">
-              {s}
-            </span>
-          ))}
-        </div>
+        <StackPills items={meta.stack} />
       </Chapter>
 
       <Chapter id="capabilities" number="03" label="Capabilities">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          What it actually does.
-        </h2>
-        <div className="mt-8 grid sm:grid-cols-2 gap-4">
-          {features.map((f) => {
-            const Icon = f.icon;
-            return (
-              <article key={f.title} className="rounded-xl border border-border bg-surface-elevated p-5 shadow-sm">
-                <span className="inline-grid h-9 w-9 place-items-center rounded-lg border border-accent/20 bg-accent-muted text-accent mb-3">
-                  <Icon className="h-4 w-4" aria-hidden />
-                </span>
-                <h3 className="font-display font-semibold text-lg text-foreground">{f.title}</h3>
-                <p className="mt-2 text-sm text-muted-strong leading-relaxed">{f.body}</p>
-              </article>
-            );
-          })}
-        </div>
+        <SectionTitle>What it actually does.</SectionTitle>
+        <FeatureGrid items={features} />
       </Chapter>
 
       <Chapter id="decisions" number="04" label="Decisions" tone="alt">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          Decisions worth keeping a paper trail on.
-        </h2>
-        <div className="mt-8 grid md:grid-cols-2 gap-4">
-          {decisions.map((d) => (
-            <div
-              key={d.title}
-              className={`rounded-xl border p-5 ${
-                d.tone === "accent"
-                  ? "border-accent/20 bg-accent-muted"
-                  : "border-border bg-surface-elevated"
-              }`}
-            >
-              <h3 className={`font-display font-semibold text-lg ${d.tone === "accent" ? "text-accent" : "text-foreground"}`}>{d.title}</h3>
-              <p className="mt-2 text-sm text-muted-strong leading-relaxed">{d.body}</p>
-            </div>
-          ))}
-        </div>
+        <SectionTitle>Decisions worth keeping a paper trail on.</SectionTitle>
+        <DecisionGrid items={decisions} />
       </Chapter>
 
       <Chapter id="tradeoffs" number="05" label="Tradeoffs">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          Where the shape of the problem fought back.
-        </h2>
-        <ul className="mt-8 space-y-5">
-          {challenges.map((c, i) => (
-            <li key={c.title} className="flex gap-4 items-start">
-              <span className="shrink-0 w-9 h-9 grid place-items-center rounded-full border border-accent/20 bg-accent-muted text-accent font-mono text-xs">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h3 className="font-display font-semibold text-lg text-foreground">{c.title}</h3>
-                <p className="mt-1 text-sm text-muted-strong leading-relaxed">{c.body}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <SectionTitle>Where the shape of the problem fought back.</SectionTitle>
+        <ChallengeList items={challenges} />
       </Chapter>
 
-      <ClosingCta />
+      <ClosingCta siblings={{ next: { href: "/work/flowcraft", label: "FlowCraft" } }} />
     </CaseStudyShell>
   );
 }
 
 function ArchitectureDiagram() {
   return (
-    <div className="mt-8 relative rounded-xl border border-border bg-surface-elevated p-6 sm:p-8 overflow-hidden">
-      <svg viewBox="0 0 800 360" className="relative w-full h-auto">
+    <DiagramFrame>
+      <svg viewBox="0 0 800 360" className="w-full h-auto" role="img" aria-label="SyncAPI architecture diagram">
         <defs>
           <marker id="arrow-syncapi" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" opacity="0.7" />
@@ -233,6 +182,6 @@ function ArchitectureDiagram() {
         <DiagramLabel x={410} y={175}>queries</DiagramLabel>
         <DiagramLabel x={680} y={175}>heartbeat</DiagramLabel>
       </svg>
-    </div>
+    </DiagramFrame>
   );
 }

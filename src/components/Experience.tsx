@@ -63,7 +63,7 @@ export function Experience() {
                           <Building2 className="h-4 w-4 text-accent shrink-0" aria-hidden />
                           <p className="font-display font-semibold text-foreground">{entry.company}</p>
                           {idx === 0 && (
-                            <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[0.6rem] font-mono uppercase tracking-wider text-emerald-700">
+                            <span className="inline-flex items-center rounded-full border px-2 py-0.5 text-[0.6rem] font-mono uppercase tracking-wider alert-success">
                               Current
                             </span>
                           )}

@@ -7,7 +7,9 @@ import {
 import { CaseStudyShell } from "./CaseStudyShell";
 import {
   Chapter, StatStrip, CaseStudyHero, ClosingCta,
-  DiagramBox, primaryBtn,
+  DiagramBox, DiagramFrame,
+  FeatureGrid, DecisionGrid, ChallengeList, SectionTitle, StackPills,
+  primaryBtn,
 } from "./shared";
 
 const meta = {
@@ -97,9 +99,9 @@ export function TalentScoutCaseStudy() {
       <StatStrip items={stats} />
 
       <Chapter id="problem" number="01" label="Problem">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
+        <SectionTitle>
           Recruitment burns hours <span className="text-gradient-accent">before anyone codes</span>.
-        </h2>
+        </SectionTitle>
         <div className="mt-6 grid md:grid-cols-2 gap-6 text-base text-muted-strong leading-relaxed">
           <p>
             The first 80% of hiring is structural: writing a JD, ranking resumes, scheduling phone
@@ -117,47 +119,26 @@ export function TalentScoutCaseStudy() {
       </Chapter>
 
       <Chapter id="pipeline" number="02" label="The pipeline" tone="alt">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          Four stages, one rubric, one transcript per candidate.
-        </h2>
-        <p className="mt-4 max-w-2xl text-base text-muted-strong leading-relaxed">
+        <SectionTitle>Four stages, one rubric, one transcript per candidate.</SectionTitle>
+        <p className="mt-4 max-w-2xl text-base text-muted-strong leading-relaxed text-pretty">
           Recruiter defines a role. Resumes get parsed and ranked. Top candidates take an
           AI-conducted interview. The system writes back a structured evaluation. Recruiter
           reviews the shortlist with the receipts already attached.
         </p>
         <PipelineDiagram />
-        <div className="mt-8 grid sm:grid-cols-2 gap-4">
-          {features.map((f) => {
-            const Icon = f.icon;
-            return (
-              <article key={f.title} className="rounded-xl border border-border bg-surface-elevated p-5 shadow-sm">
-                <span className="inline-grid h-9 w-9 place-items-center rounded-lg border border-accent/20 bg-accent-muted text-accent mb-3">
-                  <Icon className="h-4 w-4" aria-hidden />
-                </span>
-                <h3 className="font-display font-semibold text-lg text-foreground">{f.title}</h3>
-                <p className="mt-2 text-sm text-muted-strong leading-relaxed">{f.body}</p>
-              </article>
-            );
-          })}
-        </div>
-        <div className="mt-8 flex flex-wrap items-center gap-2">
-          {meta.stack.map((s) => (
-            <span key={s} className="rounded-md border border-border bg-surface px-3 py-1 text-xs font-mono text-muted-strong">{s}</span>
-          ))}
-        </div>
+        <FeatureGrid items={features} />
+        <StackPills items={meta.stack} />
       </Chapter>
 
       <Chapter id="ai-interview" number="03" label="AI interviewer">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          How an interview actually happens.
-        </h2>
-        <div className="mt-8 grid md:grid-cols-3 gap-px overflow-hidden rounded-xl border border-border bg-border">
+        <SectionTitle>How an interview actually happens.</SectionTitle>
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-px overflow-hidden rounded-xl border border-border bg-border">
           {[
             { n: "1", t: "Candidate joins", b: "Browser-native WebRTC, no install. Mic + cam permission, then a quick warm-up question." },
             { n: "2", t: "Live loop", b: "Speech → STT → LLM evaluation → LLM next-question → TTS. Streamed, so the next question feels conversational." },
             { n: "3", t: "Scoring", b: "Per-criterion reasoning persisted alongside the transcript. Recruiter sees the score and the why." },
           ].map((s) => (
-            <div key={s.n} className="bg-surface-elevated px-5 py-5">
+            <div key={s.n} className="bg-surface-elevated px-5 py-5 h-full">
               <span className="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-accent">{s.n.padStart(2, "0")} — step</span>
               <h3 className="mt-2 font-display font-semibold text-lg text-foreground">{s.t}</h3>
               <p className="mt-1.5 text-sm text-muted-strong leading-relaxed">{s.b}</p>
@@ -167,52 +148,24 @@ export function TalentScoutCaseStudy() {
       </Chapter>
 
       <Chapter id="decisions" number="04" label="Decisions" tone="alt">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          Decisions worth keeping a paper trail on.
-        </h2>
-        <div className="mt-8 grid md:grid-cols-2 gap-4">
-          {decisions.map((d) => (
-            <div
-              key={d.title}
-              className={`rounded-xl border p-5 ${
-                d.tone === "accent" ? "border-accent/20 bg-accent-muted" : "border-border bg-surface-elevated"
-              }`}
-            >
-              <h3 className={`font-display font-semibold text-lg ${d.tone === "accent" ? "text-accent" : "text-foreground"}`}>{d.title}</h3>
-              <p className="mt-2 text-sm text-muted-strong leading-relaxed">{d.body}</p>
-            </div>
-          ))}
-        </div>
+        <SectionTitle>Decisions worth keeping a paper trail on.</SectionTitle>
+        <DecisionGrid items={decisions} />
       </Chapter>
 
       <Chapter id="tradeoffs" number="05" label="Tradeoffs">
-        <h2 className="font-display font-bold text-2xl sm:text-3xl md:text-4xl tracking-tight text-foreground max-w-3xl">
-          Where it got sharp.
-        </h2>
-        <ul className="mt-8 space-y-5">
-          {challenges.map((c, i) => (
-            <li key={c.title} className="flex gap-4 items-start">
-              <span className="shrink-0 w-9 h-9 grid place-items-center rounded-full border border-accent/20 bg-accent-muted text-accent font-mono text-xs">
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div>
-                <h3 className="font-display font-semibold text-lg text-foreground">{c.title}</h3>
-                <p className="mt-1 text-sm text-muted-strong leading-relaxed">{c.body}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <SectionTitle>Where it got sharp.</SectionTitle>
+        <ChallengeList items={challenges} />
       </Chapter>
 
-      <ClosingCta />
+      <ClosingCta siblings={{ prev: { href: "/work/flowcraft", label: "FlowCraft" } }} />
     </CaseStudyShell>
   );
 }
 
 function PipelineDiagram() {
   return (
-    <div className="mt-8 relative rounded-xl border border-border bg-surface-elevated p-6 sm:p-8 overflow-hidden">
-      <svg viewBox="0 0 800 220" className="relative w-full h-auto">
+    <DiagramFrame>
+      <svg viewBox="0 0 800 220" className="w-full h-auto min-w-[640px]" role="img" aria-label="TalentScout hiring pipeline">
         <defs>
           <marker id="arrow-ts" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
             <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--accent)" opacity="0.7" />
@@ -232,6 +185,6 @@ function PipelineDiagram() {
           STRUCTURED PIPELINE · one rubric, one transcript per candidate
         </text>
       </svg>
-    </div>
+    </DiagramFrame>
   );
 }

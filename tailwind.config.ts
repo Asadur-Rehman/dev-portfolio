@@ -34,6 +34,8 @@ const config: Config = {
         "accent-2": "var(--accent-2)",
         "accent-2-muted": "var(--accent-2-muted)",
         "accent-3": "var(--accent-3)",
+        success: "var(--success)",
+        error: "var(--error)",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],

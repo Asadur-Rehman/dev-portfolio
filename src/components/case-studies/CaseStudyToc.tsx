@@ -1,23 +1,16 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { motion } from "framer-motion";
 
 export type TocChapter = { id: string; num: string; label: string };
 
 type Props = {
   chapters: TocChapter[];
-  /** Element whose scroll height determines the reading progress bar. Defaults to <main>. */
   rootSelector?: string;
 };
 
-/**
- * CaseStudyToc — a vertical chapter index on the right (lg+) with an
- * active highlight and a thin top-of-page reading-progress bar. The
- * top bar is always visible (mobile included); the side list is desktop
- * only and avoids the right-side ScrollRail (which is hidden on case
- * study pages).
- */
+const HEADER_OFFSET = "4.25rem";
+
 export function CaseStudyToc({ chapters, rootSelector = "main" }: Props) {
   const [progress, setProgress] = useState(0);
   const [active, setActive] = useState(chapters[0]?.id ?? "");
@@ -25,7 +18,9 @@ export function CaseStudyToc({ chapters, rootSelector = "main" }: Props) {
 
   const onScroll = useCallback(() => {
     const root = (rootSelector ? document.querySelector(rootSelector) : null) as HTMLElement | null;
-    const max = root ? root.scrollHeight - window.innerHeight : (document.documentElement.scrollHeight - window.innerHeight);
+    const max = root
+      ? root.scrollHeight - window.innerHeight
+      : document.documentElement.scrollHeight - window.innerHeight;
     const y = window.scrollY;
     setProgress(max > 0 ? Math.min(1, Math.max(0, y / max)) : 0);
   }, [rootSelector]);
@@ -47,7 +42,7 @@ export function CaseStudyToc({ chapters, rootSelector = "main" }: Props) {
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => { if (entry.isIntersecting) setActive(c.id); },
-        { rootMargin: "-40% 0px -55% 0px" }
+        { rootMargin: "-35% 0px -55% 0px", threshold: 0.05 }
       );
       obs.observe(el);
       observers.push(obs);
@@ -55,31 +50,35 @@ export function CaseStudyToc({ chapters, rootSelector = "main" }: Props) {
     return () => observers.forEach((o) => o.disconnect());
   }, [chapters]);
 
-  const jump = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const jump = (id: string) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 
   return (
     <>
-      {/* Top reading-progress bar — always visible */}
+      {/* Reading progress — sits just below the fixed header */}
       <div
-        className="fixed top-0 inset-x-0 h-px z-[60] pointer-events-none"
+        className="fixed left-0 right-0 z-[45] h-0.5 pointer-events-none"
+        style={{ top: HEADER_OFFSET }}
         aria-hidden
       >
-        <span className="absolute inset-0 bg-border/40" />
+        <span className="absolute inset-0 bg-border/50" />
         <span
-          className="absolute left-0 top-0 h-px bg-gradient-to-r from-accent via-accent-2 to-accent transition-[width] duration-150"
+          className="absolute left-0 top-0 h-full bg-accent transition-[width] duration-150 ease-out"
           style={{ width: `${progress * 100}%` }}
         />
       </div>
 
-      {/* Side TOC — desktop only */}
+      {/* Chapter index — wide screens only (avoids overlapping content on lg tablets) */}
       <aside
         aria-label="Case study chapters"
-        className="hidden lg:flex fixed top-1/2 -translate-y-1/2 right-4 xl:right-6 z-40 flex-col items-end gap-3 select-none"
+        className="hidden xl:flex fixed top-1/2 -translate-y-1/2 right-6 2xl:right-10 z-40 flex-col items-end gap-3 select-none"
       >
         <div className="relative flex flex-col items-end gap-2.5 py-3 pl-3 pr-1">
           {chapters.map((c) => {
             const isActive = c.id === active;
             const isHover = hovered === c.id;
+            const showLabel = isActive || isHover;
+
             return (
               <button
                 key={c.id}
@@ -90,43 +89,37 @@ export function CaseStudyToc({ chapters, rootSelector = "main" }: Props) {
                 aria-current={isActive ? "true" : undefined}
                 className="group relative flex items-center gap-3"
               >
-                <motion.span
-                  animate={{
-                    opacity: isActive || isHover ? 1 : 0,
-                    x: isActive || isHover ? 0 : 8,
-                  }}
-                  transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
-                  className="font-mono text-[0.6rem] tracking-[0.25em] uppercase pointer-events-none whitespace-nowrap"
+                <span
+                  className={`font-mono text-[0.6rem] tracking-[0.25em] uppercase whitespace-nowrap transition-all duration-200 ${
+                    showLabel ? "opacity-100 translate-x-0" : "opacity-0 translate-x-2 pointer-events-none"
+                  }`}
                 >
                   <span className="text-muted/60">{c.num}</span>
                   <span className={`ml-2 ${isActive ? "text-accent" : "text-muted-strong"}`}>{c.label}</span>
-                </motion.span>
+                </span>
 
-                <span className="relative grid place-items-center w-6 h-6">
-                  <motion.span
-                    animate={{
-                      scale: isActive ? 1 : 0.55,
-                      backgroundColor: isActive ? "var(--accent)" : "rgba(168,168,184,0.55)",
-                      boxShadow: isActive ? "0 0 0 4px var(--accent-muted)" : "0 0 0 0 transparent",
-                    }}
-                    transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                    className="block w-1.5 h-1.5 rounded-full"
+                <span className="relative grid place-items-center w-6 h-6 shrink-0">
+                  <span
+                    className={`block w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                      isActive
+                        ? "scale-100 bg-accent shadow-[0_0_0_4px_var(--accent-muted)]"
+                        : "scale-[0.55] bg-border-strong"
+                    }`}
                   />
                 </span>
               </button>
             );
           })}
 
-          {/* track */}
           <span aria-hidden className="absolute right-[10px] top-2 bottom-2 w-px bg-border/60 -z-10" />
           <span
             aria-hidden
             style={{ transform: `scaleY(${progress})`, transformOrigin: "top" }}
-            className="absolute right-[10px] top-2 bottom-2 w-px bg-gradient-to-b from-accent via-accent/60 to-accent-2 -z-10 transition-transform duration-150"
+            className="absolute right-[10px] top-2 bottom-2 w-px bg-accent/70 -z-10 transition-transform duration-150"
           />
         </div>
 
-        <span className="font-mono text-[0.55rem] uppercase tracking-[0.3em] text-muted/40 tabular-nums pr-2">
+        <span className="font-mono text-[0.55rem] uppercase tracking-[0.3em] text-muted/50 tabular-nums pr-2">
           {Math.round(progress * 100).toString().padStart(2, "0")}%
         </span>
       </aside>

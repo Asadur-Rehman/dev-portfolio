@@ -52,7 +52,7 @@ export function NowBar({ liveActivity }: { liveActivity?: LiveActivity | null } 
       className="inline-flex w-full max-w-xl items-center gap-3 rounded-lg border border-border bg-surface px-4 py-3 text-xs sm:text-sm"
       role="status"
     >
-      <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-500" aria-hidden />
+      <span className="h-2 w-2 shrink-0 rounded-full status-dot" aria-hidden />
       <span className="font-mono text-[0.65rem] uppercase tracking-wider text-muted shrink-0">
         {statusLine.label}
       </span>

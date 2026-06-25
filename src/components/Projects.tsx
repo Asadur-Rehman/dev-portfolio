@@ -33,11 +33,11 @@ const catMeta: Record<string, {
 /* ── motion variants ─────────────────────────────────────────────── */
 const container = {
   hidden: { opacity: 0 },
-  show:   { opacity: 1, transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
+  show:   { opacity: 1, transition: { staggerChildren: 0.05, delayChildren: 0.03 } },
 };
 const item = {
-  hidden: { opacity: 0, y: 28 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } },
+  hidden: { opacity: 0, y: 14 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] as [number,number,number,number] } },
 };
 
 /* ── CategoryBadge ───────────────────────────────────────────────── */
@@ -89,28 +89,20 @@ function FeaturedCard({ project }: { project: ProjectType }) {
           </div>
 
           {/* ── Vertical divider (desktop only) ── */}
-          <div
-            className="hidden lg:block"
-            style={{ background: "linear-gradient(to bottom, transparent 5%, rgba(255,255,255,0.07) 25%, rgba(255,255,255,0.07) 75%, transparent 95%)" }}
-            aria-hidden
-          />
+          <div className="hidden lg:block w-px bg-border/60 self-stretch" aria-hidden />
 
           {/* ── Right: Details ── */}
           <div className="p-8 sm:p-10 lg:py-12 lg:pr-12 flex flex-col justify-between border-t border-border/40 lg:border-t-0">
             {project.highlights.length > 0 && (
               <ul className="space-y-3 mb-8">
-                {project.highlights.map((h, i) => (
-                  <motion.li
+                {project.highlights.map((h) => (
+                  <li
                     key={h}
-                    initial={{ opacity: 0, x: 20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.15 + i * 0.08, duration: 0.45, ease: [0.22,1,0.36,1] }}
                     className="flex gap-3 text-sm sm:text-base text-muted-strong"
                   >
                     <span className="mt-2 shrink-0 h-1.5 w-1.5 rounded-full bg-accent" aria-hidden />
                     <span>{h}</span>
-                  </motion.li>
+                  </li>
                 ))}
               </ul>
             )}
@@ -182,7 +174,7 @@ function ProjectCard({ project, num }: { project: ProjectType; num: number }) {
   const meta = catMeta[project.category] ?? { spotlight: "rgba(0,212,255,0.06)", stripe: "via-border" };
 
   return (
-    <motion.div variants={item} style={{ perspective: 700 }} className="h-full">
+    <motion.div variants={item} className="h-full">
       <SpotlightCard className="rounded-2xl h-full" spotlightColor={meta.spotlight}>
         <div className="group rounded-2xl border border-border bg-surface-elevated flex flex-col overflow-hidden h-full transition-all duration-200 hover:border-accent/30 hover:shadow-card-hover">
 

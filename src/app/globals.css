@@ -3,33 +3,100 @@
 @tailwind utilities;
 
 /* ============================================
-   DESIGN TOKENS
-   Muted light — warm stone base, cream cards,
-   enough contrast without feeling stark.
+   DESIGN TOKENS — Light (default)
+   Clean, neutral, international portfolio tone
    ============================================ */
-:root {
-  --background: #e3e0da;
-  --background-2: #d8d4cc;
-  --foreground: #141210;
-  --surface: #cdc9c1;
-  --surface-elevated: #eeebe6;
-  --surface-hover: #c5c0b8;
-  --muted: #5c5650;
-  --muted-strong: #3d3834;
-  --border: #c4bfb6;
-  --border-strong: #a39d94;
+:root,
+[data-theme="light"] {
+  color-scheme: light;
 
-  --accent: #1e40af;
-  --accent-hover: #1e3a8a;
-  --accent-muted: rgba(30, 64, 175, 0.12);
-  --accent-glow: rgba(30, 64, 175, 0.22);
+  --background: #f7f8fa;
+  --background-2: #eef0f4;
+  --foreground: #111827;
+  --surface: #f1f3f6;
+  --surface-elevated: #ffffff;
+  --surface-hover: #e8ebf0;
+  --muted: #6b7280;
+  --muted-strong: #374151;
+  --border: #e5e7eb;
+  --border-strong: #d1d5db;
 
-  --accent-2: #0369a1;
-  --accent-2-muted: rgba(3, 105, 161, 0.12);
+  --accent: #1d4ed8;
+  --accent-hover: #1e40af;
+  --accent-muted: rgba(29, 78, 216, 0.1);
+  --accent-glow: rgba(29, 78, 216, 0.16);
 
+  --accent-2: #0f766e;
+  --accent-2-muted: rgba(15, 118, 110, 0.1);
   --accent-3: #4338ca;
 
+  --success: #047857;
+  --success-bg: #ecfdf5;
+  --success-border: #a7f3d0;
+  --error: #b91c1c;
+  --error-bg: #fef2f2;
+  --error-border: #fecaca;
+  --status-dot: #10b981;
+
+  --header-scrim: rgba(247, 248, 250, 0.9);
+  --mobile-menu-scrim: rgba(247, 248, 250, 0.97);
+  --shadow-nav: 0 1px 0 rgba(17, 24, 39, 0.04), 0 8px 24px -12px rgba(17, 24, 39, 0.08);
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-strong-bg: rgba(255, 255, 255, 0.92);
+  --grid-line: rgba(17, 24, 39, 0.04);
+  --ambient-1: rgba(29, 78, 216, 0.06);
+  --ambient-2: rgba(15, 118, 110, 0.05);
+  --ambient-3: rgba(17, 24, 39, 0.04);
+  --on-accent: #ffffff;
+
   --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ============================================
+   DESIGN TOKENS — Dark
+   Refined charcoal, not pure black
+   ============================================ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #0b0d11;
+  --background-2: #101318;
+  --foreground: #f3f4f6;
+  --surface: #141820;
+  --surface-elevated: #1a1f28;
+  --surface-hover: #222833;
+  --muted: #9ca3af;
+  --muted-strong: #d1d5db;
+  --border: #2a3140;
+  --border-strong: #3d4659;
+
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --accent-muted: rgba(59, 130, 246, 0.14);
+  --accent-glow: rgba(59, 130, 246, 0.22);
+
+  --accent-2: #2dd4bf;
+  --accent-2-muted: rgba(45, 212, 191, 0.12);
+  --accent-3: #818cf8;
+
+  --success: #6ee7b7;
+  --success-bg: rgba(16, 185, 129, 0.12);
+  --success-border: rgba(16, 185, 129, 0.28);
+  --error: #fca5a5;
+  --error-bg: rgba(239, 68, 68, 0.12);
+  --error-border: rgba(239, 68, 68, 0.28);
+  --status-dot: #34d399;
+
+  --header-scrim: rgba(11, 13, 17, 0.9);
+  --mobile-menu-scrim: rgba(11, 13, 17, 0.97);
+  --shadow-nav: 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 24px -12px rgba(0, 0, 0, 0.5);
+  --glass-bg: rgba(26, 31, 40, 0.82);
+  --glass-strong-bg: rgba(26, 31, 40, 0.94);
+  --grid-line: rgba(255, 255, 255, 0.04);
+  --ambient-1: rgba(59, 130, 246, 0.08);
+  --ambient-2: rgba(45, 212, 191, 0.06);
+  --ambient-3: rgba(0, 0, 0, 0.35);
+  --on-accent: #ffffff;
 }
 
 @layer base {
@@ -47,6 +114,7 @@
     letter-spacing: -0.011em;
     overflow-x: hidden;
     position: relative;
+    transition: background-color 0.25s var(--ease-smooth), color 0.25s var(--ease-smooth);
   }
 
   h1, h2, h3, h4 {
@@ -56,11 +124,11 @@
 
   a, button {
     transition:
-      color 0.22s var(--ease-smooth),
-      background-color 0.22s var(--ease-smooth),
-      border-color 0.22s var(--ease-smooth),
-      box-shadow 0.22s var(--ease-smooth),
-      opacity 0.22s var(--ease-smooth);
+      color 0.2s var(--ease-smooth),
+      background-color 0.2s var(--ease-smooth),
+      border-color 0.2s var(--ease-smooth),
+      box-shadow 0.2s var(--ease-smooth),
+      opacity 0.2s var(--ease-smooth);
   }
 
   ::selection {
@@ -75,7 +143,7 @@
   }
 }
 
-/* Ambient depth */
+/* Ambient depth — subtle, theme-aware */
 body::after {
   content: "";
   position: fixed;
@@ -83,9 +151,10 @@ body::after {
   z-index: -10;
   pointer-events: none;
   background:
-    radial-gradient(55vw 45vh at 8% -5%, rgba(30, 64, 175, 0.08), transparent 55%),
-    radial-gradient(50vw 40vh at 92% 12%, rgba(3, 105, 161, 0.06), transparent 50%),
-    radial-gradient(70vw 50vh at 50% 100%, rgba(61, 56, 52, 0.08), transparent 60%);
+    radial-gradient(55vw 45vh at 8% -5%, var(--ambient-1), transparent 55%),
+    radial-gradient(50vw 40vh at 92% 12%, var(--ambient-2), transparent 50%),
+    radial-gradient(70vw 50vh at 50% 100%, var(--ambient-3), transparent 60%);
+  transition: opacity 0.3s var(--ease-smooth);
 }
 
 ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -102,19 +171,19 @@ body::after {
   }
 
   .glass {
-    background: rgba(238, 235, 230, 0.78);
+    background: var(--glass-bg);
     backdrop-filter: blur(14px) saturate(130%);
     -webkit-backdrop-filter: blur(14px) saturate(130%);
     border: 1px solid var(--border);
-    box-shadow: 0 1px 3px rgba(20, 18, 16, 0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
   }
 
   .glass-strong {
-    background: rgba(238, 235, 230, 0.9);
+    background: var(--glass-strong-bg);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
     border: 1px solid var(--border-strong);
-    box-shadow: 0 2px 10px rgba(20, 18, 16, 0.07);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
   }
 
   .text-gradient {
@@ -138,8 +207,8 @@ body::after {
 
   .bg-grid {
     background-image:
-      linear-gradient(to right, rgba(20, 18, 16, 0.045) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(20, 18, 16, 0.045) 1px, transparent 1px);
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 
@@ -185,7 +254,32 @@ body::after {
     opacity: 0.85;
   }
 
-  /* LinkedIn official badge — full width, hide fallback link after widget loads */
+  .status-dot {
+    background: var(--status-dot);
+  }
+
+  .alert-success {
+    border-color: var(--success-border);
+    background: var(--success-bg);
+    color: var(--success);
+  }
+
+  .alert-error {
+    border-color: var(--error-border);
+    background: var(--error-bg);
+    color: var(--error);
+  }
+
+  .header-scrim {
+    background: var(--header-scrim);
+    box-shadow: var(--shadow-nav);
+  }
+
+  .mobile-menu-scrim {
+    background: var(--mobile-menu-scrim);
+  }
+
+  /* LinkedIn official badge */
   .linkedin-badge {
     width: 100%;
     min-width: 0;

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { linkedIn } from "@/data/socials";
+import { useColorMode } from "@/hooks/useColorMode";
 
 const SCRIPT_SRC = "https://platform.linkedin.com/badges/js/profile.js";
 const SCRIPT_ATTR = "data-linkedin-profile-badge";
@@ -71,21 +72,24 @@ export function LinkedInBadge({ size = "medium", theme = "light", className }: L
  * Responsive badge sizes — horizontal layout fills the sidebar on each breakpoint.
  * LinkedIn API max size is `large` (builder “extra-large” maps to horizontal large).
  */
-export function ResponsiveLinkedInBadge({ theme = "light" }: { theme?: BadgeTheme }) {
+export function ResponsiveLinkedInBadge() {
+  const { mode, ready } = useColorMode();
+  const badgeTheme = ready && mode === "dark" ? "dark" : "light";
+
   useEffect(() => {
     loadLinkedInBadgeScript();
   }, []);
 
   return (
-    <div className="w-full min-w-0" aria-label="LinkedIn profile">
+    <div className="w-full min-w-0" aria-label="LinkedIn profile" key={badgeTheme}>
       <div className="sm:hidden">
-        <BadgeMount size="small" theme={theme} />
+        <BadgeMount size="small" theme={badgeTheme} />
       </div>
       <div className="hidden sm:block lg:hidden">
-        <BadgeMount size="medium" theme={theme} />
+        <BadgeMount size="medium" theme={badgeTheme} />
       </div>
       <div className="hidden lg:block">
-        <BadgeMount size="large" theme={theme} />
+        <BadgeMount size="large" theme={badgeTheme} />
       </div>
     </div>
   );
